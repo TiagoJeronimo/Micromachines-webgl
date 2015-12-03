@@ -174,6 +174,11 @@ var lighting = false
 
     function handleKeyDown(event) {
         currentlyPressedKeys[event.keyCode] = true;
+
+        if (String.fromCharCode(event.keyCode) == "L") { // L - Lights off/on
+            lighting = !lighting;
+            gl.uniform1i(shaderProgram.useLightingUniform, lighting);
+        }
     }
 
 
@@ -206,10 +211,6 @@ var lighting = false
         if (currentlyPressedKeys[40]) {
             // Down cursor key
             xSpeed += 1;
-        }
-        if (currentlyPressedKeys[76]) { // L - Lights off/on
-            lighting = !lighting;
-            gl.uniform1i(shaderProgram.useLightingUniform, lighting);
         }
     }
 
