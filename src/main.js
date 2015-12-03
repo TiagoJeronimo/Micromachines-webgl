@@ -1,4 +1,5 @@
-var gl;
+var gl
+var canvas
 
     function initGL(canvas) {
         try {
@@ -12,6 +13,18 @@ var gl;
         }
     }
 
+    function resize() {
+        try {
+           gl = canvas.getContext("experimental-webgl");
+           gl.viewportWidth = window.innerWidth
+           gl.viewportHeight = window.innerHeight
+           canvas.width = window.innerWidth
+           canvas.height = window.innerHeight
+        } catch (e) {}
+        if (!gl) {
+           alert("Could not initialise WebGL, sorry :-(");
+        }
+    }
 
     function getShader(gl, id) {
         var shaderScript = document.getElementById(id);
@@ -83,7 +96,6 @@ var gl;
         shaderProgram.ambientColorUniform = gl.getUniformLocation(shaderProgram, "uAmbientColor");
         shaderProgram.lightingDirectionUniform = gl.getUniformLocation(shaderProgram, "uLightingDirection");
         shaderProgram.directionalColorUniform = gl.getUniformLocation(shaderProgram, "uDirectionalColor");
-        shaderProgram.alphaUniform = gl.getUniformLocation(shaderProgram, "uAlpha");
     }
 
 
@@ -373,43 +385,29 @@ var gl;
         gl.bindTexture(gl.TEXTURE_2D, glassTexture);
         gl.uniform1i(shaderProgram.samplerUniform, 0);
 
+        gl.disable(gl.DEPTH_TEST);
 
-        gl.blendFunc(gl.SRC_ALPHA, gl.ONE);
-        gl.uniform1f(shaderProgram.alphaUniform, parseFloat(document.getElementById("alpha").value));
-        gl.disable(gl.BLEND);
-        gl.enable(gl.DEPTH_TEST);
+        //Light
 
-        var lighting = document.getElementById("lighting").checked;
+        var lighting = true;
         gl.uniform1i(shaderProgram.useLightingUniform, lighting);
-        if (lighting) {
-            gl.uniform3f(
-                shaderProgram.ambientColorUniform,
-                parseFloat(document.getElementById("ambientR").value),
-                parseFloat(document.getElementById("ambientG").value),
-                parseFloat(document.getElementById("ambientB").value)
-            );
 
-            var lightingDirection = [
-                parseFloat(document.getElementById("lightDirectionX").value),
-                parseFloat(document.getElementById("lightDirectionY").value),
-                parseFloat(document.getElementById("lightDirectionZ").value)
-            ];
-            var adjustedLD = vec3.create();
-            vec3.normalize(lightingDirection, adjustedLD);
-            vec3.scale(adjustedLD, -1);
-            gl.uniform3fv(shaderProgram.lightingDirectionUniform, adjustedLD);
+        gl.uniform3f(shaderProgram.ambientColorUniform,0.5, 0.1, 0.2); //AMBIENT LIGHT RGB
 
-            gl.uniform3f(
-                shaderProgram.directionalColorUniform,
-                parseFloat(document.getElementById("directionalR").value),
-                parseFloat(document.getElementById("directionalG").value),
-                parseFloat(document.getElementById("directionalB").value)
-            );
-        }
+        var lightingDirection = [-0.25,-0.25,-1.0];
+
+        var adjustedLD = vec3.create();
+        vec3.normalize(lightingDirection, adjustedLD);
+        vec3.scale(adjustedLD, -1);
+        gl.uniform3fv(shaderProgram.lightingDirectionUniform, adjustedLD);
+
+        gl.uniform3f(shaderProgram.directionalColorUniform,0.8,0.8,0.8);
 
         gl.bindBuffer(gl.ELEMENT_ARRAY_BUFFER, cubeVertexIndexBuffer);
         setMatrixUniforms();
         gl.drawElements(gl.TRIANGLES, cubeVertexIndexBuffer.numItems, gl.UNSIGNED_SHORT, 0);
+
+        gl.enable(gl.DEPTH_TEST);
     }
 
 
@@ -428,16 +426,17 @@ var gl;
 
 
     function tick() {
-        requestAnimFrame(tick);
-        handleKeys();
-        drawScene();
-        animate();
+        resize()
+        requestAnimFrame(tick)
+        handleKeys()
+        drawScene()
+        animate()
     }
 
 
 
     function webGLStart() {
-        var canvas = document.getElementById("lesson08-canvas");
+        canvas = document.getElementById("lesson08-canvas")
         initGL(canvas);
         initShaders();
         initBuffers();
@@ -445,8 +444,8 @@ var gl;
 
         gl.clearColor(0.0, 0.0, 0.0, 1.0);
         gl.enable(gl.DEPTH_TEST);
+        gl.blendFunc(gl.SRC_ALPHA, gl.ONE);
         gl.enable(gl.BLEND);
-        gl.disable(gl.DEPTH_TEST);
 
         document.onkeydown = handleKeyDown;
         document.onkeyup = handleKeyUp;
