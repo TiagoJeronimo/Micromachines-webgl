@@ -1,5 +1,6 @@
 var gl
 var canvas
+var lighting = false
 
     function initGL(canvas) {
         try {
@@ -206,6 +207,10 @@ var canvas
             // Down cursor key
             xSpeed += 1;
         }
+        if (currentlyPressedKeys[76]) { // L - Lights off/on
+            lighting = !lighting;
+            gl.uniform1i(shaderProgram.useLightingUniform, lighting);
+        }
     }
 
 
@@ -388,20 +393,18 @@ var canvas
         gl.disable(gl.DEPTH_TEST);
 
         //Light
+        if(lighting) {
+            gl.uniform3f(shaderProgram.ambientColorUniform,0.5, 0.4, 0.2); //AMBIENT LIGHT RGB
 
-        var lighting = true;
-        gl.uniform1i(shaderProgram.useLightingUniform, lighting);
+            var lightingDirection = [-0.25,-0.25,-1.0];
 
-        gl.uniform3f(shaderProgram.ambientColorUniform,0.5, 0.1, 0.2); //AMBIENT LIGHT RGB
+            var adjustedLD = vec3.create();
+            vec3.normalize(lightingDirection, adjustedLD);
+            vec3.scale(adjustedLD, -1);
+            gl.uniform3fv(shaderProgram.lightingDirectionUniform, adjustedLD);
 
-        var lightingDirection = [-0.25,-0.25,-1.0];
-
-        var adjustedLD = vec3.create();
-        vec3.normalize(lightingDirection, adjustedLD);
-        vec3.scale(adjustedLD, -1);
-        gl.uniform3fv(shaderProgram.lightingDirectionUniform, adjustedLD);
-
-        gl.uniform3f(shaderProgram.directionalColorUniform,0.8,0.8,0.8);
+            gl.uniform3f(shaderProgram.directionalColorUniform,0.8,0.8,0.8);
+        }
 
         gl.bindBuffer(gl.ELEMENT_ARRAY_BUFFER, cubeVertexIndexBuffer);
         setMatrixUniforms();
@@ -436,7 +439,7 @@ var canvas
 
 
     function webGLStart() {
-        canvas = document.getElementById("lesson08-canvas")
+        canvas = document.getElementById("AVT-WebGL")
         initGL(canvas);
         initShaders();
         initBuffers();
