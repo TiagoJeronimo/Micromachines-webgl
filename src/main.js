@@ -1,6 +1,7 @@
 var gl
 var canvas
 var lighting = false
+var cube = new Cube()
 
     function initGL(canvas) {
         try {
@@ -204,8 +205,7 @@ var lighting = false
     }
 
     function initBuffers() {
-        initPyramidBuffers ()
-        initCubeBuffers ()
+        cube.initBuffers()
     }
 
     function drawScene() {
@@ -218,11 +218,8 @@ var lighting = false
 
         mat4.translate(mvMatrix, [0.0, 0.0, z]);
 
-        // PYRAMID
-        drawPyramid ()
-
         // CUBE
-        drawCube ()
+        cube.draw()
 
         //Light
         if(lighting) {
