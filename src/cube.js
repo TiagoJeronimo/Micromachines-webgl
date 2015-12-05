@@ -1,6 +1,6 @@
 var Cube = function () {
   this.position = {x: 0, y: 0, z: 0}
-  this.scale = {x: 0, y: 0, z: 0}
+  this.scale = {x: 1, y: 1, z: 1}
   this.rotation = {x: 0, y: 0, z: 0}
 }
 
@@ -15,10 +15,11 @@ Cube.prototype = {
   draw: function () {
     mvPushMatrix()
 
-    mat4.rotate(mvMatrix, degToRad(this.rotation.x), [1, 0, 0])
-    mat4.rotate(mvMatrix, degToRad(this.rotation.y), [0, 1, 0])
-    mat4.rotate(mvMatrix, degToRad(this.rotation.z), [0, 0, 1])
+    mat4.rotateX(mvMatrix, degToRad(this.rotation.x))
+    mat4.rotateY(mvMatrix, degToRad(this.rotation.y))
+    mat4.rotateZ(mvMatrix, degToRad(this.rotation.z))
     mat4.translate(mvMatrix, [this.position.x, this.position.y, this.position.z])
+    mat4.scale(mvMatrix, [this.scale.x, this.scale.y, this.scale.z])
 
  		this.cubeBindBuffers()
 
