@@ -1,7 +1,7 @@
 var gl
 var canvas
 var lighting = false
-var cube = new Cube()
+var cube = new GameObject(CUBE_OBJ)
 
     function initGL(canvas) {
         try {
