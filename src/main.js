@@ -185,7 +185,6 @@ var road = null
     }
 
     function initBuffers() {
-        car.initBuffers()
         butter1.initBuffers()
         butter2.initBuffers()
         cup.initBuffers()
@@ -205,8 +204,8 @@ var road = null
 
         // Draw Objects
         table.draw()
-
         car.draw()
+
         butter1.draw()
         butter2.draw()
         cup.draw()
@@ -234,8 +233,10 @@ var road = null
         table = new Table ()
         table.create()
 
-        car = new GameObject(CUBE_OBJ, "glass.gif")
+        car = new Car()
+        car.create()
         car.position = {x:0.0, y:0.45, z:2.8}
+
         car.scale = {x:0.2, y:0.2, z:0.2}
         butter1 = new GameObject(CUBE_OBJ, "glass.gif")
         butter1.position = {x:3.6, y:0.5, z:3.0}
