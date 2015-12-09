@@ -10,10 +10,10 @@ var Road = function () {
 
 Road.prototype = {
   create: function () {
-    this.goUp = new GameObject(CUBE_OBJ, "glass.gif")
-    this.goBottom = new GameObject(CUBE_OBJ, "glass.gif")
-    this.goLeft = new GameObject(CUBE_OBJ, "glass.gif")
-    this.goRight = new GameObject(CUBE_OBJ, "glass.gif")
+    this.goUp = new GameObject(CUBE_OBJ, "road.png")
+    this.goBottom = new GameObject(CUBE_OBJ, "road.png")
+    this.goLeft = new GameObject(CUBE_OBJ, "road.png")
+    this.goRight = new GameObject(CUBE_OBJ, "road.png")
     this.initBuffers()
   },
   draw: function () {
@@ -25,31 +25,31 @@ Road.prototype = {
 
     // UP
     mvPushMatrix()
-    mat4.translate(mvMatrix, mvMatrix, [-2.5, 0.50, -2.5])
+    mat4.translate(mvMatrix, mvMatrix, [0, 0.50, -5])
     mat4.rotateY(mvMatrix,mvMatrix, degToRad(90))
-    mat4.scale(mvMatrix,mvMatrix, [1.0, 0.01, 5.0])
+    mat4.scale(mvMatrix,mvMatrix, [1.0, 0.01, 4.0])
     this.goUp.cubeBindBuffers()
     mvPopMatrix()
 
     // Bottom
     mvPushMatrix()
-    mat4.translate(mvMatrix, mvMatrix,[-2.5, 0.50, 3.6])
+    mat4.translate(mvMatrix, mvMatrix,[0, 0.50, 5])
     mat4.rotateY(mvMatrix,mvMatrix, degToRad(90))
-    mat4.scale(mvMatrix, mvMatrix,[1.0, 0.01, 5.0])
+    mat4.scale(mvMatrix, mvMatrix,[1.0, 0.01, 4.0])
     this.goBottom.cubeBindBuffers()
     mvPopMatrix()
 
     // Left
     mvPushMatrix()
-    mat4.translate(mvMatrix,mvMatrix, [-3.5, 0.5, -3.5])
-    mat4.scale(mvMatrix, mvMatrix,[1.0, 0.01, 7.1])
+    mat4.translate(mvMatrix,mvMatrix, [-5, 0.50, 0])
+    mat4.scale(mvMatrix, mvMatrix,[1.0, 0.01, 6])
     this.goLeft.cubeBindBuffers()
     mvPopMatrix()
 
     // Right
     mvPushMatrix()
-    mat4.translate(mvMatrix, mvMatrix,[2.5, 0.5, -3.5])
-    mat4.scale(mvMatrix,mvMatrix, [1.0, 0.01, 7.1])
+    mat4.translate(mvMatrix, mvMatrix,[5, 0.50, 0])
+    mat4.scale(mvMatrix,mvMatrix, [1.0, 0.01, 6])
     this.goRight.cubeBindBuffers()
     mvPopMatrix()
 
