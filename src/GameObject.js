@@ -72,8 +72,8 @@ GameObject.prototype = {
   initTexture: function () {
     this.imageTexture = gl.createTexture();
     this.imageTexture.image = new Image();
+    this.imageTexture.image.onload = function () { this.handleLoadedTexture(this.imageTexture) }.bind(this)
     this.imageTexture.image.src = this.textureId
-    this.imageTexture.image.onload = this.handleLoadedTexture(this.imageTexture)
   },
 
 
