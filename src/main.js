@@ -105,30 +105,6 @@ var road = null
         shaderProgram.directionalColorUniform = gl.getUniformLocation(shaderProgram, "uDirectionalColor");
     }
 
-    function handleLoadedTexture(texture) {
-        gl.pixelStorei(gl.UNPACK_FLIP_Y_WEBGL, true);
-
-        gl.bindTexture(gl.TEXTURE_2D, texture);
-        gl.texImage2D(gl.TEXTURE_2D, 0, gl.RGBA, gl.RGBA, gl.UNSIGNED_BYTE, texture.image);
-        gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_MAG_FILTER, gl.LINEAR);
-        gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_MIN_FILTER, gl.LINEAR_MIPMAP_NEAREST);
-        gl.generateMipmap(gl.TEXTURE_2D);
-
-        gl.bindTexture(gl.TEXTURE_2D, null);
-    }
-
-    var glassTexture;
-
-    function initTexture() {
-        glassTexture = gl.createTexture();
-        glassTexture.image = new Image();
-        glassTexture.image.onload = function () {
-            handleLoadedTexture(glassTexture)
-        }
-
-        glassTexture.image.src = "glass.gif";
-    }
-
     var mvMatrix = mat4.create();
     var mvMatrixStack = [];
     var pMatrix = mat4.create();
@@ -258,30 +234,30 @@ var road = null
         table = new Table ()
         table.create()
 
-        car = new GameObject(CUBE_OBJ)
+        car = new GameObject(CUBE_OBJ, "glass.gif")
         car.position = {x:0.0, y:0.45, z:2.8}
         car.scale = {x:0.2, y:0.2, z:0.2}
-        butter1 = new GameObject(CUBE_OBJ)
+        butter1 = new GameObject(CUBE_OBJ, "glass.gif")
         butter1.position = {x:3.6, y:0.5, z:3.0}
         butter1.scale = {x:0.7, y:0.7, z:0.7}
-        butter2 = new GameObject(CUBE_OBJ)
+        butter2 = new GameObject(CUBE_OBJ, "glass.gif")
         butter2.position = {x:-3.4, y:0.5, z:-4.0}
         butter2.scale = {x:0.7, y:0.7, z:0.7}
-        cup = new GameObject(CUBE_OBJ)
+        cup = new GameObject(CUBE_OBJ, "glass.gif")
         cup.position = {x:-1.5, y:1.0, z:0.0}
-        broccoli[0] = new GameObject(CUBE_OBJ)
+        broccoli[0] = new GameObject(CUBE_OBJ, "glass.gif")
         broccoli[0].position = {x:1.5, y:0.5, z:1.5}
-        broccoli[1] = new GameObject(CUBE_OBJ)
+        broccoli[1] = new GameObject(CUBE_OBJ, "glass.gif")
         broccoli[1].position = {x:1.5, y:0.5, z:-1.5}
-        broccoli[2] = new GameObject(CUBE_OBJ)
+        broccoli[2] = new GameObject(CUBE_OBJ, "glass.gif")
         broccoli[2].position = {x:-1.5, y:0.5, z:-1.5}
-        broccoli[3] = new GameObject(CUBE_OBJ)
+        broccoli[3] = new GameObject(CUBE_OBJ, "glass.gif")
         broccoli[3].position = {x:-1.5, y:0.5, z:1.5}
 
         road = new Road ()
         road.create()
     }
-    
+
     var lastTime = 0;
 
     function animate() {
@@ -295,7 +271,6 @@ var road = null
         lastTime = timeNow;
     }
 
-
     function tick() {
         resize()
         requestAnimFrame(tick)
@@ -304,20 +279,17 @@ var road = null
         animate()
     }
 
-
-
     function webGLStart() {
         canvas = document.getElementById("AVT-WebGL")
         initGL(canvas)
         create()
         initShaders()
         initBuffers()
-        initTexture()
- 
+
         gl.clearColor(0.0, 0.0, 0.0, 1.0);
         gl.enable(gl.DEPTH_TEST);
-        gl.blendFunc(gl.SRC_ALPHA, gl.ONE);
-        gl.enable(gl.BLEND);
+        //gl.blendFunc(gl.SRC_ALPHA, gl.ONE);
+        //gl.enable(gl.BLEND);
 
         document.onkeydown = handleKeyDown;
         document.onkeyup = handleKeyUp;
