@@ -7,7 +7,7 @@ var butter1 = null
 var butter2 = null
 var cup = null
 var broccoli = []
-var road = []
+var road = null
 
     function initGL(canvas) {
         try {
@@ -216,9 +216,6 @@ var road = []
         for (var i = 0; i<broccoli.length; i++) {
             broccoli[i].initBuffers()
         }
-        for (var i = 0; i<road.length; i++) {
-            road[i].initBuffers()
-        }
     }
 
     function drawScene() {
@@ -232,7 +229,7 @@ var road = []
 
         // Draw Objects
         table.draw()
-        
+
         car.draw()
         butter1.draw()
         butter2.draw()
@@ -240,9 +237,7 @@ var road = []
         for (var i = 0; i<broccoli.length; i++) {
             broccoli[i].draw()
         }
-        for (var i = 0; i<broccoli.length; i++) {
-            road[i].draw()
-        }
+        road.draw()
 
         //Light
         if(lighting) {
@@ -282,24 +277,11 @@ var road = []
         broccoli[2].position = {x:-1.5, y:0.5, z:-1.5}
         broccoli[3] = new GameObject(CUBE_OBJ)
         broccoli[3].position = {x:-1.5, y:0.5, z:1.5}
-        road[0] = new GameObject(CUBE_OBJ) // up
-        road[0].position = {x:-2.5, y:0.50, z:-2.5}
-        road[0].rotation.y = 90
-        road[0].scale = {x:1.0, y:0.01, z:5.0}
-        road[1] = new GameObject(CUBE_OBJ) // bottom
-        road[1].position = {x:-2.5, y:0.50, z:3.6}
-        road[1].rotation.y = 90
-        road[1].scale = {x:1.0, y:0.01, z:5.0}
-        road[2] = new GameObject(CUBE_OBJ) // left
-        road[2].position = {x:-3.5, y:0.5, z:-3.5}
-        road[2].scale = {x:1.0, y:0.01, z:7.1}
-        road[3] = new GameObject(CUBE_OBJ) // right
-        road[3].position = {x:2.5, y:0.5, z:-3.5}
-        road[3].scale = {x:1.0, y:0.01, z:7.1}
 
-
+        road = new Road ()
+        road.create()
     }
-
+    
     var lastTime = 0;
 
     function animate() {
