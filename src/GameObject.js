@@ -82,8 +82,8 @@ GameObject.prototype = {
     gl.bindBuffer(gl.ARRAY_BUFFER, vertexPositionBuffer)
     var vertices = this.obj.vertices
     gl.bufferData(gl.ARRAY_BUFFER, new Float32Array(vertices), gl.STATIC_DRAW)
-    vertexPositionBuffer.itemSize = 3
-    vertexPositionBuffer.numItems = 24
+    vertexPositionBuffer.itemSize = this.obj.vertexItemSize
+    vertexPositionBuffer.numItems = this.obj.vertexNumItens
 
     return vertexPositionBuffer
   },
@@ -93,8 +93,8 @@ GameObject.prototype = {
     gl.bindBuffer(gl.ARRAY_BUFFER, vertexNormalBuffer)
     var vertexNormals = this.obj.vertexNormals
     gl.bufferData(gl.ARRAY_BUFFER, new Float32Array(vertexNormals), gl.STATIC_DRAW)
-    vertexNormalBuffer.itemSize = 3
-    vertexNormalBuffer.numItems = 24
+    vertexNormalBuffer.itemSize = this.obj.normalItemSize
+    vertexNormalBuffer.numItems = this.obj.normalNumItens
 
     return vertexNormalBuffer
   },
@@ -104,8 +104,8 @@ GameObject.prototype = {
     gl.bindBuffer(gl.ARRAY_BUFFER, vertexTextureCoordBuffer)
     var textureCoords = this.obj.textureCoords
     gl.bufferData(gl.ARRAY_BUFFER, new Float32Array(textureCoords), gl.STATIC_DRAW)
-    vertexTextureCoordBuffer.itemSize = 2
-    vertexTextureCoordBuffer.numItems = 24
+    vertexTextureCoordBuffer.itemSize = this.obj.textureItemSize
+    vertexTextureCoordBuffer.numItems = this.obj.textureNumItens
 
     return vertexTextureCoordBuffer
   },
@@ -115,8 +115,8 @@ GameObject.prototype = {
     gl.bindBuffer(gl.ELEMENT_ARRAY_BUFFER, vertexIndexBuffer)
     var vertexIndices = this.obj.vertexIndices
     gl.bufferData(gl.ELEMENT_ARRAY_BUFFER, new Uint16Array(vertexIndices), gl.STATIC_DRAW)
-    vertexIndexBuffer.itemSize = 1
-    vertexIndexBuffer.numItems = 36
+    vertexIndexBuffer.itemSize = this.obj.indexItemSize
+    vertexIndexBuffer.numItems = this.obj.indexNumItens
 
     return vertexIndexBuffer
   }

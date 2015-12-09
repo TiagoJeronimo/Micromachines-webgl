@@ -120,5 +120,14 @@ var CUBE_OBJ = {
       12, 13, 14,   12, 14, 15, // Bottom face
       16, 17, 18,   16, 18, 19, // Right face
       20, 21, 22,   20, 22, 23  // Left face
-    ]
+    ], 
+
+    vertexItemSize : 3,
+    vertexNumItens : 24,
+    normalItemSize: 3,
+    normalNumItens: 24,
+    textureItemSize : 2,
+    textureNumItens : 24,
+    indexItemSize: 1,
+    indexNumItens: 36,
 }
