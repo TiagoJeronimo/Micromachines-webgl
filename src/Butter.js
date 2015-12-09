@@ -11,17 +11,9 @@ Butter.prototype = {
     this.initBuffers()
   },
   draw: function () {
-    mvPushMatrix()
-
-    mat4.rotateX(mvMatrix,mvMatrix, degToRad(this.rotation.x))
-    mat4.rotateY(mvMatrix,mvMatrix, degToRad(this.rotation.y))
-    mat4.rotateZ(mvMatrix,mvMatrix, degToRad(this.rotation.z))
-    mat4.translate(mvMatrix,mvMatrix, [this.position.x, this.position.y, this.position.z])
-    mat4.scale(mvMatrix,mvMatrix, [0.7, 0.7, 0.7])
-
- 		this.gameObject.cubeBindBuffers()
-
-    mvPopMatrix()
+    this.gameObject.position = this.position 
+    this.gameObject.scale = {x: 0.7, y: 0.7, z: 0.7}
+    this.gameObject.draw()
   },
   initBuffers: function () {
     this.gameObject.initBuffers()

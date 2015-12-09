@@ -237,10 +237,10 @@ var road = null
 
         butter1 = new Butter()
         butter1.create()
-        butter1.position = {x:3.6, y:0.5, z:3.0}
+        butter1.position = {x:7.0, y:0.5, z:7.0}
         butter2 = new Butter()
         butter2.create()
-        butter2.position = {x:-3.4, y:0.5, z:-4.0}
+        butter2.position = {x:-7.0, y:0.5, z:-7.0}
 
         cup = new GameObject(CUBE_OBJ, "glass.gif")
         cup.position = {x:-1.5, y:1.0, z:0.0}
