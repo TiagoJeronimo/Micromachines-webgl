@@ -1935,11 +1935,11 @@ var TORUS_OBJ = {
 	]
 }
 
-	TORUS_OBJ.vertexItemSize = 3
+	TORUS_OBJ.vertexItemSize = 4
     TORUS_OBJ.vertexNumItens = TORUS_OBJ.vertices.length
-    TORUS_OBJ.normalItemSize = 3
+    TORUS_OBJ.normalItemSize = 4
     TORUS_OBJ.normalNumItens = TORUS_OBJ.vertexNormals.length
-    TORUS_OBJ.textureItemSize = 2
+    TORUS_OBJ.textureItemSize = 4
     TORUS_OBJ.textureNumItens = TORUS_OBJ.textureCoords.length
     TORUS_OBJ.indexItemSize = 1
     TORUS_OBJ.indexNumItens = TORUS_OBJ.vertexIndices.length
