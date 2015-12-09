@@ -168,24 +168,24 @@ var road = null
         }
         if (currentlyPressedKeys[37]) {
             // Left cursor key
-            ySpeed -= 1;
+            ySpeed -= 0.1;
         }
         if (currentlyPressedKeys[39]) {
             // Right cursor key
-            ySpeed += 1;
+            ySpeed += 0.1;
         }
         if (currentlyPressedKeys[38]) {
             // Up cursor key
-            xSpeed -= 1;
+            xSpeed -= 0.1;
         }
         if (currentlyPressedKeys[40]) {
             // Down cursor key
-            xSpeed += 1;
+            xSpeed += 0.1;
         }
     }
 
-    function initBuffers() {
-        cup.initBuffers()
+    function update () {
+        car.position = {x: ySpeed,y: 0,z: xSpeed}
     }
 
     function drawScene() {
@@ -242,7 +242,8 @@ var road = null
         butter2.create()
         butter2.position = {x:-7.0, y:0.5, z:-7.0}
 
-        cup = new GameObject(CUBE_OBJ, "glass.gif")
+        cup = new Cup()
+        cup.create()
         cup.position = {x:-1.5, y:1.0, z:0.0}
 
         for(var i=0; i<4; i++) {
@@ -275,6 +276,7 @@ var road = null
         resize()
         requestAnimFrame(tick)
         handleKeys()
+        update()
         drawScene()
         animate()
     }
@@ -284,7 +286,6 @@ var road = null
         initGL(canvas)
         create()
         initShaders()
-        initBuffers()
 
         gl.clearColor(0.0, 0.0, 0.0, 1.0);
         gl.enable(gl.DEPTH_TEST);
