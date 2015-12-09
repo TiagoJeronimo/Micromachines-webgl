@@ -1,7 +1,13 @@
 var gl
 var canvas
 var lighting = false
-var cube = new GameObject(CUBE_OBJ)
+var car = null
+var table = null
+var butter1 = null
+var butter2 = null
+var cup = null
+var broccoli = []
+var road = []
 
     function initGL(canvas) {
         try {
@@ -160,8 +166,6 @@ var cube = new GameObject(CUBE_OBJ)
     var yRot = 0;
     var ySpeed = -3;
 
-    var z = -5.0;
-
     var currentlyPressedKeys = {};
 
     function handleKeyDown(event) {
@@ -205,7 +209,17 @@ var cube = new GameObject(CUBE_OBJ)
     }
 
     function initBuffers() {
-        cube.initBuffers()
+        table.initBuffers()
+        car.initBuffers()
+        butter1.initBuffers()
+        butter2.initBuffers()
+        cup.initBuffers()
+        for (var i = 0; i<broccoli.length; i++) {
+            broccoli[i].initBuffers()
+        }
+        for (var i = 0; i<road.length; i++) {
+            road[i].initBuffers()
+        }
     }
 
     function drawScene() {
@@ -213,13 +227,22 @@ var cube = new GameObject(CUBE_OBJ)
         gl.clear(gl.COLOR_BUFFER_BIT | gl.DEPTH_BUFFER_BIT);
 
         mat4.perspective(45, gl.viewportWidth / gl.viewportHeight, 0.1, 100.0, pMatrix);
-
         mat4.identity(mvMatrix);
+        mat4.translate(mvMatrix, [0.0, 0.0, -15.0]);
+        mat4.rotateX(mvMatrix, degToRad(45))
 
-        mat4.translate(mvMatrix, [0.0, 0.0, z]);
-
-        // CUBE
-        cube.draw()
+        // Draw Objects
+        table.draw()
+        car.draw()
+        butter1.draw()
+        butter2.draw()
+        cup.draw()
+        for (var i = 0; i<broccoli.length; i++) {
+            broccoli[i].draw()
+        }
+        for (var i = 0; i<broccoli.length; i++) {
+            road[i].draw()
+        }
 
         //Light
         if(lighting) {
@@ -237,6 +260,42 @@ var cube = new GameObject(CUBE_OBJ)
     }
 
     function create() {
+        table = new GameObject(CUBE_OBJ)
+        table.scale = {x:9.0, y:0.0000001, z:9.0}
+        car = new GameObject(CUBE_OBJ)
+        car.position = {x:0.0, y:0.45, z:2.8}
+        car.scale = {x:0.2, y:0.2, z:0.2}
+        butter1 = new GameObject(CUBE_OBJ)
+        butter1.position = {x:3.6, y:0.5, z:3.0}
+        butter1.scale = {x:0.7, y:0.7, z:0.7}
+        butter2 = new GameObject(CUBE_OBJ)
+        butter2.position = {x:-3.4, y:0.5, z:-4.0}
+        butter2.scale = {x:0.7, y:0.7, z:0.7}
+        cup = new GameObject(CUBE_OBJ)
+        cup.position = {x:-1.5, y:1.0, z:0.0}
+        broccoli[0] = new GameObject(CUBE_OBJ)
+        broccoli[0].position = {x:1.5, y:0.5, z:1.5}
+        broccoli[1] = new GameObject(CUBE_OBJ)
+        broccoli[1].position = {x:1.5, y:0.5, z:-1.5}
+        broccoli[2] = new GameObject(CUBE_OBJ)
+        broccoli[2].position = {x:-1.5, y:0.5, z:-1.5}
+        broccoli[3] = new GameObject(CUBE_OBJ)
+        broccoli[3].position = {x:-1.5, y:0.5, z:1.5}
+        road[0] = new GameObject(CUBE_OBJ) // up
+        road[0].position = {x:-2.5, y:0.50, z:-2.5}
+        road[0].rotation.y = 90
+        road[0].scale = {x:1.0, y:0.01, z:5.0}
+        road[1] = new GameObject(CUBE_OBJ) // bottom
+        road[1].position = {x:-2.5, y:0.50, z:3.6}
+        road[1].rotation.y = 90
+        road[1].scale = {x:1.0, y:0.01, z:5.0}
+        road[2] = new GameObject(CUBE_OBJ) // left
+        road[2].position = {x:-3.5, y:0.5, z:-3.5}
+        road[2].scale = {x:1.0, y:0.01, z:7.1}
+        road[3] = new GameObject(CUBE_OBJ) // right
+        road[3].position = {x:2.5, y:0.5, z:-3.5}
+        road[3].scale = {x:1.0, y:0.01, z:7.1}
+
 
     }
 
@@ -266,12 +325,12 @@ var cube = new GameObject(CUBE_OBJ)
 
     function webGLStart() {
         canvas = document.getElementById("AVT-WebGL")
-        initGL(canvas);
-        initShaders();
-        initBuffers();
-        initTexture();
-        create();
-
+        initGL(canvas)
+        create()
+        initShaders()
+        initBuffers()
+        initTexture()
+ 
         gl.clearColor(0.0, 0.0, 0.0, 1.0);
         gl.enable(gl.DEPTH_TEST);
         gl.blendFunc(gl.SRC_ALPHA, gl.ONE);
