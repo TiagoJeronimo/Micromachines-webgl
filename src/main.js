@@ -209,7 +209,6 @@ var road = []
     }
 
     function initBuffers() {
-        table.initBuffers()
         car.initBuffers()
         butter1.initBuffers()
         butter2.initBuffers()
@@ -233,6 +232,7 @@ var road = []
 
         // Draw Objects
         table.draw()
+        
         car.draw()
         butter1.draw()
         butter2.draw()
@@ -260,8 +260,9 @@ var road = []
     }
 
     function create() {
-        table = new GameObject(CUBE_OBJ)
-        table.scale = {x:9.0, y:0.0000001, z:9.0}
+        table = new Table ()
+        table.create()
+
         car = new GameObject(CUBE_OBJ)
         car.position = {x:0.0, y:0.45, z:2.8}
         car.scale = {x:0.2, y:0.2, z:0.2}
