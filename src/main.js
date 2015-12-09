@@ -185,8 +185,6 @@ var road = null
     }
 
     function initBuffers() {
-        butter1.initBuffers()
-        butter2.initBuffers()
         cup.initBuffers()
         for (var i = 0; i<broccoli.length; i++) {
             broccoli[i].initBuffers()
@@ -208,9 +206,9 @@ var road = null
         // Draw Objects
         table.draw()
         car.draw()
-
         butter1.draw()
         butter2.draw()
+
         cup.draw()
         for (var i = 0; i<broccoli.length; i++) {
             broccoli[i].draw()
@@ -240,13 +238,13 @@ var road = null
         car.create()
         car.position = {x:0.0, y:0.45, z:2.8}
 
-        car.scale = {x:0.2, y:0.2, z:0.2}
-        butter1 = new GameObject(CUBE_OBJ, "glass.gif")
+        butter1 = new Butter()
+        butter1.create()
         butter1.position = {x:3.6, y:0.5, z:3.0}
-        butter1.scale = {x:0.7, y:0.7, z:0.7}
-        butter2 = new GameObject(CUBE_OBJ, "glass.gif")
+        butter2 = new Butter()
+        butter2.create()
         butter2.position = {x:-3.4, y:0.5, z:-4.0}
-        butter2.scale = {x:0.7, y:0.7, z:0.7}
+
         cup = new GameObject(CUBE_OBJ, "glass.gif")
         cup.position = {x:-1.5, y:1.0, z:0.0}
         broccoli[0] = new GameObject(CUBE_OBJ, "glass.gif")
