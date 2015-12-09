@@ -14,11 +14,11 @@ Table.prototype = {
   draw: function () {
     mvPushMatrix()
 
-    mat4.rotateX(mvMatrix, degToRad(this.rotation.x))
-    mat4.rotateY(mvMatrix, degToRad(this.rotation.y))
-    mat4.rotateZ(mvMatrix, degToRad(this.rotation.z))
-    mat4.translate(mvMatrix, [this.position.x, this.position.y, this.position.z])
-    mat4.scale(mvMatrix, [this.scale.x, this.scale.y, this.scale.z])
+    mat4.rotateX(mvMatrix,mvMatrix, degToRad(this.rotation.x))
+    mat4.rotateY(mvMatrix,mvMatrix, degToRad(this.rotation.y))
+    mat4.rotateZ(mvMatrix,mvMatrix, degToRad(this.rotation.z))
+    mat4.translate(mvMatrix,mvMatrix, [this.position.x, this.position.y, this.position.z])
+    mat4.scale(mvMatrix,mvMatrix, [this.scale.x, this.scale.y, this.scale.z])
 
  		this.gameObject.cubeBindBuffers()
 

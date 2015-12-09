@@ -25,31 +25,31 @@ Road.prototype = {
 
     // UP
     mvPushMatrix()
-    mat4.translate(mvMatrix, [-2.5, 0.50, -2.5])
-    mat4.rotateY(mvMatrix, degToRad(90))
-    mat4.scale(mvMatrix, [1.0, 0.01, 5.0])
+    mat4.translate(mvMatrix, mvMatrix, [-2.5, 0.50, -2.5])
+    mat4.rotateY(mvMatrix,mvMatrix, degToRad(90))
+    mat4.scale(mvMatrix,mvMatrix, [1.0, 0.01, 5.0])
     this.goUp.cubeBindBuffers()
     mvPopMatrix()
 
     // Bottom
     mvPushMatrix()
-    mat4.translate(mvMatrix, [-2.5, 0.50, 3.6])
-    mat4.rotateY(mvMatrix, degToRad(90))
-    mat4.scale(mvMatrix, [1.0, 0.01, 5.0])
+    mat4.translate(mvMatrix, mvMatrix,[-2.5, 0.50, 3.6])
+    mat4.rotateY(mvMatrix,mvMatrix, degToRad(90))
+    mat4.scale(mvMatrix, mvMatrix,[1.0, 0.01, 5.0])
     this.goBottom.cubeBindBuffers()
     mvPopMatrix()
 
     // Left
     mvPushMatrix()
-    mat4.translate(mvMatrix, [-3.5, 0.5, -3.5])
-    mat4.scale(mvMatrix, [1.0, 0.01, 7.1])
+    mat4.translate(mvMatrix,mvMatrix, [-3.5, 0.5, -3.5])
+    mat4.scale(mvMatrix, mvMatrix,[1.0, 0.01, 7.1])
     this.goLeft.cubeBindBuffers()
     mvPopMatrix()
 
     // Right
     mvPushMatrix()
-    mat4.translate(mvMatrix, [2.5, 0.5, -3.5])
-    mat4.scale(mvMatrix, [1.0, 0.01, 7.1])
+    mat4.translate(mvMatrix, mvMatrix,[2.5, 0.5, -3.5])
+    mat4.scale(mvMatrix,mvMatrix, [1.0, 0.01, 7.1])
     this.goRight.cubeBindBuffers()
     mvPopMatrix()
 

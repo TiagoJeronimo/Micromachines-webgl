@@ -13,11 +13,11 @@ Car.prototype = {
   draw: function () {
     mvPushMatrix()
 
-    mat4.rotateX(mvMatrix, degToRad(this.rotation.x))
-    mat4.rotateY(mvMatrix, degToRad(this.rotation.y))
-    mat4.rotateZ(mvMatrix, degToRad(this.rotation.z))
-    mat4.translate(mvMatrix, [this.position.x, this.position.y, this.position.z])
-    mat4.scale(mvMatrix, [0.2, 0.2, 0.2])
+    mat4.rotateX(mvMatrix,mvMatrix, degToRad(this.rotation.x))
+    mat4.rotateY(mvMatrix,mvMatrix, degToRad(this.rotation.y))
+    mat4.rotateZ(mvMatrix,mvMatrix, degToRad(this.rotation.z))
+    mat4.translate(mvMatrix,mvMatrix,[this.position.x, this.position.y, this.position.z])
+    mat4.scale(mvMatrix,mvMatrix, [0.2, 0.2, 0.2])
 
     /*mvPushMatrix()
     por aqui as varias pessas do carro

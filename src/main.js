@@ -111,7 +111,7 @@ var road = null
 
     function mvPushMatrix() {
         var copy = mat4.create();
-        mat4.set(mvMatrix, copy);
+        mat4.adjoint(mvMatrix, copy);
         mvMatrixStack.push(copy);
     }
 
@@ -127,8 +127,8 @@ var road = null
         gl.uniformMatrix4fv(shaderProgram.mvMatrixUniform, false, mvMatrix);
 
         var normalMatrix = mat3.create();
-        mat4.toInverseMat3(mvMatrix, normalMatrix);
-        mat3.transpose(normalMatrix);
+        mat4.invert(mvMatrix, normalMatrix);
+        mat3.transpose(normalMatrix,normalMatrix);
         gl.uniformMatrix3fv(shaderProgram.nMatrixUniform, false, normalMatrix);
     }
 
@@ -194,13 +194,16 @@ var road = null
     }
 
     function drawScene() {
-        gl.viewport(0, 0, gl.viewportWidth, gl.viewportHeight);
-        gl.clear(gl.COLOR_BUFFER_BIT | gl.DEPTH_BUFFER_BIT);
+        gl.viewport(0, 0, gl.viewportWidth, gl.viewportHeight)
+        gl.clear(gl.COLOR_BUFFER_BIT | gl.DEPTH_BUFFER_BIT)
 
-        mat4.perspective(45, gl.viewportWidth / gl.viewportHeight, 0.1, 100.0, pMatrix);
-        mat4.identity(mvMatrix);
-        mat4.translate(mvMatrix, [0.0, 0.0, -15.0]);
-        mat4.rotateX(mvMatrix, degToRad(45))
+        mat4.perspective(pMatrix, 45, gl.viewportWidth / gl.viewportHeight, 0.1, 100.0)
+        //mat4.frustum(pMatrix, 10, 10, 10, 10, 1, 100)
+        //mat4.lookAt(pMatrix, 0,0,1, 0,0,-10, 0,1,0)
+
+        //mat4.identity(mvMatrix)
+        mat4.translate(pMatrix, pMatrix, [0.0, 0.0, -15.0])
+        mat4.rotateX(pMatrix,pMatrix, degToRad(45))
 
         // Draw Objects
         table.draw()
