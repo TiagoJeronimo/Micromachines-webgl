@@ -186,9 +186,6 @@ var road = null
 
     function initBuffers() {
         cup.initBuffers()
-        for (var i = 0; i<broccoli.length; i++) {
-            broccoli[i].initBuffers()
-        }
     }
 
     function drawScene() {
@@ -247,13 +244,14 @@ var road = null
 
         cup = new GameObject(CUBE_OBJ, "glass.gif")
         cup.position = {x:-1.5, y:1.0, z:0.0}
-        broccoli[0] = new GameObject(CUBE_OBJ, "glass.gif")
+
+        for(var i=0; i<4; i++) {
+            broccoli[i] = new Broccoli()
+            broccoli[i].create()
+        }
         broccoli[0].position = {x:1.5, y:0.5, z:1.5}
-        broccoli[1] = new GameObject(CUBE_OBJ, "glass.gif")
         broccoli[1].position = {x:1.5, y:0.5, z:-1.5}
-        broccoli[2] = new GameObject(CUBE_OBJ, "glass.gif")
         broccoli[2].position = {x:-1.5, y:0.5, z:-1.5}
-        broccoli[3] = new GameObject(CUBE_OBJ, "glass.gif")
         broccoli[3].position = {x:-1.5, y:0.5, z:1.5}
 
         road = new Road ()
