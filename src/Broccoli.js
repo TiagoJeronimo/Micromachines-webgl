@@ -7,12 +7,15 @@ var Broccoli = function () {
 
 Broccoli.prototype = {
   create: function () {
-    this.gameObject = new GameObject(CUBE_OBJ, "glass.gif")
+    this.gameObject = new GameObject(CUBE_OBJ, "broccoli.png")
     this.initBuffers()
   },
   draw: function () {
+ 
     this.gameObject.position = this.position
+    this.gameObject.scale.z = 0
     this.gameObject.draw()
+
   },
   initBuffers: function () {
     this.gameObject.initBuffers()

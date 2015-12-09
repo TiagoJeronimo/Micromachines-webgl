@@ -205,12 +205,13 @@ var road = null
         car.draw()
         butter1.draw()
         butter2.draw()
+        road.draw()
 
         cup.draw()
         for (var i = 0; i<broccoli.length; i++) {
             broccoli[i].draw()
         }
-        road.draw()
+
 
         //Light
         if(lighting) {
@@ -246,17 +247,19 @@ var road = null
         cup.create()
         cup.position = {x:-1.5, y:1.0, z:0.0}
 
+
         for(var i=0; i<4; i++) {
             broccoli[i] = new Broccoli()
             broccoli[i].create()
         }
-        broccoli[0].position = {x:1.5, y:0.5, z:1.5}
-        broccoli[1].position = {x:1.5, y:0.5, z:-1.5}
-        broccoli[2].position = {x:-1.5, y:0.5, z:-1.5}
-        broccoli[3].position = {x:-1.5, y:0.5, z:1.5}
+        broccoli[0].position = {x:1.5, y:1, z:1.5}
+        broccoli[1].position = {x:1.5, y:1, z:-1.5}
+        broccoli[2].position = {x:-1.5, y:1, z:-1.5}
+        broccoli[3].position = {x:-1.5, y:1, z:1.5}
 
         road = new Road ()
         road.create()
+
     }
 
     var lastTime = 0;
@@ -289,8 +292,8 @@ var road = null
 
         gl.clearColor(0.0, 0.0, 0.0, 1.0);
         gl.enable(gl.DEPTH_TEST);
-        //gl.blendFunc(gl.SRC_ALPHA, gl.ONE);
-        //gl.enable(gl.BLEND);
+        gl.enable(gl.BLEND)
+        gl.blendFunc(gl.SRC_ALPHA, gl.ONE_MINUS_SRC_ALPHA);
 
         document.onkeydown = handleKeyDown;
         document.onkeyup = handleKeyUp;
