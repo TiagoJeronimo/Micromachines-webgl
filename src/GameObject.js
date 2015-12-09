@@ -48,13 +48,13 @@ GameObject.prototype = {
     gl.bindTexture(gl.TEXTURE_2D, this.imageTexture)
     gl.uniform1i(shaderProgram.samplerUniform, 0)
 
-    gl.disable(gl.DEPTH_TEST)
+    //gl.disable(gl.DEPTH_TEST)
 
     gl.bindBuffer(gl.ELEMENT_ARRAY_BUFFER, this.vertexIndexBuffer)
     setMatrixUniforms()
     gl.drawElements(gl.TRIANGLES, this.vertexIndexBuffer.numItems, gl.UNSIGNED_SHORT, 0)
 
-    gl.enable(gl.DEPTH_TEST)
+    //gl.enable(gl.DEPTH_TEST)
   },
 
   handleLoadedTexture: function (texture) {

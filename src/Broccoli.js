@@ -11,7 +11,7 @@ Broccoli.prototype = {
     this.initBuffers()
   },
   draw: function () {
-    this.gameObject.positon = this.position
+    this.gameObject.position = this.position
     this.gameObject.draw()
   },
   initBuffers: function () {
