@@ -198,6 +198,10 @@ var lastTime = 0
 
     function update (dt) {
         car.update(dt)
+        if (checkCollisions(car, butter1) || checkCollisions(car, butter2)) {
+            car.acceleration = 0
+            car.speed = 0
+        }
     }
 
     function drawScene() {

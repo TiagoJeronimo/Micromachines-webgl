@@ -7,6 +7,7 @@ var Car = function () {
   this.stopping = false
   this.maxSpeed = 0.02
   this.turning = 0
+  this.checkBox = [0, 0, 0, 0]
 
   this.targetSpeed = 0
 }
@@ -30,8 +31,7 @@ Car.prototype = {
     else this.acceleration = 0
 
     this.speed += this.acceleration * dt
-    this.speed = Math.round(this.speed * 10000)/10000
-    console.log(this.speed)
+    this.speed = Math.round(this.speed * 10000) / 10000
 
     /*var stop = (oldSpeed / Math.abs(oldSpeed)) != (this.speed / Math.abs(this.speed))
 
@@ -61,10 +61,16 @@ Car.prototype = {
     }
     dx /= 15 * dir
     dz /= 15 * dir
+
+    var bb = 0.1 // bounding box half-width and half-height
+    this.checkBox[0] = this.gameObject.position.x + dx - bb
+    this.checkBox[1] = this.gameObject.position.x + dx + bb
+    this.checkBox[2] = this.gameObject.position.z + dz - bb
+    this.checkBox[3] = this.gameObject.position.z + dz + bb
   },
 
-  setPosition: function (x, z) {
-    this.gameObject.setPosition(x, 0.1, z)
+  setPosition: function (x, y, z) {
+    this.gameObject.setPosition(x, y, z)
   },
 
   forward: function() {

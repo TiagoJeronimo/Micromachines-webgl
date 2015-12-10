@@ -1,5 +1,6 @@
 var Butter = function () {
   this.gameObject = null
+  this.checkBox = [0, 0, 0, 0]
 }
 
 Butter.prototype = {
@@ -13,6 +14,12 @@ Butter.prototype = {
   },
 
   draw: function () {
+    var bb = 0.25
+    this.checkBox[0] = this.gameObject.position.x - bb + 0.2
+    this.checkBox[1] = this.gameObject.position.x + bb + 0.2
+    this.checkBox[2] = this.gameObject.position.z - bb + 0.45
+    this.checkBox[3] = this.gameObject.position.z + bb + 0.45
+
     this.gameObject.draw()
   },
 
