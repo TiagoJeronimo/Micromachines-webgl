@@ -7,7 +7,7 @@ var Table = function () {
 
 Table.prototype = {
   create: function () {
-    this.gameObject = new GameObject(CUBE_OBJ, "Assets/Textures/table.gif")
+    this.gameObject = new GameObject(CUBE_OBJ, 'Assets/Textures/table.png')
     this.initBuffers()
     this.scale = {x: 9.0, y: 0.0000001, z: 9.0}
   },
