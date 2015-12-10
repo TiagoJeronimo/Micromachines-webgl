@@ -286,10 +286,10 @@ var lastTime = 0
         road.create()
 
         //DONUTS
-        for(var i = 0; i < 12; i++) {
+        for(var i = 0; i < 7; i++) {
             donuts[i] = new Donut()
             donuts[i].create()
-            donuts[i].setPosition(-6 + i, 0.1, 6.5)
+            donuts[i].position = {x:-3 + i, y:0.1, z:-8.0}
         }
 
     }
