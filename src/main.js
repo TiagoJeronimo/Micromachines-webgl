@@ -198,6 +198,14 @@ var lastTime = 0
         if (checkCollisions(car, butter1) || checkCollisions(car, butter2)) {
             car.acceleration = 0
             car.speed = 0
+            car.targetSpeed = 0
+        }
+        for (var i = 0; i < donuts.length; i++) {
+            if (checkCollisions(car, donuts[i])) {
+                car.acceleration = 0
+                car.speed = 0
+                car.targetSpeed = 0
+            }
         }
     }
 
@@ -281,7 +289,7 @@ var lastTime = 0
         for(var i = 0; i < 12; i++) {
             donuts[i] = new Donut()
             donuts[i].create()
-            donuts[i].position = {x:-6 + i, y:0.1, z:6.5}
+            donuts[i].setPosition(-6 + i, 0.1, 6.5)
         }
 
     }
