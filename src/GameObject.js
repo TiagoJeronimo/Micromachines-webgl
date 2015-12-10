@@ -12,6 +12,14 @@ var GameObject = function (obj, textureName) {
 }
 
 GameObject.prototype = {
+  setPosition: function (x, y, z) {
+    this.position = {x: x, y: y, z: z}
+  },
+
+  setScale: function (x, y, z) {
+    this.scale = {x: x, y: y, z: z}
+  },
+
   initBuffers: function () {
     this.vertexPositionBuffer = this.positionBuffer()
     this.vertexNormalBuffer = this.normalBuffer()
@@ -22,11 +30,11 @@ GameObject.prototype = {
   draw: function () {
     mvPushMatrix()
 
+    mat4.translate(mvMatrix,mvMatrix, [this.position.x, this.position.y, this.position.z])
+    mat4.scale(mvMatrix,mvMatrix, [this.scale.x, this.scale.y, this.scale.z])
     mat4.rotateX(mvMatrix,mvMatrix, degToRad(this.rotation.x))
     mat4.rotateY(mvMatrix,mvMatrix, degToRad(this.rotation.y))
     mat4.rotateZ(mvMatrix,mvMatrix, degToRad(this.rotation.z))
-    mat4.translate(mvMatrix,mvMatrix, [this.position.x, this.position.y, this.position.z])
-    mat4.scale(mvMatrix,mvMatrix, [this.scale.x, this.scale.y, this.scale.z])
 
  		this.cubeBindBuffers()
 

@@ -212,8 +212,7 @@ var road = null
             broccoli[i].draw()
         }
 
-
-        Light
+        //Light
         if(lighting) {
             gl.uniform3f(shaderProgram.ambientColorUniform,0.9, 0.9, 0.9); //AMBIENT LIGHT RGB
 
