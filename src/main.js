@@ -317,3 +317,25 @@ var lastTime = 0
 
         tick();
     }
+
+
+    var lPos_uniformId = []
+    var local_uniformId = []
+    var enabled_uniformId = []
+    var spot_uniformId = []
+    var spotDir_uniformId = []
+    var spotCutOff_uniformId = []
+    var spotExp_uniformId = []
+
+    function drawLights () {
+        //eu a tentar meter as luzes
+        lPos_uniformId[0] = gl.getUniformLocation(shaderProgram, "Lights[0].l_pos")
+        local_uniformId[0] = gl.getUniformLocation(shaderProgram, "Lights[0].isLocal")
+        enabled_uniformId[0] = gl.getUniformLocation(shaderProgram, "Lights[0].isEnabled")
+        spot_uniformId[0] = gl.getUniformLocation(shaderProgram, "Lights[0].isSpot")
+
+        gl.uniform1i(local_uniformId[0], false)
+        gl.uniform1i(enabled_uniformId[0], true)
+        gl.uniform1i(spot_uniformId[0], false)
+        gl.uniform4f(lPos_uniformId[0], 1, 0, 5, 0)
+    }
