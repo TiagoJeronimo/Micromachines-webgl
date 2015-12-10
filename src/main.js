@@ -142,45 +142,45 @@ var road = null
     var yRot = 0;
     var ySpeed = -3;
 
-    var currentlyPressedKeys = {};
-
     function handleKeyDown(event) {
-        currentlyPressedKeys[event.keyCode] = true;
+        var key = String.fromCharCode(event.keyCode)
+        switch(key) {
+            case 'Q': //UP
+                car.forward()
+                break
+            case 'A': //DOWN
+                car.back()
+                break
+            case 'O': //LEFT
+                car.left()
+                break
+            case 'P': //RIGHT
+                car.right()
+                break
 
-        if (String.fromCharCode(event.keyCode) == "L") { // L - Lights off/on
-            lighting = !lighting;
-            gl.uniform1i(shaderProgram.useLightingUniform, lighting);
+            case 'L':
+                lighting = !lighting
+                gl.uniform1i(shaderProgram.useLightingUniform, lighting)
+                break
         }
+
     }
 
     function handleKeyUp(event) {
-        currentlyPressedKeys[event.keyCode] = false;
-    }
-
-    function handleKeys() {
-        if (currentlyPressedKeys[33]) {
-            // Page Up
-            z -= 0.05;
-        }
-        if (currentlyPressedKeys[34]) {
-            // Page Down
-            z += 0.05;
-        }
-        if (currentlyPressedKeys[37]) {
-            // Left cursor key
-            car.angle += 2;
-        }
-        if (currentlyPressedKeys[39]) {
-            // Right cursor key
-            car.angle -= 2;
-        }
-        if (currentlyPressedKeys[38]) {
-            // Up cursor key
-            car.acceleration = 0.001;
-        }
-        if (currentlyPressedKeys[40]) {
-            // Down cursor key
-            car.acceleration = -0.001;
+        var key = String.fromCharCode(event.keyCode)
+        switch(key) {
+            case 'Q': //UP
+                car.stopForward()
+                break
+            case 'A': //DOWN
+                car.stopBack()
+                break
+            case 'O': //LEFT
+                car.stopLeft()
+                break
+            case 'P': //RIGHT
+                car.stopRight()
+                break
         }
     }
 
@@ -278,7 +278,6 @@ var road = null
     function tick() {
         resize()
         requestAnimFrame(tick)
-        handleKeys()
         update()
         drawScene()
         animate()

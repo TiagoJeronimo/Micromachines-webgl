@@ -6,13 +6,16 @@ var Car = function () {
   this.gameObject = null
   this.stopping = false
   this.maxSpeed = 0.02
+  this.turning = 0
+
+  this.targetSpeed = 0
 }
 
 Car.prototype = {
   create: function () {
     this.gameObject = new GameObject(CAR_OBJ, "Assets/Textures/FREE-CAR-Texture.png")
     this.gameObject.initBuffers()
-    this.gameObject.setScale(0.5, 0.5, 0.5)
+    this.gameObject.setScale(-0.5, 0.5, -0.5)
   },
 
   draw: function () {
@@ -22,13 +25,18 @@ Car.prototype = {
   update: function (dt) {
     var oldSpeed = this.speed
 
-    this.speed -= this.acceleration
+    console.log(this.targetSpeed)
+    if (this.speed > this.targetSpeed) this.acceleration = -0.001
+    else if (this.speed < this.targetSpeed) this.acceleration = 0.001
+    else this.acceleration = 0
 
-    var stop = (oldSpeed / Math.abs(oldSpeed)) != (this.speed / Math.abs(this.speed))
+    this.speed += this.acceleration
+
+    /*var stop = (oldSpeed / Math.abs(oldSpeed)) != (this.speed / Math.abs(this.speed))
 
     if (this.stopping && stop) {
       this.acceleration = 0;
-    }
+    }*/
     
     if (this.speed > this.maxSpeed) this.speed = this.maxSpeed
     else if (this.speed < -this.maxSpeed) this.speed = -this.maxSpeed
@@ -38,6 +46,7 @@ Car.prototype = {
 
     //angle stuff
     this.gameObject.rotation.y = this.angle
+    this.angle += this.turning * 2
     if (this.angle > 360) this.angle = 0
     else if (this.angle < 0) this.angle = 360
     var da = this.angle * 3.14 / 180
@@ -55,5 +64,41 @@ Car.prototype = {
 
   setPosition: function (x, z) {
     this.gameObject.setPosition(x, 0.1, z)
-  }
+  },
+
+  forward: function() {
+    this.targetSpeed = this.maxSpeed
+    this.stoppiong = false
+  }, 
+
+  back: function() {
+    this.targetSpeed = -this.maxSpeed
+    this.stopping = false
+  }, 
+
+  stopForward: function() {
+    this.targetSpeed = 0
+    this.stopping = true
+  }, 
+
+  stopBack: function() {
+    this.targetSpeed = 0
+    this.stopping = true
+  }, 
+
+  left: function() {
+    this.turning = 1
+  }, 
+
+  right: function() {
+    this.turning = -1
+  }, 
+
+  stopLeft: function() {
+    if (this.turning === 1) this.turning = 0
+  }, 
+
+  stopRight: function() {
+    if (this.turning === -1) this.turning = 0
+  }, 
 }
