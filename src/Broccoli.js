@@ -7,7 +7,7 @@ var Broccoli = function () {
 
 Broccoli.prototype = {
   create: function () {
-    this.gameObject = new GameObject(CUBE_OBJ, "Assets/Textures/broccoli.png")
+    this.gameObject = new GameObject(QUAD_OBJ, "Assets/Textures/broccoli.png")
     this.initBuffers()
   },
   draw: function () {
