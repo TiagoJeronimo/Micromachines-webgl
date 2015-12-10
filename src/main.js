@@ -185,7 +185,7 @@ var road = null
     }
 
     function update () {
-         car.position = {x: ySpeed,y: 0,z: xSpeed}
+         car.setPosition(ySpeed, xSpeed)
     }
 
     function drawScene() {
@@ -233,7 +233,8 @@ var road = null
 
         car = new Car()
         car.create()
-        car.position = {x:0.0, y:0.45, z:2.8}
+        car.setPosition(0.0, 0.45, 5)
+        car.angle = 90
 
         butter1 = new Butter()
         butter1.create()

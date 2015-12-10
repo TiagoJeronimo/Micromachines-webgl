@@ -10,6 +10,7 @@ Car.prototype = {
   create: function () {
     this.gameObject = new GameObject(CAR_OBJ, "Assets/Textures/FREE-CAR-Texture.png")
     this.gameObject.initBuffers()
+    this.gameObject.setScale(0.5, 0.5, 0.5)
   },
 
   draw: function () {
@@ -17,6 +18,10 @@ Car.prototype = {
   },
 
   update: function (dt) {
+    this.gameObject.rotation.y = this.angle
+  },
 
+  setPosition: function (x, z) {
+    this.gameObject.setPosition(x, 0.1, z)
   }
 }
