@@ -9,6 +9,10 @@ var particles = null
 var cup = null
 var broccoli = []
 var donuts = []
+var waffles = []
+var burguer = null
+var iceCream = null
+var cake = null
 var road = null
 var orange = []
 var lastTime = 0
@@ -278,6 +282,14 @@ var lastKey = null
             broccoli[i].draw()
         }
 
+        burguer.draw()
+        iceCream.draw()
+        cake.draw()
+
+        for (var i = 0; i < waffles.length; i++) {
+            waffles[i].draw()
+        }
+
         for (var j = 0; j < donuts.length; j++) {
             donuts[j].draw()
         }
@@ -330,8 +342,41 @@ var lastKey = null
         broccoli[2].setPosition(-1.5, 1, -1.5)
         broccoli[3].setPosition(-1.5, 1, 1.5)
 
+        //Waffle
+        for (var i = 0; i < 6; i++) {
+            waffles[i] = new Waffle()
+            waffles[i].create()
+        }
+
+        //Bottom
+        waffles[0].setPosition(0, 1.0,  7.7)
+        waffles[0].gameObject.rotation = {x: 80, y:0, z:0}
+
+        waffles[1].setPosition(0, 1.0, 6.2)
+        waffles[1].gameObject.rotation = {x: -80, y:0, z:0}
+
+        waffles[2].setPosition(0, 2.0, 6.9)
+
+        //Top
+        waffles[3].setPosition(0, 1.0,  -7.5)
+        waffles[3].gameObject.rotation = {x: 80, y:0, z:0}
+
+        waffles[4].setPosition(0, 1.0, -5.8)
+        waffles[4].gameObject.rotation = {x: -80, y:0, z:0}
+
+        waffles[5].setPosition(0, 2.0, -6.3)
+
         road = new Road ()
         road.create()
+
+        burguer = new Burguer()
+        burguer.create()
+
+        iceCream = new IceCream()
+        iceCream.create()
+
+        cake = new Cake()
+        cake.create()
 
         //DONUTS
         for(var i = 0, e = 0; i < 28; e++, i += 4) {
