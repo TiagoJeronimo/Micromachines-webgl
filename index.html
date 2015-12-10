@@ -184,8 +184,21 @@
 <script type="text/javascript" src="src/Common.js"></script>
 
 <body onload="webGLStart();">
-    <canvas id="AVT-WebGL" style="border: none; width:100%; height:97%; margin:0px; padding:0px; overflow:hidden"  position="absolute"></canvas>
-
+<div class="container" style="position: relative;">
+  <canvas id="AVT-WebGL" style="border: none; width:100%; height:97%; margin:0px; padding:0px; overflow:hidden"  position="absolute"></canvas>
+  <div id="overlay" style="
+      position: absolute;
+      left: 10px;
+      top: 10px;
+      background-color: #FFFFFF;
+      color: #000000;
+      border: 4px solid #6D6D6D;
+      padding: 9px;
+      font-family: verdana;
+      font-size: 21px;">
+    <div>Score: <span id="score">0</span></div>
+  </div>
+</div>
 </body>
 
 </html>

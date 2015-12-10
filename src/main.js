@@ -143,6 +143,7 @@ var tableSize = 9
 
     function handleKeyDown(event) {
         var key = String.fromCharCode(event.keyCode)
+        console.log(key)
         switch(key) {
             case 'Q': //UP
                 car.forward()
