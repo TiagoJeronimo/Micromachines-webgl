@@ -232,7 +232,7 @@ var tableSize = 9
         //mat4.lookAt(pMatrix, 0,0,1, 0,0,-10, 0,1,0)
 
         //mat4.identity(mvMatrix)
-        mat4.translate(pMatrix, pMatrix, [0.0, 0.0, -15.0])
+        mat4.translate(pMatrix, pMatrix, [0.0, 0.0, -20.0])
         mat4.rotateX(pMatrix,pMatrix, degToRad(45))
 
         // Draw Objects
@@ -272,7 +272,7 @@ var tableSize = 9
 
         car = new Car()
         car.create()
-        car.setPosition(0, 0.45, 5)
+        car.setPosition(0, 0.45, 7)
         car.angle = 90
 
         butter1 = new Butter()
@@ -299,11 +299,43 @@ var tableSize = 9
         road = new Road ()
         road.create()
 
+ 
         //DONUTS
-        for(var i = 0; i < 7; i++) {
+        for(var i = 0, e = 0; i < 28; e++, i += 4) {
             donuts[i] = new Donut()
             donuts[i].create()
-            donuts[i].setPosition(-3 + i, 0.1, -8)
+            donuts[i].setPosition(-3 + e, 0.1, -8.5)
+
+            donuts[i+1] = new Donut()
+            donuts[i+1].create()
+            donuts[i+1].setPosition(-3 + e, 0.1, -5)
+
+            donuts[i+2] = new Donut()
+            donuts[i+2].create()
+            donuts[i+2].setPosition(-3 + e, 0.1, 8.5)
+
+            donuts[i+3] = new Donut()
+            donuts[i+3].create()
+            donuts[i+3].setPosition(-3 + e, 0.1, 5)
+        }
+        console.log('i: '+ i+' e: '+e)
+
+        for(var i = 28, e = 0; i < 56; e++, i += 4) {
+            donuts[i] = new Donut()
+            donuts[i].create()
+            donuts[i].setPosition(-8.5, 0.1, -3 + e)
+
+            donuts[i+1] = new Donut()
+            donuts[i+1].create()
+            donuts[i+1].setPosition(-5, 0.1, -3 + e)
+
+            donuts[i+2] = new Donut()
+            donuts[i+2].create()
+            donuts[i+2].setPosition(8.5, 0.1, -3 + e)
+
+            donuts[i+3] = new Donut()
+            donuts[i+3].create()
+            donuts[i+3].setPosition(5, 0.1, -3 + e)
         }
 
     }
