@@ -35,3 +35,18 @@ function checkCollisions (obj1, obj2) {
 	}
 	return collides
 }
+
+
+
+function multMatrixPoint(matrix, point, res) {
+	for (var i = 0; i < 4; ++i) {
+
+		res[i] = 0.0;
+	
+		for (var j = 0; j < 4; j++) {
+		
+			res[i] += point[j] * matrix[j*4 + i];
+		} 
+	}
+
+}

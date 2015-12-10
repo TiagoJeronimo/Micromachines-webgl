@@ -210,6 +210,8 @@ var lastTime = 0
     }
 
     function drawScene() {
+        drawLights()
+
         gl.viewport(0, 0, gl.viewportWidth, gl.viewportHeight)
         gl.clear(gl.COLOR_BUFFER_BIT | gl.DEPTH_BUFFER_BIT)
 
@@ -329,13 +331,23 @@ var lastTime = 0
 
     function drawLights () {
         //eu a tentar meter as luzes
+        gl.uniform4fv(gl.getUniformLocation(shaderProgram, "mat.ambient"),  [0.94, 0.94, 0.94, 1.00])
+        gl.uniform4fv(gl.getUniformLocation(shaderProgram, "mat.diffuse"),  [0.94, 0.94, 0.94, 1.00])
+        gl.uniform4fv(gl.getUniformLocation(shaderProgram, "mat.specular"), [0.94, 0.94, 0.94, 1.00])
+        gl.uniform4fv(gl.getUniformLocation(shaderProgram, "mat.emissive"), [0.00, 0.00, 0.00, 1.00])
+        gl.uniform1f(gl.getUniformLocation(shaderProgram, "mat.shininess"), 100.0)
+        gl.uniform1f(gl.getUniformLocation(shaderProgram, "mat.texCount"), 0)
+
         lPos_uniformId[0] = gl.getUniformLocation(shaderProgram, "Lights[0].l_pos")
         local_uniformId[0] = gl.getUniformLocation(shaderProgram, "Lights[0].isLocal")
         enabled_uniformId[0] = gl.getUniformLocation(shaderProgram, "Lights[0].isEnabled")
         spot_uniformId[0] = gl.getUniformLocation(shaderProgram, "Lights[0].isSpot")
 
+        aux = []
+        multMatrixPoint(mvMatrix, [0, 0, 3, 1], aux);
+
         gl.uniform1i(local_uniformId[0], false)
         gl.uniform1i(enabled_uniformId[0], true)
         gl.uniform1i(spot_uniformId[0], false)
-        gl.uniform4f(lPos_uniformId[0], 1, 0, 5, 0)
+        gl.uniform4fv(lPos_uniformId[0], aux)
     }
