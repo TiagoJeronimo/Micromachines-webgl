@@ -272,15 +272,15 @@ var tableSize = 9
 
         car = new Car()
         car.create()
-        car.setPosition(0.0, 0.45, 5)
+        car.setPosition(0, 0.45, 5)
         car.angle = 90
 
         butter1 = new Butter()
         butter1.create()
-        butter1.position = {x:7.0, y:0.5, z:7.0}
+        butter1.setPosition(7, 0.5, 7)
         butter2 = new Butter()
         butter2.create()
-        butter2.position = {x:-7.0, y:0.5, z:-7.0}
+        butter2.setPosition(-7, 0.5, -7)
 
         cup = new Cup()
         cup.create()
