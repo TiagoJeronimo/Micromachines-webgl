@@ -8,49 +8,185 @@
 <script type="text/javascript" src="js/webgl-utils.js"></script>
 
 <script id="shader-fs" type="x-shader/x-fragment">
-    precision mediump float;
+    precision highp float;
+    const int MaxLights = 9;
 
+    struct Materials {
+        vec4 diffuse;
+        vec4 ambient;
+        vec4 specular;
+        vec4 emissive;
+        float shininess;
+        int texCount;
+    };
+
+    struct LightProperties {
+        bool isEnabled;
+        bool isLocal;           //true for a pointlight or a spotlight
+        bool isSpot;
+        vec4 l_pos;
+        //spotlight attributes
+        vec3 coneDirection;
+        float spotCutOff;
+        float spotExponent;
+    };
+
+    uniform LightProperties Lights[MaxLights];
+    uniform bool darken; //if set to drue, darkens pixels a bit. used for reflections
+    uniform Materials mat;
+    uniform bool texMode;       //true se usar textura, false caso contrario, 
+    uniform sampler2D texmap1;
+    uniform sampler2D texmap2;
+    uniform bool lightsOff;
+    uniform int depthFog;
+
+    //esta info vem das normais interpoladas
+    varying vec3 normal;
+    varying vec3 eye;
+    varying vec4 pos;
     varying vec2 vTextureCoord;
-    varying vec3 vLightWeighting;
 
-    uniform sampler2D uSampler;
+    const vec3 fogColor = vec3(0.5, 0.5,0.5);
+    const float FogDensity = 0.025;
 
-    void main(void) {
-        vec4 textureColor = texture2D(uSampler, vec2(vTextureCoord.s, vTextureCoord.t));
-        gl_FragColor = vec4(textureColor.rgb * vLightWeighting, textureColor.a);
+    void main() {
+        int disabled = 0;
+        vec4 spec = vec4(0.0);
+        vec4 scatteredLight = vec4(0.0);
+        vec4 reflectedLight = vec4(0.0);
+        //estes vectores tem de ser normalizados pois foram interpolados
+        vec3 n = normalize(normal);
+        vec3 e = normalize(eye);
+
+        //distance
+        float dist = 0.0;
+        float fogFactor = 0.0;
+     
+        //compute distance used in fog equations
+        if(depthFog == 0)//select plane based vs range based
+        {
+          //plane based
+          dist = abs(pos.z);
+          //dist = (gl_FragCoord.z / gl_FragCoord.w);
+        }
+        else
+        {
+           //range based
+           dist = length(pos);
+        }
+     
+
+        //loop over all the lights
+        for (int light = 0; light < MaxLights; light++) {
+            if (!Lights[light].isEnabled) 
+            {   
+                disabled++;
+                continue;
+            }
+
+            float attenuation = 1.0;
+            vec3 h;
+            vec3 light_Dir = vec3(Lights[light].l_pos);
+
+            if (Lights[light].isLocal) {
+                light_Dir = light_Dir - vec3(pos);
+                float light_Distance = length(light_Dir);
+                light_Dir = light_Dir / light_Distance;
+            
+                attenuation = 1.0 / (light_Distance * light_Distance);
+                
+                if (Lights[light].isSpot) {
+                    float spotCos = dot(light_Dir, -Lights[light].coneDirection);
+                    if (spotCos < Lights[light].spotCutOff)
+                        attenuation = 0.0;
+                    else
+                        attenuation *= pow(spotCos, Lights[light].spotExponent);
+                }
+            }
+
+            else {
+                //Directional Light
+                light_Dir = vec3(Lights[light].l_pos);
+            }
+
+            h = normalize(light_Dir + e);
+            float intDiff = max(dot(n, light_Dir), 0.0);
+            float intSpec = max(dot(h,n), 0.0);
+
+            if (intDiff == 0.0) 
+                intSpec = 0.0;
+            else 
+                spec = mat.specular * pow(intSpec, mat.shininess);
+            
+            //Acumulate all the lights effect
+            scatteredLight += mat.diffuse * intDiff * attenuation;
+            reflectedLight += spec * attenuation;
+            
+        }
+        vec4 texel, texel1, texel2;
+        if (texMode) {
+                texel1 = texture2D(texmap1, vTextureCoord);  // texel from stone.tga
+                texel2 = texture2D(texmap2, vTextureCoord);  // texel from checker.tga
+                texel = texel1 * texel2;
+                if(texel.a == 0.0) discard;
+        }
+
+        if (texMode && !lightsOff)
+            gl_FragColor = max(mat.ambient*texel, scatteredLight*texel + reflectedLight);
+        else if (texMode && lightsOff)
+            gl_FragColor = texel;
+        else if (lightsOff)
+            gl_FragColor = mat.ambient;
+        else
+            gl_FragColor = max(mat.ambient, scatteredLight + reflectedLight);
+
+        if (!lightsOff) {
+            fogFactor = 1.0 /exp(dist * (dist/2.0) * FogDensity);
+            fogFactor = clamp( fogFactor, 0.0, 1.0 );
+     
+            gl_FragColor = vec4(mix(fogColor, vec3(gl_FragColor), fogFactor), gl_FragColor.w);
+        }
+
+        if (darken) gl_FragColor *= vec4(1.3, 1.25, 1.2, 1);
+
+        //temporario
+        texel1 = texture2D(texmap1, vTextureCoord);  // texel from stone.tga
+        texel2 = texture2D(texmap2, vTextureCoord);  // texel from checker.tga
+        texel = texel1 * texel2;
+        if(texel.a == 0.0) discard;
+        gl_FragColor = texel;
     }
 </script>
 
 <script id="shader-vs" type="x-shader/x-vertex">
+    uniform mat4 uPMatrix;        //clip coordinates
+    uniform mat4 uMVMatrix;  //view coordinates
+    uniform mat3 uNMatrix;     //transposta da inversa da matriz viewModel
+
+
+
+
     attribute vec3 aVertexPosition;
-    attribute vec3 aVertexNormal;
+    attribute vec3 aVertexNormal;    //por causa do gerador de geometria
     attribute vec2 aTextureCoord;
 
-    uniform mat4 uMVMatrix;
-    uniform mat4 uPMatrix;
-    uniform mat3 uNMatrix;
-
-    uniform vec3 uAmbientColor;
-
-    uniform vec3 uLightingDirection;
-    uniform vec3 uDirectionalColor;
-
-    uniform bool uUseLighting;
-
+    varying vec3 normal;
+    varying vec3 eye;
+    varying vec4 pos;
     varying vec2 vTextureCoord;
-    varying vec3 vLightWeighting;
 
-    void main(void) {
-        gl_Position = uPMatrix * uMVMatrix * vec4(aVertexPosition, 1.0);
-        vTextureCoord = aTextureCoord;
+    void main () {
 
-        if (!uUseLighting) {
-            vLightWeighting = vec3(1.0, 1.0, 1.0);
-        } else {
-            vec3 transformedNormal = uNMatrix * aVertexNormal;
-            float directionalLightWeighting = max(dot(transformedNormal, uLightingDirection), 0.0);
-            vLightWeighting = uAmbientColor + uDirectionalColor * directionalLightWeighting;
-        }
+        pos = uMVMatrix * vec4(aVertexPosition, 1.0);
+
+        //tem de ser normalizado para as normais interpoladas terem a direccao correcta
+        //mas as normais interpoladas podem nao ter tamanho 1
+        //por isso voltam a ser normalizadas no fragment shader
+        normal = normalize(uNMatrix * aVertexNormal); 
+        vTextureCoord = aTextureCoord.st;
+        
+        eye = vec3(-pos);
+        gl_Position = uPMatrix * uMVMatrix * vec4(aVertexPosition, 1.0); //posicao do vertice em clip coordinates
     }
 </script>
 
