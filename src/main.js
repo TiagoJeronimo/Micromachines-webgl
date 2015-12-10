@@ -5,6 +5,7 @@ var car = null
 var table = null
 var butter1 = null
 var butter2 = null
+var particles = null
 var cup = null
 var broccoli = []
 var donuts = []
@@ -217,6 +218,8 @@ var auxtimer = 0
             }
         }
         if (checkCollisions(car, butter1) || checkCollisions(car, butter2)) {
+            particles.setPosition(car.position.x, 1, car.position.z)
+            particles.create()
             car.acceleration = 0
             car.speed = 0
             car.targetSpeed = 0
@@ -238,6 +241,8 @@ var auxtimer = 0
                 pause()
             } */
         }
+
+        particles.update()
     }
 
     function drawScene() {
@@ -272,6 +277,8 @@ var auxtimer = 0
         for (var j = 0; j < donuts.length; j++) {
             donuts[j].draw()
         }
+
+        particles.draw()
 
         //Light
         if(lighting) {
@@ -308,14 +315,16 @@ var auxtimer = 0
         cup.create()
         cup.position = {x:-1.5, y:1.0, z:0.0}
 
+        particles = new Particles()
+
         for(var i=0; i<4; i++) {
             broccoli[i] = new Broccoli()
             broccoli[i].create()
         }
-        broccoli[0].position = {x:1.5, y:1, z:1.5}
-        broccoli[1].position = {x:1.5, y:1, z:-1.5}
-        broccoli[2].position = {x:-1.5, y:1, z:-1.5}
-        broccoli[3].position = {x:-1.5, y:1, z:1.5}
+        broccoli[0].setPosition(1.5, 1, 1.5)
+        broccoli[1].setPosition(1.5, 1, -1.5)
+        broccoli[2].setPosition(-1.5, 1, -1.5)
+        broccoli[3].setPosition(-1.5, 1, 1.5)
 
         road = new Road ()
         road.create()

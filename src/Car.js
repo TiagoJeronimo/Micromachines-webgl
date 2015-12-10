@@ -8,6 +8,7 @@ var Car = function () {
   this.maxSpeed = 0.02
   this.turning = 0
   this.checkBox = [0, 0, 0, 0]
+  this.position = {}
 
   this.targetSpeed = 0
 }
@@ -44,6 +45,7 @@ Car.prototype = {
 
     this.gameObject.position.x = this.gameObject.position.x + this.direction[0] * this.speed
     this.gameObject.position.z = this.gameObject.position.z + this.direction[2] * this.speed
+    this.position = this.gameObject.position
 
     //angle stuff
     this.gameObject.rotation.y = this.angle
