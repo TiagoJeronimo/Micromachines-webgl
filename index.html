@@ -37,7 +37,7 @@
     uniform bool texMode;       //true se usar textura, false caso contrario, 
     uniform sampler2D texmap1;
     uniform sampler2D texmap2;
-    uniform bool lightsOff;
+    uniform bool uUseLighting;
     uniform int depthFog;
 
     //esta info vem das normais interpoladas
@@ -62,18 +62,8 @@
         float dist = 0.0;
         float fogFactor = 0.0;
      
-        //compute distance used in fog equations
-        if(depthFog == 0)//select plane based vs range based
-        {
-          //plane based
-          dist = abs(pos.z);
-          //dist = (gl_FragCoord.z / gl_FragCoord.w);
-        }
-        else
-        {
-           //range based
-           dist = length(pos);
-        }
+        //dist = abs(pos.z); //plane based
+        dist = length(pos); //range based
      
 
         //loop over all the lights
@@ -124,23 +114,17 @@
             
         }
         vec4 texel, texel1, texel2;
-        if (texMode) {
-                texel1 = texture2D(texmap1, vTextureCoord);  // texel from stone.tga
-                texel2 = texture2D(texmap2, vTextureCoord);  // texel from checker.tga
-                texel = texel1 * texel2;
-                if(texel.a == 0.0) discard;
-        }
 
-        if (texMode && !lightsOff)
-            gl_FragColor = max(mat.ambient*texel, scatteredLight*texel + reflectedLight);
-        else if (texMode && lightsOff)
+        texel = texture2D(texmap1, vTextureCoord);
+        if(texel.a == 0.0) discard;
+
+        if (uUseLighting)
+            //gl_FragColor = max(mat.ambient*texel, scatteredLight*texel + reflectedLight);
             gl_FragColor = texel;
-        else if (lightsOff)
-            gl_FragColor = mat.ambient;
-        else
-            gl_FragColor = max(mat.ambient, scatteredLight + reflectedLight);
+        else if (!uUseLighting)
+            gl_FragColor = texel;
 
-        if (!lightsOff) {
+        if (uUseLighting) {
             fogFactor = 1.0 /exp(dist * (dist/2.0) * FogDensity);
             fogFactor = clamp( fogFactor, 0.0, 1.0 );
      
@@ -148,13 +132,6 @@
         }
 
         if (darken) gl_FragColor *= vec4(1.3, 1.25, 1.2, 1);
-
-        //temporario
-        texel1 = texture2D(texmap1, vTextureCoord);  // texel from stone.tga
-        texel2 = texture2D(texmap2, vTextureCoord);  // texel from checker.tga
-        texel = texel1 * texel2;
-        if(texel.a == 0.0) discard;
-        gl_FragColor = texel;
     }
 </script>
 
