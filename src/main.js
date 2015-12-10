@@ -9,6 +9,7 @@ var cup = null
 var broccoli = []
 var donuts = []
 var road = null
+var orange = null
 var lastTime = 0
 var tableSize = 9
 
@@ -241,8 +242,9 @@ var tableSize = 9
         butter1.draw()
         butter2.draw()
         road.draw()
-
         cup.draw()
+        orange.draw()
+
         for (var i = 0; i<broccoli.length; i++) {
             broccoli[i].draw()
         }
@@ -338,6 +340,9 @@ var tableSize = 9
             donuts[i+3].setPosition(5, 0.1, -3 + e)
         }
 
+        orange = new Orange()
+        orange.create()
+        orange.setPosition(0,0.5,3)
     }
 
     function tick() {
