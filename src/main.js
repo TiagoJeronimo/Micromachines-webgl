@@ -14,6 +14,7 @@ var orange = []
 var lastTime = 0
 var tableSize = 9
 var auxtimer = 0
+var lastKey = null
 
     function initGL(canvas) {
         try {
@@ -146,6 +147,7 @@ var auxtimer = 0
 
     function handleKeyDown(event) {
         var key = String.fromCharCode(event.keyCode)
+        if (key === lastKey) return
         switch(key) {
             case 'Q': //UP
                 car.forward()
@@ -166,6 +168,7 @@ var auxtimer = 0
                 gl.uniform1i(shaderProgram.useLightingUniform, lighting)
                 break
         }
+        lastKey = key
 
     }
 
@@ -185,6 +188,7 @@ var auxtimer = 0
                 car.stopRight()
                 break
         }
+        lastKey = null
     }
 
     function setTimes () {
