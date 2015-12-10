@@ -10,6 +10,7 @@ var broccoli = []
 var donuts = []
 var road = null
 var lastTime = 0
+var tableSize = 9
 
     function initGL(canvas) {
         try {
@@ -206,6 +207,16 @@ var lastTime = 0
                 car.speed = 0
                 car.targetSpeed = 0
             }
+        }
+
+        //Car fall from table
+        if (car.gameObject.position.x >= tableSize || car.gameObject.position.x <= -tableSize || 
+        car.gameObject.position.z >= tableSize || car.gameObject.position.z <= -tableSize) {
+            car.kill()
+            /* remainingLives--
+            if (remainingLives <= 0) {
+                pause()
+            } */
         }
     }
 

@@ -73,39 +73,46 @@ Car.prototype = {
     this.gameObject.setPosition(x, y, z)
   },
 
-  forward: function() {
+  forward: function () {
     this.targetSpeed = this.maxSpeed
     this.stoppiong = false
-  }, 
+  },
 
-  back: function() {
+  back: function () {
     this.targetSpeed = -this.maxSpeed
     this.stopping = false
-  }, 
+  },
 
-  stopForward: function() {
+  stopForward: function () {
     this.targetSpeed = 0
     this.stopping = true
-  }, 
+  },
 
-  stopBack: function() {
+  stopBack: function () {
     this.targetSpeed = 0
     this.stopping = true
-  }, 
+  },
 
-  left: function() {
+  left: function () {
     this.turning = 1
-  }, 
+  },
 
-  right: function() {
+  right: function () {
     this.turning = -1
-  }, 
+  },
 
-  stopLeft: function() {
+  stopLeft: function () {
     if (this.turning === 1) this.turning = 0
-  }, 
+  },
 
-  stopRight: function() {
+  stopRight: function () {
     if (this.turning === -1) this.turning = 0
-  }, 
+  },
+
+  kill: function () {
+    this.gameObject.setPosition(0.0, 0.45, 5)
+    this.acceleration = 0
+    this.speed = 0
+    this.targetSpeed = 0
+  }
 }
