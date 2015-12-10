@@ -9,7 +9,7 @@ var cup = null
 var broccoli = []
 var donuts = []
 var road = null
-var orange = null
+var orange = []
 var lastTime = 0
 var tableSize = 9
 
@@ -198,6 +198,27 @@ var tableSize = 9
 
     function update (dt) {
         car.update(dt)
+        for(var i = 0; i < 3; i++) {
+            orange[i].update(dt)
+
+            if (orange[i].gameObject.position.x >= tableSize || orange[i].gameObject.position.x <= -tableSize) {
+                // orange[i].setDelayDraw(true);
+                // if (glutGet(GLUT_ELAPSED_TIME) > auxtimer + 10000) {
+                    //auxtimer = glutGet(GLUT_ELAPSED_TIME);
+                    orange[i].init();
+
+                //}
+
+            }
+            /*orangeArray[i].update(delta_t);
+            if (orangeArray[i].checkCollisions(&car)) {
+                car.kill();
+                remainingLives--;
+                if (remainingLives <= 0) {
+                    pause();
+                }
+            }*/
+        }
         if (checkCollisions(car, butter1) || checkCollisions(car, butter2)) {
             car.acceleration = 0
             car.speed = 0
@@ -243,7 +264,9 @@ var tableSize = 9
         butter2.draw()
         road.draw()
         cup.draw()
-        orange.draw()
+        for(var i = 0; i < 3; i++) {
+            orange[i].draw()
+        }
 
         for (var i = 0; i<broccoli.length; i++) {
             broccoli[i].draw()
@@ -340,9 +363,11 @@ var tableSize = 9
             donuts[i+3].setPosition(5, 0.1, -3 + e)
         }
 
-        orange = new Orange()
-        orange.create()
-        orange.setPosition(0,0.5,3)
+        for(var i = 0; i < 3; i++) {
+            orange[i] = new Orange()
+            orange[i].create()
+            orange[i].init()
+        }
     }
 
     function tick() {
