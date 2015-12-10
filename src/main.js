@@ -168,24 +168,24 @@ var road = null
         }
         if (currentlyPressedKeys[37]) {
             // Left cursor key
-            ySpeed -= 0.1;
+            car.angle += 2;
         }
         if (currentlyPressedKeys[39]) {
             // Right cursor key
-            ySpeed += 0.1;
+            car.angle -= 2;
         }
         if (currentlyPressedKeys[38]) {
             // Up cursor key
-            xSpeed -= 0.1;
+            car.acceleration = 0.001;
         }
         if (currentlyPressedKeys[40]) {
             // Down cursor key
-            xSpeed += 0.1;
+            car.acceleration = -0.001;
         }
     }
 
     function update () {
-         car.setPosition(ySpeed, xSpeed)
+         car.update()
     }
 
     function drawScene() {

@@ -1,9 +1,11 @@
 var Car = function () {
-  this.acceleration = {x: 0, y: 0, z: 0}
-  this.speed = {x: 0, y: 0, z: 0}
-  this.position = {x: 0, y: 0, z: 0}
-  this.angle = 0
+  this.acceleration = 0
+  this.speed = 0
+  this.angle = 90
+  this.direction = [-1, 0, 0]
   this.gameObject = null
+  this.stopping = false
+  this.maxSpeed = 0.02
 }
 
 Car.prototype = {
@@ -18,7 +20,37 @@ Car.prototype = {
   },
 
   update: function (dt) {
+    var oldSpeed = this.speed
+
+    this.speed -= this.acceleration
+
+    var stop = (oldSpeed / Math.abs(oldSpeed)) != (this.speed / Math.abs(this.speed))
+
+    if (this.stopping && stop) {
+      this.acceleration = 0;
+    }
+    
+    if (this.speed > this.maxSpeed) this.speed = this.maxSpeed
+    else if (this.speed < -this.maxSpeed) this.speed = -this.maxSpeed
+
+    this.gameObject.position.x = this.gameObject.position.x + this.direction[0] * this.speed
+    this.gameObject.position.z = this.gameObject.position.z + this.direction[2] * this.speed
+
+    //angle stuff
     this.gameObject.rotation.y = this.angle
+    if (this.angle > 360) this.angle = 0
+    else if (this.angle < 0) this.angle = 360
+    var da = this.angle * 3.14 / 180
+    var dx = 3 * Math.sin(da)
+    var dz = 3 * Math.cos(da)
+    vec3.set(this.direction, dx, 0, dz)
+
+    var dir = 1
+    if (this.speed < 0) {
+      dir = -1
+    }
+    dx /= 15 * dir
+    dz /= 15 * dir
   },
 
   setPosition: function (x, z) {
