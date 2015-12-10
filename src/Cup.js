@@ -7,7 +7,7 @@ var Cup = function () {
 
 Cup.prototype = {
   create: function () {
-    this.gameObject = new GameObject(CUBE_OBJ, "glass.png")
+    this.gameObject = new GameObject(CUBE_OBJ, "Assets/Textures/glass.png")
     this.initBuffers()
   },
   draw: function () {

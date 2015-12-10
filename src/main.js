@@ -185,7 +185,7 @@ var road = null
     }
 
     function update () {
-        car.position = {x: ySpeed,y: 0,z: xSpeed}
+         car.position = {x: ySpeed,y: 0,z: xSpeed}
     }
 
     function drawScene() {
@@ -213,7 +213,7 @@ var road = null
         }
 
 
-        //Light
+        Light
         if(lighting) {
             gl.uniform3f(shaderProgram.ambientColorUniform,0.9, 0.9, 0.9); //AMBIENT LIGHT RGB
 

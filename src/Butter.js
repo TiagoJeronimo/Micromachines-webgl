@@ -7,7 +7,7 @@ var Butter = function () {
 
 Butter.prototype = {
   create: function () {
-    this.gameObject = new GameObject(CUBE_OBJ, "glass.gif")
+    this.gameObject = new GameObject(CUBE_OBJ, "Assets/Textures/glass.gif")
     this.initBuffers()
   },
   draw: function () {

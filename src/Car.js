@@ -7,7 +7,7 @@ var Car = function () {
 
 Car.prototype = {
   create: function () {
-    this.gameObject = new GameObject(CUBE_OBJ, "glass.gif")
+    this.gameObject = new GameObject(CAR_OBJ, "Assets/Textures/FREE-CAR-Texture.png")
     this.initBuffers()
   },
   draw: function () {

@@ -10,10 +10,10 @@ var Road = function () {
 
 Road.prototype = {
   create: function () {
-    this.goUp = new GameObject(CUBE_OBJ, "road.png")
-    this.goBottom = new GameObject(CUBE_OBJ, "road.png")
-    this.goLeft = new GameObject(CUBE_OBJ, "road.png")
-    this.goRight = new GameObject(CUBE_OBJ, "road.png")
+    this.goUp = new GameObject(CUBE_OBJ, "Assets/Textures/road.png")
+    this.goBottom = new GameObject(CUBE_OBJ, "Assets/Textures/road.png")
+    this.goLeft = new GameObject(CUBE_OBJ, "Assets/Textures/road.png")
+    this.goRight = new GameObject(CUBE_OBJ, "Assets/Textures/road.png")
     this.initBuffers()
   },
   draw: function () {
