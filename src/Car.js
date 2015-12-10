@@ -25,12 +25,13 @@ Car.prototype = {
   update: function (dt) {
     var oldSpeed = this.speed
 
-    console.log(this.targetSpeed)
-    if (this.speed > this.targetSpeed) this.acceleration = -0.001
-    else if (this.speed < this.targetSpeed) this.acceleration = 0.001
+    if (this.speed > this.targetSpeed) this.acceleration = -0.0001
+    else if (this.speed < this.targetSpeed) this.acceleration = 0.0001
     else this.acceleration = 0
 
-    this.speed += this.acceleration
+    this.speed += this.acceleration * dt
+    this.speed = Math.round(this.speed * 10000)/10000
+    console.log(this.speed)
 
     /*var stop = (oldSpeed / Math.abs(oldSpeed)) != (this.speed / Math.abs(this.speed))
 
@@ -46,7 +47,7 @@ Car.prototype = {
 
     //angle stuff
     this.gameObject.rotation.y = this.angle
-    this.angle += this.turning * 2
+    this.angle += this.turning * 0.2 * dt
     if (this.angle > 360) this.angle = 0
     else if (this.angle < 0) this.angle = 360
     var da = this.angle * 3.14 / 180

@@ -8,6 +8,7 @@ var butter2 = null
 var cup = null
 var broccoli = []
 var road = null
+var lastTime = 0
 
     function initGL(canvas) {
         try {
@@ -184,8 +185,18 @@ var road = null
         }
     }
 
-    function update () {
-         car.update()
+    function setTimes () {
+        var currentTime = Date.now();
+        if (lastTime != 0) {
+        var dt = currentTime - lastTime;
+            update(dt)
+        }
+
+        lastTime = currentTime;
+    }
+
+    function update (dt) {
+        car.update(dt)
     }
 
     function drawScene() {
@@ -262,25 +273,11 @@ var road = null
 
     }
 
-    var lastTime = 0;
-
-    function animate() {
-        var timeNow = new Date().getTime();
-        if (lastTime != 0) {
-            var elapsed = timeNow - lastTime;
-
-            xRot += (xSpeed * elapsed) / 1000.0;
-            yRot += (ySpeed * elapsed) / 1000.0;
-        }
-        lastTime = timeNow;
-    }
-
     function tick() {
         resize()
         requestAnimFrame(tick)
-        update()
+        setTimes()
         drawScene()
-        animate()
     }
 
     function webGLStart() {
