@@ -289,7 +289,7 @@ var lastTime = 0
         for(var i = 0; i < 7; i++) {
             donuts[i] = new Donut()
             donuts[i].create()
-            donuts[i].position = {x:-3 + i, y:0.1, z:-8.0}
+            donuts[i].setPosition(-3 + i, 0.1, -8)
         }
 
     }
