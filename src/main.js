@@ -12,6 +12,7 @@ var road = null
 var orange = []
 var lastTime = 0
 var tableSize = 9
+var auxtimer = 0
 
     function initGL(canvas) {
         try {
@@ -144,7 +145,6 @@ var tableSize = 9
 
     function handleKeyDown(event) {
         var key = String.fromCharCode(event.keyCode)
-        console.log(key)
         switch(key) {
             case 'Q': //UP
                 car.forward()
@@ -187,9 +187,9 @@ var tableSize = 9
     }
 
     function setTimes () {
-        var currentTime = Date.now();
+        var currentTime = Date.now()
         if (lastTime != 0) {
-        var dt = currentTime - lastTime;
+        var dt = currentTime - lastTime
             update(dt)
         }
 
@@ -202,22 +202,19 @@ var tableSize = 9
             orange[i].update(dt)
 
             if (orange[i].gameObject.position.x >= tableSize || orange[i].gameObject.position.x <= -tableSize) {
-                // orange[i].setDelayDraw(true);
-                // if (glutGet(GLUT_ELAPSED_TIME) > auxtimer + 10000) {
-                    //auxtimer = glutGet(GLUT_ELAPSED_TIME);
-                    orange[i].init();
-
-                //}
-
-            }
-            /*orangeArray[i].update(delta_t);
-            if (orangeArray[i].checkCollisions(&car)) {
-                car.kill();
-                remainingLives--;
-                if (remainingLives <= 0) {
-                    pause();
+                orange[i].delay = true
+                if (Date.now() > auxtimer + 5000) {
+                    auxtimer = Date.now()
+                    orange[i].init()
                 }
-            }*/
+            }
+            if (checkCollisions(car, orange[i])) {
+                car.kill()
+                /* remainingLives--;
+                if (remainingLives <= 0) {
+                    pause()
+                } */
+            }
         }
         if (checkCollisions(car, butter1) || checkCollisions(car, butter2)) {
             car.acceleration = 0
@@ -311,7 +308,6 @@ var tableSize = 9
         cup.create()
         cup.position = {x:-1.5, y:1.0, z:0.0}
 
-
         for(var i=0; i<4; i++) {
             broccoli[i] = new Broccoli()
             broccoli[i].create()
@@ -324,7 +320,6 @@ var tableSize = 9
         road = new Road ()
         road.create()
 
- 
         //DONUTS
         for(var i = 0, e = 0; i < 28; e++, i += 4) {
             donuts[i] = new Donut()
@@ -343,7 +338,6 @@ var tableSize = 9
             donuts[i+3].create()
             donuts[i+3].setPosition(-3 + e, 0.1, 5)
         }
-        console.log('i: '+ i+' e: '+e)
 
         for(var i = 28, e = 0; i < 56; e++, i += 4) {
             donuts[i] = new Donut()

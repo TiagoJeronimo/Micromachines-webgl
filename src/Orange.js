@@ -4,6 +4,9 @@ var Orange = function () {
   this.positionX = 0
   this.velocity = 0
   this.rotationZ = 0
+  this.delay = false
+  this.speedTimer = 0
+  this.speedInc = 0
 }
 
 Orange.prototype = {
@@ -13,7 +16,7 @@ Orange.prototype = {
     var plusOrMinus = Math.random() < 0.5 ? -1 : 1
     this.gameObject.setPosition(this.positionX, 1.0, positionZ * plusOrMinus)
     this.velocity = this.randomVelocity()
-    // setDelayDraw(false);
+    this.delay = false
   },
 
   create: function () {
@@ -24,18 +27,24 @@ Orange.prototype = {
   },
 
   draw: function () {
-    this.gameObject.draw()
+    if (!this.delay) this.gameObject.draw()
   },
 
   update: function (dt) {
+    // aumentar a velocidade depois de um certo tempo
+    if (Date.now() > this.speedTimer + 20000) {
+      this.speedTimer = Date.now()
+      this.speedInc += 0.5
+    }
+
     var bb = 0.5
     this.checkBox[0] = this.gameObject.position.x - bb
     this.checkBox[1] = this.gameObject.position.x + bb
     this.checkBox[2] = this.gameObject.position.z - bb
     this.checkBox[3] = this.gameObject.position.z + bb
 
-    this.positionX = this.positionX + this.velocity * dt
-    this.rotationZ = this.rotationZ + (this.velocity * 100) * dt // *100 to rotate slower
+    this.positionX = this.positionX + this.velocity * dt * this.speedInc
+    this.rotationZ = this.rotationZ + (this.velocity * 100) * dt * this.speedInc// *100 to rotate slower
     this.gameObject.position.x = this.positionX
     this.gameObject.rotation.z = -this.rotationZ
   },
