@@ -7,6 +7,7 @@ var butter1 = null
 var butter2 = null
 var cup = null
 var broccoli = []
+var donuts = []
 var road = null
 var lastTime = 0
 
@@ -223,6 +224,10 @@ var lastTime = 0
             broccoli[i].draw()
         }
 
+        for (var j = 0; j < donuts.length; j++) {
+            donuts[j].draw()
+        }
+
         //Light
         if(lighting) {
             gl.uniform3f(shaderProgram.ambientColorUniform,0.9, 0.9, 0.9); //AMBIENT LIGHT RGB
@@ -270,6 +275,13 @@ var lastTime = 0
 
         road = new Road ()
         road.create()
+
+        //DONUTS
+        for(var i = 0; i < 12; i++) {
+            donuts[i] = new Donut()
+            donuts[i].create()
+            donuts[i].position = {x:-6 + i, y:0.1, z:6.5}
+        }
 
     }
 
