@@ -21,7 +21,7 @@ Orange.prototype = {
 
   create: function () {
     this.gameObject = new GameObject(ORANGE_OBJ, 'Assets/Textures/orange.png')
-    this.gameObject.scale = {x: 0.7, y: 0.7, z: 0.7}
+    this.gameObject.scale = {x: 1.2, y: 1.2, z: 1.2}
     this.gameObject.position.y = 1
     this.gameObject.initBuffers()
   },
