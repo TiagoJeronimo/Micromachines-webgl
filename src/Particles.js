@@ -1,5 +1,5 @@
 var Particles = function () {
-  this.maxN = 100
+  this.maxN = 10
   this.particula = []
   this.position = {x: 0, y: 0, z: 0}
 }

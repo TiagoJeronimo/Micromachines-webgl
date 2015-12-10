@@ -9,20 +9,10 @@ Table.prototype = {
   create: function () {
     this.gameObject = new GameObject(CUBE_OBJ, 'Assets/Textures/table.png')
     this.initBuffers()
-    this.scale = {x: 9.0, y: 0.0000001, z: 9.0}
   },
   draw: function () {
-    mvPushMatrix()
-
-    mat4.rotateX(mvMatrix,mvMatrix, degToRad(this.rotation.x))
-    mat4.rotateY(mvMatrix,mvMatrix, degToRad(this.rotation.y))
-    mat4.rotateZ(mvMatrix,mvMatrix, degToRad(this.rotation.z))
-    mat4.translate(mvMatrix,mvMatrix, [this.position.x, this.position.y, this.position.z])
-    mat4.scale(mvMatrix,mvMatrix, [this.scale.x, this.scale.y, this.scale.z])
-
- 		this.gameObject.cubeBindBuffers()
-
-    mvPopMatrix()
+    this.gameObject.scale = {x: 9.0, y: 0.0000001, z: 9.0}
+    this.gameObject.draw()
   },
   initBuffers: function () {
     this.gameObject.initBuffers()
