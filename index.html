@@ -135,12 +135,11 @@
 </script>
 
 <script id="shader-vs" type="x-shader/x-vertex">
-    uniform mat4 uPMatrix;        //clip coordinates
-    uniform mat4 uMVMatrix;  //view coordinates
+
+    uniform mat4 modelMatrix;
+    uniform mat4 viewMatrix;
+    uniform mat4 projectionMatrix;
     uniform mat3 uNMatrix;     //transposta da inversa da matriz viewModel
-
-
-
 
     attribute vec3 aVertexPosition;
     attribute vec3 aVertexNormal;    //por causa do gerador de geometria
@@ -153,7 +152,7 @@
 
     void main () {
 
-        pos = uMVMatrix * vec4(aVertexPosition, 1.0);
+        pos = viewMatrix * modelMatrix * vec4(aVertexPosition, 1.0);
 
         //tem de ser normalizado para as normais interpoladas terem a direccao correcta
         //mas as normais interpoladas podem nao ter tamanho 1
@@ -162,7 +161,7 @@
         vTextureCoord = aTextureCoord.st;
         
         eye = vec3(-pos);
-        gl_Position = uPMatrix * uMVMatrix * vec4(aVertexPosition, 1.0); //posicao do vertice em clip coordinates
+        gl_Position = projectionMatrix * viewMatrix * modelMatrix * vec4(aVertexPosition, 1.0); //posicao do vertice em clip coordinates
     }
 </script>
 

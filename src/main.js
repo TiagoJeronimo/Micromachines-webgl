@@ -19,6 +19,7 @@ var lastTime = 0
 var tableSize = 9
 var auxtimer = 0
 var lastKey = null
+var activeCamera = 0
 
     function initGL(canvas) {
         try {
@@ -106,19 +107,23 @@ var lastKey = null
         shaderProgram.textureCoordAttribute = gl.getAttribLocation(shaderProgram, "aTextureCoord");
         gl.enableVertexAttribArray(shaderProgram.textureCoordAttribute);
 
-        shaderProgram.pMatrixUniform = gl.getUniformLocation(shaderProgram, "uPMatrix");
-        shaderProgram.mvMatrixUniform = gl.getUniformLocation(shaderProgram, "uMVMatrix");
+        shaderProgram.modelMatrixUniform = gl.getUniformLocation(shaderProgram, "modelMatrix");
+        shaderProgram.viewMatrixUniform = gl.getUniformLocation(shaderProgram, "viewMatrix");
+        shaderProgram.projectionMatrixUniform = gl.getUniformLocation(shaderProgram, "projectionMatrix");
         shaderProgram.nMatrixUniform = gl.getUniformLocation(shaderProgram, "uNMatrix");
         shaderProgram.useLightingUniform = gl.getUniformLocation(shaderProgram, "uUseLighting");
     }
 
-    var mvMatrix = mat4.create();
+    var model = mat4.create();
+    var view = mat4.create();
+    var projection = mat4.create();
+    var viewModelMatrix = mat4.create();
+
     var mvMatrixStack = [];
-    var pMatrix = mat4.create();
 
     function mvPushMatrix() {
         var copy = mat4.create();
-        mat4.adjoint(mvMatrix, copy);
+        mat4.adjoint(model, copy);
         mvMatrixStack.push(copy);
     }
 
@@ -126,15 +131,17 @@ var lastKey = null
         if (mvMatrixStack.length == 0) {
             throw "Invalid popMatrix!";
         }
-        mvMatrix = mvMatrixStack.pop();
+        model = mvMatrixStack.pop();
     }
 
     function setMatrixUniforms() {
-        gl.uniformMatrix4fv(shaderProgram.pMatrixUniform, false, pMatrix);
-        gl.uniformMatrix4fv(shaderProgram.mvMatrixUniform, false, mvMatrix);
+        gl.uniformMatrix4fv(shaderProgram.modelMatrixUniform, false, model);
+        gl.uniformMatrix4fv(shaderProgram.viewMatrixUniform, false, view);
+        gl.uniformMatrix4fv(shaderProgram.projectionMatrixUniform, false, projection);
 
+        mat4.multiply(viewModelMatrix, view, model)
         var normalMatrix = mat3.create();
-        mat4.invert(mvMatrix, normalMatrix);
+        mat4.invert(normalMatrix, viewModelMatrix);
         mat3.transpose(normalMatrix,normalMatrix);
         gl.uniformMatrix3fv(shaderProgram.nMatrixUniform, false, normalMatrix);
     }
@@ -153,6 +160,17 @@ var lastKey = null
         var key = String.fromCharCode(event.keyCode)
         if (key === lastKey) return
         switch(key) {
+            case '1':
+                activeCamera = 0;
+                break;
+            case '2':
+                activeCamera = 1;
+                break;
+
+            case '3': 
+                activeCamera = 2;
+                break;
+
             case 'Q': //UP
                 car.forward()
                 break
@@ -266,19 +284,52 @@ var lastKey = null
         particles.update()
     }
 
+    function updateCamera() {
+        if (activeCamera == 0) {
+            //Orthogonal Projection
+
+            // Eye(0,10,0) Center(0,0,0) Up(1,0,0)
+            mat4.lookAt(view, [0, 10, 0], [0, 0, 0], [1, 0, 0])
+            mat4.ortho(projection, -10, 10, -10, 10, -20, 20) 
+        }
+        else if (activeCamera == 1) {
+            //Fixed Perspective
+
+            // Eye(0,10,14) Center(0,0,0) Up(0,1,0)
+            mat4.lookAt(view, [0, 10, 14], [0, 0, 0], [0, 1, 0])
+            mat4.perspective(projection, 45, gl.viewportWidth / gl.viewportHeight, 1, 100.0)
+        }
+        else if (activeCamera == 2) {
+            //Dynamic Perspective
+
+            //Find camera lookAt based on Car's properties
+            // var cam = vec3.create()
+            // var dir = vec3.create()
+
+            // var carPos = vec3.create()
+            // vec3.set(carPos, car.position.x, car.position.y, car.position.z)
+
+            // var carDir = vec3.create()
+            // vec3.set(carDir, car.direction[0], car.direction[1], car.direction[2])
+
+
+
+            // vec3.add(dir, carDir, carPos)
+            // vec3.subtract(cam, carPos, carDir)
+
+
+            mat4.lookAt(view, [car.position.x + 5, 2, car.position.z], [0, 0, 0], [0, 1, 0])
+            mat4.perspective(projection, 45, gl.viewportWidth / gl.viewportHeight, 1, 100.0)
+        }
+    }
+
     function drawScene() {
         drawLights()
 
         gl.viewport(0, 0, gl.viewportWidth, gl.viewportHeight)
         gl.clear(gl.COLOR_BUFFER_BIT | gl.DEPTH_BUFFER_BIT)
 
-        mat4.perspective(pMatrix, 45, gl.viewportWidth / gl.viewportHeight, 0.1, 100.0)
-        //mat4.frustum(pMatrix, 10, 10, 10, 10, 1, 100)
-        //mat4.lookAt(pMatrix, 0,0,1, 0,0,-10, 0,1,0)
-
-        //mat4.identity(mvMatrix)
-        mat4.translate(pMatrix, pMatrix, [0.0, 0.0, -20.0])
-        mat4.rotateX(pMatrix,pMatrix, degToRad(45))
+        updateCamera()
 
         // Draw Objects
         table.draw()
@@ -479,7 +530,6 @@ var lastKey = null
         gl.uniform4fv(gl.getUniformLocation(shaderProgram, "mat.specular"), [0.94, 0.94, 0.94, 1.00])
         gl.uniform4fv(gl.getUniformLocation(shaderProgram, "mat.emissive"), [0.00, 0.00, 0.00, 1.00])
         gl.uniform1f(gl.getUniformLocation(shaderProgram, "mat.shininess"), 100.0)
-        gl.uniform1f(gl.getUniformLocation(shaderProgram, "mat.texCount"), 0)
 
         lPos_uniformId[0] = gl.getUniformLocation(shaderProgram, "Lights[0].l_pos")
         local_uniformId[0] = gl.getUniformLocation(shaderProgram, "Lights[0].isLocal")
@@ -487,7 +537,7 @@ var lastKey = null
         spot_uniformId[0] = gl.getUniformLocation(shaderProgram, "Lights[0].isSpot")
 
         aux = []
-        multMatrixPoint(mvMatrix, [0, 0, 3, 1], aux);
+        multMatrixPoint(model, [0, 0, 3, 1], aux);
 
         gl.uniform1i(local_uniformId[0], false)
         gl.uniform1i(enabled_uniformId[0], true)

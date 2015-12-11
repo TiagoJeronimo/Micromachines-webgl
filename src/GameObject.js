@@ -30,11 +30,11 @@ GameObject.prototype = {
   draw: function () {
     mvPushMatrix()
 
-    mat4.translate(mvMatrix,mvMatrix, [this.position.x, this.position.y, this.position.z])
-    mat4.scale(mvMatrix,mvMatrix, [this.scale.x, this.scale.y, this.scale.z])
-    mat4.rotateX(mvMatrix,mvMatrix, degToRad(this.rotation.x))
-    mat4.rotateY(mvMatrix,mvMatrix, degToRad(this.rotation.y))
-    mat4.rotateZ(mvMatrix,mvMatrix, degToRad(this.rotation.z))
+    mat4.translate(model, model, [this.position.x, this.position.y, this.position.z])
+    mat4.scale(model, model, [this.scale.x, this.scale.y, this.scale.z])
+    mat4.rotateX(model, model, degToRad(this.rotation.x))
+    mat4.rotateY(model, model, degToRad(this.rotation.y))
+    mat4.rotateZ(model, model, degToRad(this.rotation.z))
 
  		this.cubeBindBuffers()
 
