@@ -286,14 +286,23 @@ var lastKey = null
         butter1.draw()
         butter2.draw()
         road.draw()
-        cup.draw()
+
         for(var i = 0; i < 3; i++) {
             orange[i].draw()
         }
 
-        for (var i = 0; i<broccoli.length; i++) {
+
+
+     
+
+        gl.blendFunc(gl.SRC_ALPHA, gl.ONE_MINUS_SRC_ALPHA)
+        gl.enable(gl.BLEND)
+         for (var i = 0; i<broccoli.length; i++) {
             broccoli[i].draw()
         }
+
+        cup.draw()
+        gl.disable(gl.BLEND)
 
         burguer.draw()
         iceCream.draw()
@@ -450,10 +459,8 @@ var lastKey = null
         create()
         initShaders()
 
-        gl.clearColor(0.5, 0.5, 0.5 , 1.0);
-        gl.enable(gl.DEPTH_TEST);
-        gl.enable(gl.BLEND)
-        gl.blendFunc(gl.SRC_ALPHA, gl.ONE_MINUS_SRC_ALPHA);
+        gl.clearColor(0.5, 0.5, 0.5 , 1.0)
+        gl.enable(gl.DEPTH_TEST)
 
         document.onkeydown = handleKeyDown;
         document.onkeyup = handleKeyUp;
