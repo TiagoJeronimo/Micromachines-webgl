@@ -257,10 +257,10 @@ var lastKey = null
         if (car.gameObject.position.x >= tableSize || car.gameObject.position.x <= -tableSize || 
         car.gameObject.position.z >= tableSize || car.gameObject.position.z <= -tableSize) {
             car.kill()
-            /* remainingLives--
-            if (remainingLives <= 0) {
-                pause()
-            } */
+            document.getElementById("lifes").textContent--
+            if (document.getElementById("lifes").textContent <= 0) {
+                document.getElementById("lifes").textContent = 'you DIEEEEEEEEEEEEEEEEE!!!'
+            }
         }
 
         particles.update()
