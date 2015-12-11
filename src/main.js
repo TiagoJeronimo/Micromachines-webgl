@@ -239,6 +239,19 @@ var lastKey = null
                 car.targetSpeed = 0
             }
         }
+        if (checkCollisions(car, cake) || checkCollisions(car, burguer)) {
+            car.acceleration = 0
+            car.speed = 0
+            car.targetSpeed = 0
+        }
+
+        for (var i = 0; i < waffles.length; i++) {
+            if (checkCollisions(car, waffles[i])) {
+                car.acceleration = 0
+                car.speed = 0
+                car.targetSpeed = 0
+            }
+        }
 
         //Car fall from table
         if (car.gameObject.position.x >= tableSize || car.gameObject.position.x <= -tableSize || 
@@ -348,23 +361,25 @@ var lastKey = null
             waffles[i].create()
         }
 
-        //Bottom
-        waffles[0].setPosition(0, 1.0,  7.7)
-        waffles[0].gameObject.rotation = {x: 80, y:0, z:0}
+        // Left
+        waffles[0].setPosition(7.3, 1.0,  0.0)
+        waffles[0].gameObject.rotation = {x: 0, y:0, z:100}
 
-        waffles[1].setPosition(0, 1.0, 6.2)
-        waffles[1].gameObject.rotation = {x: -80, y:0, z:0}
+        waffles[1].setPosition(5.8, 1.0, 0.0)
+        waffles[1].gameObject.rotation = {x: 0, y:0, z:-100}
 
-        waffles[2].setPosition(0, 2.0, 6.9)
+        waffles[2].setPosition(6.4, 2.0, 0.0)
+        waffles[2].collisionsOn = false
 
-        //Top
-        waffles[3].setPosition(0, 1.0,  -7.5)
-        waffles[3].gameObject.rotation = {x: 80, y:0, z:0}
+        // Top
+        waffles[3].setPosition(-7.5, 1.0,  0.0)
+        waffles[3].gameObject.rotation = {x: 0, y:0, z:-100}
 
-        waffles[4].setPosition(0, 1.0, -5.8)
-        waffles[4].gameObject.rotation = {x: -80, y:0, z:0}
+        waffles[4].setPosition(-5.8, 1.0, 0.0)
+        waffles[4].gameObject.rotation = {x: 0, y:0, z:100}
 
-        waffles[5].setPosition(0, 2.0, -6.3)
+        waffles[5].setPosition(-6.4, 2.0, 0.0)
+        waffles[5].collisionsOn = false
 
         road = new Road ()
         road.create()

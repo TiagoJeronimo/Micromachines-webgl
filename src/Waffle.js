@@ -1,6 +1,7 @@
 var Waffle = function () {
   this.gameObject = null
   this.checkBox = [0, 0, 0, 0]
+  this.collisionsOn = true
 }
 
 Waffle.prototype = {
@@ -11,11 +12,11 @@ Waffle.prototype = {
   },
 
   draw: function () {
-    var bb = 0.5
+    var bb = 0.25
     this.checkBox[0] = this.gameObject.position.x - bb
     this.checkBox[1] = this.gameObject.position.x + bb
-    this.checkBox[2] = this.gameObject.position.z - bb
-    this.checkBox[3] = this.gameObject.position.z + bb
+    this.checkBox[2] = this.gameObject.position.z - bb * 4
+    this.checkBox[3] = this.gameObject.position.z + bb * 4
 
     this.gameObject.draw()
   },
