@@ -301,25 +301,12 @@ var activeCamera = 0
         }
         else if (activeCamera == 2) {
             //Dynamic Perspective
+            var pos = [car.position.x - car.direction[0]/2, 1.5, car.position.z - car.direction[2]/2]
+            var dir = [car.position.x + car.direction[0], 1, car.position.z + car.direction[2]]
 
-            //Find camera lookAt based on Car's properties
-            // var cam = vec3.create()
-            // var dir = vec3.create()
-
-            // var carPos = vec3.create()
-            // vec3.set(carPos, car.position.x, car.position.y, car.position.z)
-
-            // var carDir = vec3.create()
-            // vec3.set(carDir, car.direction[0], car.direction[1], car.direction[2])
-
-
-
-            // vec3.add(dir, carDir, carPos)
-            // vec3.subtract(cam, carPos, carDir)
-
-
-            mat4.lookAt(view, [car.position.x + 5, 2, car.position.z], [0, 0, 0], [0, 1, 0])
+            mat4.lookAt(view, pos, dir, [0, 1, 0])
             mat4.perspective(projection, 45, gl.viewportWidth / gl.viewportHeight, 1, 100.0)
+            mat4.scale(projection, projection, [3, 3, 3])
         }
     }
 
