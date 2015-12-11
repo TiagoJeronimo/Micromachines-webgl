@@ -239,7 +239,7 @@ var lastKey = null
                 car.targetSpeed = 0
             }
         }
-        if (checkCollisions(car, cake) || checkCollisions(car, burguer)) {
+        if (checkCollisions(car, cake) || checkCollisions(car, burguer) || checkCollisions(car, iceCream)) {
             car.acceleration = 0
             car.speed = 0
             car.targetSpeed = 0
@@ -291,10 +291,6 @@ var lastKey = null
             orange[i].draw()
         }
 
-
-
-     
-
         gl.blendFunc(gl.SRC_ALPHA, gl.ONE_MINUS_SRC_ALPHA)
         gl.enable(gl.BLEND)
          for (var i = 0; i<broccoli.length; i++) {
@@ -340,7 +336,6 @@ var lastKey = null
         car = new Car()
         car.create()
         car.setPosition(0, 0.45, 7)
-        car.angle = 90
 
         butter1 = new Butter()
         butter1.create()

@@ -1,11 +1,11 @@
 var Car = function () {
   this.acceleration = 0
   this.speed = 0
-  this.angle = 90
+  this.angle = 270
   this.direction = [-1, 0, 0]
   this.gameObject = null
   this.stopping = false
-  this.maxSpeed = 0.02
+  this.maxSpeed = 0.035
   this.turning = 0
   this.checkBox = [0, 0, 0, 0]
   this.position = {}
@@ -27,8 +27,8 @@ Car.prototype = {
   update: function (dt) {
     var oldSpeed = this.speed
 
-    if (this.speed > this.targetSpeed) this.acceleration = -0.0001
-    else if (this.speed < this.targetSpeed) this.acceleration = 0.0001
+    if (this.speed > this.targetSpeed) this.acceleration = -0.00005
+    else if (this.speed < this.targetSpeed) this.acceleration = 0.00005
     else this.acceleration = 0
 
     this.speed += this.acceleration * dt
@@ -117,5 +117,6 @@ Car.prototype = {
     this.acceleration = 0
     this.speed = 0
     this.targetSpeed = 0
+    this.angle = 270
   }
 }
