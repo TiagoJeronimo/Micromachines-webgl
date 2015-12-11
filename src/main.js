@@ -288,9 +288,17 @@ var activeCamera = 0
         if (activeCamera == 0) {
             //Orthogonal Projection
 
-            // Eye(0,10,0) Center(0,0,0) Up(1,0,0)
+            var w = gl.viewportWidth
+            var h = gl.viewportHeight
+            if (w > h) {
+                var ratio = w / h
+                mat4.ortho(projection, -10*ratio, 10*ratio, -10, 10, -20, 20) 
+            } else {
+                var ratio = h / w
+                mat4.ortho(projection, -10, 10, -10*ratio, 10*ratio, -20, 20) 
+            }
+            
             mat4.lookAt(view, [0, 10, 0], [0, 0, 0], [1, 0, 0])
-            mat4.ortho(projection, -10, 10, -10, 10, -20, 20) 
         }
         else if (activeCamera == 1) {
             //Fixed Perspective
