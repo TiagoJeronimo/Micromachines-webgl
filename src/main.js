@@ -418,7 +418,7 @@ var activeCamera = 0
         waffles[1].setPosition(5.8, 1.0, 0.0)
         waffles[1].gameObject.rotation = {x: 0, y:0, z:-100}
 
-        waffles[2].setPosition(6.4, 2.0, 0.0)
+        waffles[2].setPosition(6.6, 2.0, 0.0)
         waffles[2].collisionsOn = false
 
         // Top
@@ -428,7 +428,7 @@ var activeCamera = 0
         waffles[4].setPosition(-5.8, 1.0, 0.0)
         waffles[4].gameObject.rotation = {x: 0, y:0, z:100}
 
-        waffles[5].setPosition(-6.4, 2.0, 0.0)
+        waffles[5].setPosition(-6.6, 2.0, 0.0)
         waffles[5].collisionsOn = false
 
         road = new Road ()

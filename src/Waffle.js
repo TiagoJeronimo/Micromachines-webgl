@@ -2,6 +2,7 @@ var Waffle = function () {
   this.gameObject = null
   this.checkBox = [0, 0, 0, 0]
   this.collisionsOn = true
+  this.onCollisionMove = false
 }
 
 Waffle.prototype = {

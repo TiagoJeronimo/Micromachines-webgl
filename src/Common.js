@@ -30,9 +30,12 @@ function checkCollisions (obj1, obj2) {
 		//console.log("collides: " + collides)
 
 		if (collides) {
-			obj2.gameObject.setPosition(obj2.gameObject.position.x + car.direction[0]*0.03*dir, 
-										obj2.gameObject.position.y, 
-										obj2.gameObject.position.z + car.direction[2]*0.03*dir)
+			if(obj2.onCollisionMove != null && obj2.onCollisionMove == false) {}
+			else {
+				obj2.gameObject.setPosition(obj2.gameObject.position.x + car.direction[0]*0.03*dir, 
+											obj2.gameObject.position.y, 
+											obj2.gameObject.position.z + car.direction[2]*0.03*dir)
+			}
 		}
 		return collides
 	}
