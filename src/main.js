@@ -140,8 +140,10 @@ var activeCamera = 0
         gl.uniformMatrix4fv(shaderProgram.projectionMatrixUniform, false, projection);
 
         mat4.multiply(viewModelMatrix, view, model)
-        var normalMatrix = mat3.create();
-        mat4.invert(normalMatrix, viewModelMatrix);
+        var normalMatrix = mat3.create()
+        var view3 = mat3.create()
+        mat3.fromMat4(view3, viewModelMatrix)
+        mat3.invert(normalMatrix, view3);
         mat3.transpose(normalMatrix,normalMatrix);
         gl.uniformMatrix3fv(shaderProgram.nMatrixUniform, false, normalMatrix);
     }
@@ -534,7 +536,8 @@ var activeCamera = 0
         spot_uniformId[0] = gl.getUniformLocation(shaderProgram, "Lights[0].isSpot")
 
         aux = []
-        multMatrixPoint(model, [0, 0, 3, 1], aux);
+        multMatrixPoint(view, [0, 5, 0, 0], aux);
+        console.log(aux)
 
         gl.uniform1i(local_uniformId[0], false)
         gl.uniform1i(enabled_uniformId[0], true)
