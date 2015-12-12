@@ -9,7 +9,7 @@ Waffle.prototype = {
   create: function () {
     this.gameObject = new GameObject(WAFFLE_OBJ, "Assets/Textures/Waffle.png")
     this.initBuffers()
-    this.gameObject.scale = {x:1.5, y:1.5, z:1.5}
+    this.gameObject.scale = {x:1.5, y:-1.5, z:1.5}
   },
 
   draw: function () {

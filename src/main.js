@@ -434,7 +434,7 @@ var directional = null, spot1 = null, spot2 = null
 
         cup = new Cup()
         cup.create()
-        cup.position = {x:-1.5, y:1.0, z:0.0}
+        cup.position = {x:-2.5, y:0.0, z:0.0}
 
         particles = new Particles()
 
