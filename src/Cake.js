@@ -12,7 +12,7 @@ Cake.prototype = {
   },
 
   draw: function () {
-    var bb = 1
+    var bb = 0.8
     this.checkBox[0] = this.gameObject.position.x - bb * 0.8
     this.checkBox[1] = this.gameObject.position.x + bb * 0.8
     this.checkBox[2] = this.gameObject.position.z - bb 

@@ -385,10 +385,10 @@ var activeCamera = 0
 
         butter1 = new Butter()
         butter1.create()
-        butter1.setPosition(7, 0.5, 7)
+        butter1.setPosition(7, 0.0, 7)
         butter2 = new Butter()
         butter2.create()
-        butter2.setPosition(-7, 0.5, -7)
+        butter2.setPosition(-7, 0.0, -7)
 
         cup = new Cup()
         cup.create()

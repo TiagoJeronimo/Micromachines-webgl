@@ -17,7 +17,7 @@ Car.prototype = {
   create: function () {
     this.gameObject = new GameObject(CAR_OBJ, "Assets/Textures/FREE-CAR-Texture.png")
     this.gameObject.initBuffers()
-    this.gameObject.setScale(-0.5, 0.5, -0.5)
+    this.gameObject.setScale(0.5, 0.5, 0.5)
   },
 
   draw: function () {

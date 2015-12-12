@@ -11,7 +11,7 @@ IceCream.prototype = {
   },
 
   draw: function () {
-    var bb = 0.5
+    var bb = 0.6
     this.checkBox[0] = this.gameObject.position.x - bb
     this.checkBox[1] = this.gameObject.position.x + bb
     this.checkBox[2] = this.gameObject.position.z - bb
