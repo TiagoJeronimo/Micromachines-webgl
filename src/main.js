@@ -412,24 +412,26 @@ var activeCamera = 0
         }
 
         // Left
-        waffles[0].setPosition(7.3, 1.0,  0.0)
+        waffles[0].setPosition(7.75, 1.0,  0.0)
         waffles[0].gameObject.rotation = {x: 0, y:0, z:100}
 
-        waffles[1].setPosition(5.8, 1.0, 0.0)
+        waffles[1].setPosition(5.65, 1.0, 0.0)
         waffles[1].gameObject.rotation = {x: 0, y:0, z:-100}
 
-        waffles[2].setPosition(6.6, 2.0, 0.0)
+        waffles[2].setPosition(6.7, 1.8, 0.0)
         waffles[2].collisionsOn = false
+        waffles[2].gameObject.rotation = {x: 0, y:0, z:3}
 
         // Top
-        waffles[3].setPosition(-7.5, 1.0,  0.0)
+        waffles[3].setPosition(-7.95, 1.0,  0.0)
         waffles[3].gameObject.rotation = {x: 0, y:0, z:-100}
 
-        waffles[4].setPosition(-5.8, 1.0, 0.0)
+        waffles[4].setPosition(-5.85, 1.0, 0.0)
         waffles[4].gameObject.rotation = {x: 0, y:0, z:100}
 
-        waffles[5].setPosition(-6.6, 2.0, 0.0)
+        waffles[5].setPosition(-6.9, 1.8, 0.0)
         waffles[5].collisionsOn = false
+        waffles[5].gameObject.rotation = {x: 0, y:0, z:3}
 
         road = new Road ()
         road.create()
