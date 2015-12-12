@@ -5,7 +5,6 @@ var Broccoli = function () {
 Broccoli.prototype = {
   create: function () {
     this.gameObject = new GameObject(QUAD_OBJ, "Assets/Textures/broccoli.png")
-    this.gameObject.position = this.position
     this.initBuffers()
   },
 
