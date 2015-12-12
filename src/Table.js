@@ -7,11 +7,12 @@ var Table = function () {
 
 Table.prototype = {
   create: function () {
-    this.gameObject = new GameObject(CUBE_OBJ, 'Assets/Textures/table.png')
+    this.gameObject = new GameObject(QUAD_OBJ, 'Assets/Textures/table.png')
+    this.gameObject.scale = {x: 9.0, y: 1, z: 9.0}
+    this.gameObject.rotation.x = 90
     this.initBuffers()
   },
   draw: function () {
-    this.gameObject.scale = {x: 9.0, y: 0.0000001, z: 9.0}
     this.gameObject.draw()
   },
   initBuffers: function () {
