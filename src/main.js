@@ -298,7 +298,7 @@ var activeCamera = 0
                 mat4.ortho(projection, -10, 10, -10*ratio, 10*ratio, -20, 20) 
             }
             
-            mat4.lookAt(view, [0, 10, 0], [0, 0, 0], [1, 0, 0])
+            mat4.lookAt(view, [0, 10, 0], [0, 0, 0], [0, 0, -1])
         }
         else if (activeCamera == 1) {
             //Fixed Perspective
