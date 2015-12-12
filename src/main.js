@@ -21,6 +21,10 @@ var auxtimer = 0
 var lastKey = null
 var activeCamera = 0
 
+var lamps = []
+var directional = null
+
+
     function initGL(canvas) {
         try {
             gl = canvas.getContext("experimental-webgl");
@@ -187,7 +191,6 @@ var activeCamera = 0
                 break
 
             case 'L':
-                console.log('oi')
                 lighting = !lighting
                 gl.uniform1i(shaderProgram.useLightingUniform, lighting)
                 break
@@ -524,6 +527,25 @@ var activeCamera = 0
             orange[i].create()
             orange[i].init()
         }
+
+        //Create lights
+        directional = new Light(0)
+        directional.local = false
+        directional.position = [0, 1, 0, 0]
+        lapms = []
+        lamps[0] = new Light(1)
+        lamps[0].position = [2.5, 1.5, 2.5, 1.0]
+        lamps[1] = new Light(2)
+        lamps[1].position = [2.5, 1.5, -2.5, 1.0]
+        lamps[2] = new Light(3)
+        lamps[2].position = [0, 1.5, 2.5, 1.0]
+        lamps[3] = new Light(4)
+        lamps[3].position = [0, 1.5, -2.5, 1.0]
+        lamps[4] = new Light(5)
+        lamps[4].position = [-2.5, 1.5, 2.5, 1.0]
+        lamps[5] = new Light(6)
+        lamps[5].position = [-2.5, 1.5, -2.5, 1.0]
+
     }
 
     function tick() {
@@ -559,23 +581,11 @@ var activeCamera = 0
 
     function drawLights () {
         //eu a tentar meter as luzes
-        gl.uniform4fv(gl.getUniformLocation(shaderProgram, "mat.ambient"),  [0.94, 0.94, 0.94, 1.00])
-        gl.uniform4fv(gl.getUniformLocation(shaderProgram, "mat.diffuse"),  [0.94, 0.94, 0.94, 1.00])
-        gl.uniform4fv(gl.getUniformLocation(shaderProgram, "mat.specular"), [0.94, 0.94, 0.94, 1.00])
-        gl.uniform4fv(gl.getUniformLocation(shaderProgram, "mat.emissive"), [0.00, 0.00, 0.00, 1.00])
+        gl.uniform4fv(gl.getUniformLocation(shaderProgram, "mat.ambient"),  [0.1, 0.1, 0.1, 1.00])
+        gl.uniform4fv(gl.getUniformLocation(shaderProgram, "mat.diffuse"),  [0.7, 0.7, 0.7, 1.00])
+        gl.uniform4fv(gl.getUniformLocation(shaderProgram, "mat.specular"), [0.1, 0.1, 0.1, 1])
         gl.uniform1f(gl.getUniformLocation(shaderProgram, "mat.shininess"), 100.0)
 
-        lPos_uniformId[0] = gl.getUniformLocation(shaderProgram, "Lights[0].l_pos")
-        local_uniformId[0] = gl.getUniformLocation(shaderProgram, "Lights[0].isLocal")
-        enabled_uniformId[0] = gl.getUniformLocation(shaderProgram, "Lights[0].isEnabled")
-        spot_uniformId[0] = gl.getUniformLocation(shaderProgram, "Lights[0].isSpot")
-
-        aux = []
-        multMatrixPoint(view, [0, 5, 0, 0], aux);
-
-
-        gl.uniform1i(local_uniformId[0], false)
-        gl.uniform1i(enabled_uniformId[0], true)
-        gl.uniform1i(spot_uniformId[0], false)
-        gl.uniform4fv(lPos_uniformId[0], aux)
+        directional.draw()
+        for (var i = 0; i < lamps.length; i++) lamps[i].draw()
     }
