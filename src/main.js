@@ -22,7 +22,7 @@ var lastKey = null
 var activeCamera = 0
 
 var lamps = []
-var directional = null
+var directional = null, spot1 = null, spot2 = null
 
 
     function initGL(canvas) {
@@ -229,6 +229,8 @@ var directional = null
     }
 
     function update (dt) {
+        spot1.update()
+        spot2.update()
         car.update(dt)
         for(var i = 0; i < 3; i++) {
             orange[i].update(dt)
@@ -532,6 +534,7 @@ var directional = null
         directional = new Light(0)
         directional.local = false
         directional.position = [0, 1, 0, 0]
+
         lapms = []
         lamps[0] = new Light(1)
         lamps[0].position = [2.5, 1.5, 2.5, 1.0]
@@ -545,6 +548,13 @@ var directional = null
         lamps[4].position = [-2.5, 1.5, 2.5, 1.0]
         lamps[5] = new Light(6)
         lamps[5].position = [-2.5, 1.5, -2.5, 1.0]
+
+        //Create lights
+        spot1 = new Light(7)
+        spot1.spot = true
+        spot2 = new Light(7)
+        spot2.spot = true
+
 
     }
 
@@ -581,11 +591,13 @@ var directional = null
 
     function drawLights () {
         //eu a tentar meter as luzes
-        gl.uniform4fv(gl.getUniformLocation(shaderProgram, "mat.ambient"),  [0.1, 0.1, 0.1, 1.00])
+        gl.uniform4fv(gl.getUniformLocation(shaderProgram, "mat.ambient"),  [0.4, 0.4, 0.4, 1.00])
         gl.uniform4fv(gl.getUniformLocation(shaderProgram, "mat.diffuse"),  [0.7, 0.7, 0.7, 1.00])
-        gl.uniform4fv(gl.getUniformLocation(shaderProgram, "mat.specular"), [0.1, 0.1, 0.1, 1])
+        gl.uniform4fv(gl.getUniformLocation(shaderProgram, "mat.specular"), [0.3, 0.3, 0.3, 1])
         gl.uniform1f(gl.getUniformLocation(shaderProgram, "mat.shininess"), 100.0)
 
         directional.draw()
+        spot1.draw()
+        spot2.draw()
         for (var i = 0; i < lamps.length; i++) lamps[i].draw()
     }

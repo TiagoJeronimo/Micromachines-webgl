@@ -6,18 +6,15 @@ var Light = function (index) {
 
   //spotlights 
   this.spot = false
-  this.cutoff = 0.5
-  this.exponent = 0.5
+  this.cutoff = 2
+  this.exponent = 0.2
   this.direction = [0, 1, 0, 0]
 }
 
 Light.prototype = {
-  create: function () {
-
-  },
-
   update: function () {
-
+    this.direction = car.position
+    this.position = [car.position.x, 1, car.position.z, 1]
   },
 
   draw: function () {
@@ -35,16 +32,16 @@ Light.prototype = {
     gl.uniform4fv(uPos, aux)
 
     if (this.spot) {
-      spotDir_uniformId[this.index] = gl.getUniformLocation(shaderProgram, "Lights[" + this.index + "].coneDirection");
-      spotCutOff_uniformId[this.index] = gl.getUniformLocation(shaderProgram, "Lights[" + this.index + "].spotCutOff");
-      spotExp_uniformId[this.index] = gl.getUniformLocation(shaderProgram, "Lights[" + this.index + "].spotExponent");
+      var dir = gl.getUniformLocation(shaderProgram, "Lights[" + this.index + "].coneDirection");
+      var cutoff = gl.getUniformLocation(shaderProgram, "Lights[" + this.index + "].spotCutOff");
+      var exp = gl.getUniformLocation(shaderProgram, "Lights[" + this.index + "].spotExponent");
 
       var auxDir = []
       multMatrixPoint(view, this.direction, auxDir);
 
-      gl.uniform1f(spotCutOff_uniformId[this.index], this.cutoff);
-      gl.uniform1f(spotExp_uniformId[this.index], this.exponent);
-      gl.uniform3fv(spotDir_uniformId[this.index], auxDir);
+      gl.uniform1f(cutoff, this.cutoff);
+      gl.uniform1f(exp, this.exponent);
+      gl.uniform3fv(dir, auxDir);
     }
   }
 }
