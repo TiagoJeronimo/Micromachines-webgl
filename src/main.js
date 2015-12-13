@@ -358,9 +358,6 @@ var directional = null, spot1 = null, spot2 = null
             orange[i].draw()
         }
 
-        gl.enable(gl.BLEND)
-        drawBroccoli()
-
         burguer.draw()
         iceCream.draw()
         cake.draw()
@@ -372,11 +369,6 @@ var directional = null, spot1 = null, spot2 = null
         for (var j = 0; j < donuts.length; j++) {
             donuts[j].draw()
         }
-
-        gl.enable(gl.BLEND)
-        gl.depthMask(false)
-        cup.draw()
-        gl.depthMask(true)
 
         particles.draw()
 
@@ -415,13 +407,15 @@ var directional = null, spot1 = null, spot2 = null
         butterInv2.draw()
         gl.uniform1i(shaderProgram.darken_uniformId, false)
 
-
         gl.disable(gl.STENCIL_TEST);
 
         gl.enable(gl.BLEND)
         drawBroccoli()
 
+        gl.depthMask(false)
         cup.draw()
+        gl.depthMask(true)
+
         gl.disable(gl.BLEND)
 
     }
