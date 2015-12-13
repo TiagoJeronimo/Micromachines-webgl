@@ -5,6 +5,8 @@ var car = null
 var table = null
 var butter1 = null
 var butter2 = null
+var butterInv1 = null
+var butterInv2 = null
 var particles = null
 var cup = null
 var broccoli = []
@@ -27,7 +29,7 @@ var directional = null, spot1 = null, spot2 = null
 
     function initGL(canvas) {
         try {
-            gl = canvas.getContext("experimental-webgl");
+            gl = canvas.getContext("experimental-webgl", {stencil:true});
             gl.viewportWidth = canvas.width;
             gl.viewportHeight = canvas.height;
         } catch (e) {
@@ -39,7 +41,7 @@ var directional = null, spot1 = null, spot2 = null
 
     function resize() {
         try {
-           gl = canvas.getContext("experimental-webgl");
+           gl = canvas.getContext("experimental-webgl", {stencil:true});
            gl.viewportWidth = window.innerWidth
            gl.viewportHeight = window.innerHeight
            canvas.width = window.innerWidth
@@ -116,6 +118,8 @@ var directional = null, spot1 = null, spot2 = null
         shaderProgram.projectionMatrixUniform = gl.getUniformLocation(shaderProgram, "projectionMatrix");
         shaderProgram.nMatrixUniform = gl.getUniformLocation(shaderProgram, "uNMatrix");
         shaderProgram.useLightingUniform = gl.getUniformLocation(shaderProgram, "uUseLighting");
+
+        shaderProgram.darken_uniformId = gl.getUniformLocation(shaderProgram, "darken");
     }
 
     var model = mat4.create();
@@ -371,7 +375,7 @@ var directional = null, spot1 = null, spot2 = null
         updateCamera()
 
         // Draw Objects
-        table.draw()
+        //table.draw()
         car.draw()
         butter1.draw()
         butter2.draw()
@@ -415,6 +419,25 @@ var directional = null, spot1 = null, spot2 = null
 
             gl.uniform3f(shaderProgram.directionalColorUniform,0.8,0.8,0.8);
         }
+
+        gl.clearStencil(0);
+        gl.clear(gl.STENCIL_BUFFER_BIT);
+        gl.stencilFunc(gl.ALWAYS, 1, 0xFF);
+        gl.stencilOp(gl.REPLACE, gl.REPLACE, gl.REPLACE);
+        gl.depthMask(false)
+        gl.enable(gl.STENCIL_TEST);
+
+        table.draw()
+
+        gl.stencilFunc(gl.EQUAL, 1, 0xFF);
+        gl.depthMask(true)
+
+        gl.uniform1i(shaderProgram.darken_uniformId, true)
+        butterInv1.draw()
+        butterInv2.draw()
+        gl.uniform1i(shaderProgram.darken_uniformId, false)
+
+        gl.disable(gl.STENCIL_TEST);
     }
 
     function create() {
@@ -529,6 +552,16 @@ var directional = null, spot1 = null, spot2 = null
             orange[i].create()
             orange[i].init()
         }
+
+        butterInv1 = new Butter()
+        butterInv1.create()
+        butterInv1.setPosition(7, 0.0, 7)
+        butterInv1.gameObject.scale.y = -1
+
+        butterInv2 = new Butter()
+        butterInv2.create()
+        butterInv2.setPosition(-7, 0.0, -7)
+        butterInv2.gameObject.scale.y = -1
 
         //Create lights
         directional = new Light(0)
