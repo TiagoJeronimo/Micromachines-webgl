@@ -1,5 +1,5 @@
 var Particles = function () {
-  this.maxN = 10
+  this.maxN = 20
   this.particula = []
   this.position = {x: 0, y: 0, z: 0}
 }
@@ -51,6 +51,7 @@ Particles.prototype = {
     if (this.particula[0]) {
       for (i = 0; i < this.maxN; i++) {
         this.particula[i].gameObject.draw()
+        this.particula[i].gameObject.rotation.y = car.angle
       }
     }
 

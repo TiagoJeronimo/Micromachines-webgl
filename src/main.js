@@ -349,11 +349,6 @@ var directional = null, spot1 = null, spot2 = null
 
         updateCamera()
 
-        // Draw Objects
-        gl.depthMask(false)
-        table.draw()
-        gl.depthMask(true)
-
         car.draw()
         butter1.draw()
         butter2.draw()
@@ -402,6 +397,7 @@ var directional = null, spot1 = null, spot2 = null
         gl.stencilFunc(gl.ALWAYS, 1, 0xFF);
         gl.stencilOp(gl.KEEP, gl.KEEP, gl.REPLACE);
         gl.depthMask(false)
+        table.draw()
         gl.enable(gl.STENCIL_TEST);
 
         gl.enable(gl.BLEND)
