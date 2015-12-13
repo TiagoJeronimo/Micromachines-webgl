@@ -31,7 +31,7 @@ var directional = null, spot1 = null, spot2 = null
 
     function initGL(canvas) {
         try {
-            gl = canvas.getContext("experimental-webgl", {stencil:true});
+            gl = canvas.getContext("experimental-webgl", {stencil:true, alpha: false});
             gl.viewportWidth = canvas.width;
             gl.viewportHeight = canvas.height;
         } catch (e) {
@@ -367,7 +367,7 @@ var directional = null, spot1 = null, spot2 = null
         drawBroccoli()
 
         cup.draw()
-        gl.disable(gl.BLEND)
+        //gl.disable(gl.BLEND)
 
         burguer.draw()
         iceCream.draw()
@@ -404,8 +404,10 @@ var directional = null, spot1 = null, spot2 = null
         gl.depthMask(false)
         gl.enable(gl.STENCIL_TEST);
 
+        gl.enable(gl.BLEND)
         puddle1.draw()
         puddle2.draw()
+        //gl.disable(gl.BLEND)
 
         gl.stencilFunc(gl.EQUAL, 1, 0xFF);
         gl.depthMask(true)
