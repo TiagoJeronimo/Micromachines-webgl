@@ -358,11 +358,7 @@ var directional = null, spot1 = null, spot2 = null
             orange[i].draw()
         }
 
-        gl.enable(gl.BLEND)
-        drawBroccoli()
-
-        cup.draw()
-        //gl.disable(gl.BLEND)
+        
 
         burguer.draw()
         iceCream.draw()
@@ -403,7 +399,7 @@ var directional = null, spot1 = null, spot2 = null
         gl.enable(gl.BLEND)
         puddle1.draw()
         puddle2.draw()
-        //gl.disable(gl.BLEND)
+        gl.disable(gl.BLEND)
 
         gl.stencilFunc(gl.EQUAL, 1, 0xFF);
         gl.depthMask(true)
@@ -415,6 +411,12 @@ var directional = null, spot1 = null, spot2 = null
 
 
         gl.disable(gl.STENCIL_TEST);
+
+        gl.enable(gl.BLEND)
+        drawBroccoli()
+
+        cup.draw()
+        gl.disable(gl.BLEND)
 
     }
 
