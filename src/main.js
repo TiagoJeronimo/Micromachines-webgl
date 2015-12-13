@@ -7,6 +7,8 @@ var butter1 = null
 var butter2 = null
 var butterInv1 = null
 var butterInv2 = null
+var puddle1 = null
+var puddle2 = null
 var particles = null
 var cup = null
 var broccoli = []
@@ -375,7 +377,10 @@ var directional = null, spot1 = null, spot2 = null
         updateCamera()
 
         // Draw Objects
-        //table.draw()
+        gl.depthMask(false)
+        table.draw()
+        gl.depthMask(true)
+
         car.draw()
         butter1.draw()
         butter2.draw()
@@ -423,11 +428,12 @@ var directional = null, spot1 = null, spot2 = null
         gl.clearStencil(0);
         gl.clear(gl.STENCIL_BUFFER_BIT);
         gl.stencilFunc(gl.ALWAYS, 1, 0xFF);
-        gl.stencilOp(gl.REPLACE, gl.REPLACE, gl.REPLACE);
+        gl.stencilOp(gl.KEEP, gl.KEEP, gl.REPLACE);
         gl.depthMask(false)
         gl.enable(gl.STENCIL_TEST);
 
-        table.draw()
+        puddle1.draw()
+        puddle2.draw()
 
         gl.stencilFunc(gl.EQUAL, 1, 0xFF);
         gl.depthMask(true)
@@ -437,7 +443,9 @@ var directional = null, spot1 = null, spot2 = null
         butterInv2.draw()
         gl.uniform1i(shaderProgram.darken_uniformId, false)
 
+
         gl.disable(gl.STENCIL_TEST);
+
     }
 
     function create() {
@@ -562,6 +570,14 @@ var directional = null, spot1 = null, spot2 = null
         butterInv2.create()
         butterInv2.setPosition(-7, 0.0, -7)
         butterInv2.gameObject.scale.y = -1
+
+        puddle1 = new Puddle ()
+        puddle1.create()
+        puddle1.setPosition(-7, 0.0, -7)
+
+        puddle2 = new Puddle ()
+        puddle2.create()
+        puddle2.setPosition(7, 0.0, 7)
 
         //Create lights
         directional = new Light(0)
