@@ -332,40 +332,13 @@ var directional = null, spot1 = null, spot2 = null
     }
 
     function drawBroccoli() {
-        //TL:DR - align brocollis with camera
-        var angleCosine = 0
-
-        var lookAt_aux = vec3.create()
-        var objToCamProj = vec3.create()
-        var upAux = vec3.create()
-
-        // objToCamProj is the vector in world coordinates from the 
-        // local origin to the camera projected in the XZ plane
-
-        var xCamX = 0.0
-        var xCamZ = 0.0
-
-        if (activeCamera == 2) {
-            xCamX = car.position.x - 2 * car.direction[0]
-            xCamZ = car.position.z - 2 * car.direction[2]
-        }
-
         for (var i = 0; i < broccoli.length; i++) {
-            vec3.set(objToCamProj, xCamX - broccoli[i].gameObject.position.x, 0, xCamZ - broccoli[i].gameObject.position.z)
-
-            vec3.set(lookAt_aux, 0, 0, 1)
-            vec3.normalize(objToCamProj, objToCamProj)
-            vec3.cross(upAux, lookAt_aux, objToCamProj)
-
-            angleCosine = vec3.dot(lookAt_aux, objToCamProj)
-
-            if ((angleCosine < 0.99990) && (angleCosine > -0.9999)) {
-                broccoli[i].gameObject.rotation.y = Math.acos(angleCosine) * 180 /  3.14159265358979323846;
+            if (activeCamera == 2) {
+                broccoli[i].gameObject.rotation.y = car.angle
             }
 
             broccoli[i].draw()
         }
-
     }
 
     function drawScene() {
@@ -390,7 +363,6 @@ var directional = null, spot1 = null, spot2 = null
             orange[i].draw()
         }
 
-        gl.blendFunc(gl.SRC_ALPHA, gl.ONE_MINUS_SRC_ALPHA)
         gl.enable(gl.BLEND)
         drawBroccoli()
 
@@ -622,6 +594,9 @@ var directional = null, spot1 = null, spot2 = null
 
         gl.clearColor(0.5, 0.5, 0.5 , 1.0)
         gl.enable(gl.DEPTH_TEST)
+        gl.blendFunc(gl.ONE, gl.ONE_MINUS_SRC_ALPHA)
+        gl.pixelStorei(gl.UNPACK_PREMULTIPLY_ALPHA_WEBGL, true)
+
 
         document.onkeydown = handleKeyDown;
         document.onkeyup = handleKeyUp;

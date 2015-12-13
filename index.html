@@ -115,7 +115,7 @@
         vec4 texel, texel1, texel2;
 
         texel = texture2D(texmap1, vTextureCoord);
-        if(texel.a == 0.0) discard;
+        if(texel.a <= 0.1) discard;
 
         if (uUseLighting)
             gl_FragColor = max(mat.ambient*texel, scatteredLight*texel + reflectedLight);
@@ -131,6 +131,7 @@
         }*/
 
         if (darken) gl_FragColor *= vec4(0.6, 0.55, 0.5, 1);
+        gl_FragColor.a = texel.a;
     }
 </script>
 
