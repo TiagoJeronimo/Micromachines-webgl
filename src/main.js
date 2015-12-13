@@ -358,7 +358,8 @@ var directional = null, spot1 = null, spot2 = null
             orange[i].draw()
         }
 
-        
+        gl.enable(gl.BLEND)
+        drawBroccoli()
 
         burguer.draw()
         iceCream.draw()
@@ -371,6 +372,11 @@ var directional = null, spot1 = null, spot2 = null
         for (var j = 0; j < donuts.length; j++) {
             donuts[j].draw()
         }
+
+        gl.enable(gl.BLEND)
+        gl.depthMask(false)
+        cup.draw()
+        gl.depthMask(true)
 
         particles.draw()
 
@@ -594,7 +600,7 @@ var directional = null, spot1 = null, spot2 = null
 
         gl.clearColor(0.5, 0.5, 0.5 , 1.0)
         gl.enable(gl.DEPTH_TEST)
-        gl.blendFunc(gl.ONE, gl.ONE_MINUS_SRC_ALPHA)
+        gl.blendFunc(gl.SRC_ALPHA, gl.ONE_MINUS_SRC_ALPHA)
         gl.pixelStorei(gl.UNPACK_PREMULTIPLY_ALPHA_WEBGL, true)
 
 
