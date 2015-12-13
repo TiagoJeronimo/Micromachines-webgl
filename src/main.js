@@ -262,6 +262,8 @@ var directional = null, spot1 = null, spot2 = null
             car.acceleration = 0
             car.speed = 0
             car.targetSpeed = 0
+            butterInv1.setPosition(butter1.gameObject.position.x, 0.0, butter1.gameObject.position.z)
+            butterInv2.setPosition(butter1.gameObject.position.x, 0.0, butter1.gameObject.position.z)
         }
         for (var i = 0; i < donuts.length; i++) {
             if (checkCollisions(car, donuts[i])) {
