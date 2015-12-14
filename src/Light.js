@@ -41,7 +41,7 @@ Light.prototype = {
 
       gl.uniform1f(cutoff, this.cutoff);
       gl.uniform1f(exp, this.exponent);
-      gl.uniform3fv(dir, auxDir);
+      gl.uniform3fv(dir, [auxDir[0], auxDir[1], auxDir[2]]);
     }
   }
 }
