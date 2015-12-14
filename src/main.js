@@ -34,8 +34,10 @@ var stereoEye = 0
 var stereoAngle = 0
 var stereoActive = false
 
-var autoMove = false
+var autoMove = true
 var totalTime = 0
+
+var gyroAlpha = 0
 
 
     function initGL(canvas) {
@@ -291,7 +293,7 @@ var totalTime = 0
                     orange[i].init()
                 }
             }
-            if (checkCollisions(car, orange[i])) {
+            if (checkCollisions(car, orange[i]) && !autoMove) {
                 car.kill()
                 /* remainingLives--;
                 if (remainingLives <= 0) {
@@ -353,6 +355,8 @@ var totalTime = 0
                 inputUpTimes.splice(0, 1)
             }  
         }
+
+        updateSensors()
     }
 
     function updateCamera() {
@@ -390,6 +394,7 @@ var totalTime = 0
             mat4.perspective(projection, 45, vw / gl.viewportHeight, 1, 100.0)
             mat4.scale(projection, projection, [3, 3, 3])
             mat4.rotateY(projection, projection, degToRad(stereoAngle))
+            mat4.rotateY(projection, projection, degToRad(-gyroAlpha))
             mat4.translate(projection, projection, [stereoEye, 0, 0])
 
         }
@@ -398,7 +403,7 @@ var totalTime = 0
     function drawBroccoli() {
         for (var i = 0; i < broccoli.length; i++) {
             if (activeCamera == 2) {
-                broccoli[i].gameObject.rotation.y = car.angle
+                broccoli[i].gameObject.rotation.y = car.angle + gyroAlpha
             }
 
             broccoli[i].draw()
@@ -717,3 +722,12 @@ var totalTime = 0
         spot2.draw()
         for (var i = 0; i < lamps.length; i++) lamps[i].draw()
     }
+
+function updateSensors() {
+    gyro.startTracking(function(o) {
+        gyroAlpha = o.alpha
+        document.getElementById("score").textContent = 'alpha: ' + Math.round(o.alpha) + ', beta: ' + Math.round(o.beta) + ', gamma: ' + Math.round(o.gamma)
+        // o.x, o.y, o.z for accelerometer
+        // o.alpha, o.beta, o.gamma for gyro
+    });
+}
