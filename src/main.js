@@ -34,6 +34,9 @@ var stereoEye = 0
 var stereoAngle = 0
 var stereoActive = false
 
+var initTime = 0
+var autoMove = false
+
 
     function initGL(canvas) {
         try {
@@ -174,9 +177,7 @@ var stereoActive = false
     var yRot = 0;
     var ySpeed = -3;
 
-    function handleKeyDown(event) {
-        var key = String.fromCharCode(event.keyCode)
-        if (key === lastKey) return
+    function keyDownSwitch (key) {
         switch(key) {
             case '1':
                 activeCamera = 0;
@@ -230,12 +231,18 @@ var stereoActive = false
                 stereoActive = true;
                 break;
         }
-        lastKey = key
-
     }
 
-    function handleKeyUp(event) {
+    function handleKeyDown(event) {
         var key = String.fromCharCode(event.keyCode)
+        if (key === lastKey) return
+        inputTimes.push({time: Date.now() - initTime, key: key})
+        keyDownSwitch(key)
+        lastKey = key
+    }
+
+    function keyUpSwitch(key) {
+        inputUpTimes.push({time: Date.now() - initTime, key: key})
         switch(key) {
             case 'Q': //UP
                 car.stopForward()
@@ -250,6 +257,11 @@ var stereoActive = false
                 car.stopRight()
                 break
         }
+    }
+
+    function handleKeyUp(event) {
+        var key = String.fromCharCode(event.keyCode)
+        keyUpSwitch(key)
         lastKey = null
     }
 
@@ -326,6 +338,18 @@ var stereoActive = false
         }
 
         particles.update()
+
+        if (autoMove) {
+            if (inputTimes.length > 0 && inputTimes[0].time <= Date.now() - initTime) {
+                keyDownSwitch(inputTimes[0].key)
+                inputTimes.splice(0, 1)
+
+            }
+            if (inputUpTimes.length > 0 && inputUpTimes[0].time <= Date.now() - initTime) {
+                keyUpSwitch(inputUpTimes[0].key)
+                inputUpTimes.splice(0, 1)
+            }  
+        }
     }
 
     function updateCamera() {
@@ -480,7 +504,7 @@ var stereoActive = false
 
         car = new Car()
         car.create()
-        car.setPosition(0, 0.45, 7)
+        car.setPosition(0, 0.05, 7)
 
         butter1 = new Butter()
         butter1.create()
@@ -666,6 +690,7 @@ var stereoActive = false
         document.onkeydown = handleKeyDown;
         document.onkeyup = handleKeyUp;
 
+        initTime = Date.now()
         tick();
     }
 

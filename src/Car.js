@@ -9,6 +9,7 @@ var Car = function () {
   this.turning = 0
   this.checkBox = [0, 0, 0, 0]
   this.position = {}
+  this.rotation = 0.1
 
   this.targetSpeed = 0
 }
@@ -49,7 +50,7 @@ Car.prototype = {
 
     //angle stuff
     this.gameObject.rotation.y = this.angle
-    this.angle += this.turning * 0.2 * dt
+    this.angle += this.turning * this.rotation * dt
     if (this.angle > 360) this.angle = 0
     else if (this.angle < 0) this.angle = 360
     var da = this.angle * 3.14 / 180
