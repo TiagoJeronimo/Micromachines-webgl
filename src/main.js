@@ -380,7 +380,7 @@ var totalTime = 0
         }
         else if (activeCamera == 2) {
             //Dynamic Perspective
-            var pos = [car.position.x - car.direction[0]/2, 1.5, car.position.z - car.direction[2]/2]
+            var pos = [car.position.x - car.direction[0]/1.5, 1, car.position.z - car.direction[2]/1.5]
             var dir = [car.position.x + car.direction[0], 1, car.position.z + car.direction[2]]
 
             var vw = gl.viewportWidth
