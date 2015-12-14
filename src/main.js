@@ -1,6 +1,8 @@
 var gl
 var canvas
 var lighting = false
+
+// objects
 var car = null
 var table = null
 var butter1 = null
@@ -21,6 +23,8 @@ var iceCream2 = null
 var cake = null
 var road = null
 var orange = []
+var flare = null
+
 var lastTime = 0
 var tableSize = 9
 var auxtimer = 0
@@ -34,7 +38,7 @@ var stereoEye = 0
 var stereoAngle = 0
 var stereoActive = false
 
-var autoMove = true
+var autoMove = false
 var totalTime = 0
 
 var gyroAlpha = 0
@@ -502,6 +506,8 @@ var gyroAlpha = 0
         cup2.draw()
         gl.depthMask(true)
 
+        drawLensFlares()
+
         gl.disable(gl.BLEND)
 
     }
@@ -644,6 +650,12 @@ var gyroAlpha = 0
         puddle2.create()
         puddle2.setPosition(-7, 0.0, -7)
 
+
+        flare = new Broccoli()
+        flare.create()
+        flare.gameObject.rotation.x = 90
+        flare.setPosition(5, 5, 5)
+
         //Create lights
         directional = new Light(0)
         directional.local = false
@@ -663,7 +675,7 @@ var gyroAlpha = 0
         lamps[5] = new Light(6)
         lamps[5].position = [-3.5, 1.5, -4.5, 1.0]
 
-        //Create lights
+        //Create spotlights
         spot1 = new Light(7)
         spot1.spot = true
         spot1.position = [car.position.x, car.position.y, car.position.z, 1.0]
@@ -723,11 +735,30 @@ var gyroAlpha = 0
         for (var i = 0; i < lamps.length; i++) lamps[i].draw()
     }
 
-function updateSensors() {
+function updateSensors () {
     gyro.startTracking(function(o) {
         gyroAlpha = o.alpha
         document.getElementById("score").textContent = 'alpha: ' + Math.round(o.alpha) + ', beta: ' + Math.round(o.beta) + ', gamma: ' + Math.round(o.gamma)
         // o.x, o.y, o.z for accelerometer
         // o.alpha, o.beta, o.gamma for gyro
     });
+}
+
+function drawLensFlares () {
+    var bPos = burguer.gameObject.position
+    var vBec = [bPos.x, bPos.y, bPos.z, 1]
+    var aux = [], aux1 = [], aux2 = []
+
+    multMatrixPoint(model, vBec, aux);
+    multMatrixPoint(view, aux, aux1);
+    multMatrixPoint(projection, aux1, aux2);
+    flare.setPosition(aux2[0], aux2[1], aux2[2])
+
+
+    // draw on orthogonal camera
+    var lastCam = activeCamera
+    activeCamera = 0
+    updateCamera()
+    activeCamera = lastCam
+    flare.draw()
 }
