@@ -10,12 +10,14 @@ var butterInv2 = null
 var puddle1 = null
 var puddle2 = null
 var particles = null
-var cup = null
+var cup1 = null
+var cup2 = null
 var broccoli = []
 var donuts = []
 var waffles = []
 var burguer = null
-var iceCream = null
+var iceCream1 = null
+var iceCream2 = null
 var cake = null
 var road = null
 var orange = []
@@ -200,6 +202,21 @@ var directional = null, spot1 = null, spot2 = null
                 lighting = !lighting
                 gl.uniform1i(shaderProgram.useLightingUniform, lighting)
                 break
+
+            case 'N':
+                directional.enabled = !directional.enabled
+                break
+
+            case 'C':
+                for (var i = 0; i < lamps.length; i++) {
+                    lamps[i].enabled = !lamps[i].enabled
+                }
+                break
+
+            case 'H':
+                spot1.enabled = !spot1.enabled
+                spot2.enabled = !spot2.enabled
+                break
         }
         lastKey = key
 
@@ -263,7 +280,7 @@ var directional = null, spot1 = null, spot2 = null
             car.speed = 0
             car.targetSpeed = 0
             butterInv1.setPosition(butter1.gameObject.position.x, 0.0, butter1.gameObject.position.z)
-            butterInv2.setPosition(butter1.gameObject.position.x, 0.0, butter1.gameObject.position.z)
+            butterInv2.setPosition(butter2.gameObject.position.x, 0.0, butter2.gameObject.position.z)
         }
         for (var i = 0; i < donuts.length; i++) {
             if (checkCollisions(car, donuts[i])) {
@@ -272,7 +289,7 @@ var directional = null, spot1 = null, spot2 = null
                 car.targetSpeed = 0
             }
         }
-        if (checkCollisions(car, cake) || checkCollisions(car, burguer) || checkCollisions(car, iceCream)) {
+        if (checkCollisions(car, cake) || checkCollisions(car, burguer) || checkCollisions(car, iceCream1) || checkCollisions(car, iceCream2)) {
             car.acceleration = 0
             car.speed = 0
             car.targetSpeed = 0
@@ -361,7 +378,8 @@ var directional = null, spot1 = null, spot2 = null
         }
 
         burguer.draw()
-        iceCream.draw()
+        iceCream1.draw()
+        iceCream2.draw()
         cake.draw()
 
         for (var i = 0; i < waffles.length; i++) {
@@ -415,7 +433,8 @@ var directional = null, spot1 = null, spot2 = null
         drawBroccoli()
 
         gl.depthMask(false)
-        cup.draw()
+        cup1.draw()
+        cup2.draw()
         gl.depthMask(true)
 
         gl.disable(gl.BLEND)
@@ -437,9 +456,12 @@ var directional = null, spot1 = null, spot2 = null
         butter2.create()
         butter2.setPosition(-7, 0.0, -7)
 
-        cup = new Cup()
-        cup.create()
-        cup.position = {x:-2.5, y:0.0, z:0.0}
+        cup1 = new Cup()
+        cup1.create()
+        cup1.position = {x:-3, y:0.0, z:-3.0}
+        cup2 = new Cup()
+        cup2.create()
+        cup2.position = {x:3, y:0.0, z:3.0}
 
         particles = new Particles()
 
@@ -486,8 +508,12 @@ var directional = null, spot1 = null, spot2 = null
         burguer = new Burguer()
         burguer.create()
 
-        iceCream = new IceCream()
-        iceCream.create()
+        iceCream1 = new IceCream()
+        iceCream1.create()
+        iceCream1.setPosition(-3, 0.1, 3)
+        iceCream2 = new IceCream()
+        iceCream2.create()
+        iceCream2.setPosition(3, 0.1, -3)
 
         cake = new Cake()
         cake.create()
@@ -547,11 +573,11 @@ var directional = null, spot1 = null, spot2 = null
 
         puddle1 = new Puddle ()
         puddle1.create()
-        puddle1.setPosition(-7, 0.0, -7)
+        puddle1.setPosition(7, 0.0, 7)
 
         puddle2 = new Puddle ()
         puddle2.create()
-        puddle2.setPosition(7, 0.0, 7)
+        puddle2.setPosition(-7, 0.0, -7)
 
         //Create lights
         directional = new Light(0)
@@ -560,23 +586,27 @@ var directional = null, spot1 = null, spot2 = null
 
         lapms = []
         lamps[0] = new Light(1)
-        lamps[0].position = [2.5, 1.5, 2.5, 1.0]
+        lamps[0].position = [3.5, 1.5, 4.5, 1.0]
         lamps[1] = new Light(2)
-        lamps[1].position = [2.5, 1.5, -2.5, 1.0]
+        lamps[1].position = [3.5, 1.5, -4.5, 1.0]
         lamps[2] = new Light(3)
-        lamps[2].position = [0, 1.5, 2.5, 1.0]
+        lamps[2].position = [0, 1.5, 4.5, 1.0]
         lamps[3] = new Light(4)
-        lamps[3].position = [0, 1.5, -2.5, 1.0]
+        lamps[3].position = [0, 1.5, -4.5, 1.0]
         lamps[4] = new Light(5)
-        lamps[4].position = [-2.5, 1.5, 2.5, 1.0]
+        lamps[4].position = [-3.5, 1.5, 4.5, 1.0]
         lamps[5] = new Light(6)
-        lamps[5].position = [-2.5, 1.5, -2.5, 1.0]
+        lamps[5].position = [-3.5, 1.5, -4.5, 1.0]
 
         //Create lights
         spot1 = new Light(7)
         spot1.spot = true
-        spot2 = new Light(7)
+        spot1.position = [car.position.x, car.position.y, car.position.z, 1.0]
+        spot1.direction = [car.position.x + car.direction[0], -1, car.position.z + car.direction[2], 1.0]
+        spot2 = new Light(8)
         spot2.spot = true
+        spot2.position = [car.position.x, car.position.y, car.position.z, 1.0]
+        spot2.direction = [car.position.x + car.direction[0], -1, car.position.z + car.direction[2], 1.0]
 
 
     }

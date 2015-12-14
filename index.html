@@ -83,6 +83,7 @@
                 light_Dir = light_Dir / light_Distance;
             
                 attenuation = 1.0 / (light_Distance * light_Distance);
+                attenuation = attenuation * 5.0;  //multiply by 5 to increase the light effect
                 
                 if (Lights[light].isSpot) {
                     float spotCos = dot(light_Dir, -Lights[light].coneDirection);
@@ -99,7 +100,7 @@
             }
 
             h = normalize(light_Dir + e);
-            float intDiff = max(dot(n, light_Dir), 0.0);
+            float intDiff = max(dot(n, light_Dir), 0.0); 
             float intSpec = max(dot(h,n), 0.0);
 
             if (intDiff == 0.0) 

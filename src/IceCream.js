@@ -7,7 +7,6 @@ IceCream.prototype = {
   create: function () {
     this.gameObject = new GameObject(ICECREAM_OBJ, "Assets/Textures/icecream.png")
     this.initBuffers()
-    this.setPosition(-3, 0.1, 3)
   },
 
   draw: function () {
