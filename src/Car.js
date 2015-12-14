@@ -27,6 +27,7 @@ Car.prototype = {
 
   update: function (dt) {
     var oldSpeed = this.speed
+    if (autoMove) var dt = 16
 
     if (this.speed > this.targetSpeed) this.acceleration = -0.00005
     else if (this.speed < this.targetSpeed) this.acceleration = 0.00005
@@ -114,7 +115,7 @@ Car.prototype = {
 
   kill: function () {
     document.getElementById("score").textContent++
-    this.gameObject.setPosition(0.0, 0.45, 7)
+    this.gameObject.setPosition(0.0, 0.05, 7)
     this.acceleration = 0
     this.speed = 0
     this.targetSpeed = 0

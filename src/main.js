@@ -34,8 +34,8 @@ var stereoEye = 0
 var stereoAngle = 0
 var stereoActive = false
 
-var initTime = 0
 var autoMove = false
+var totalTime = 0
 
 
     function initGL(canvas) {
@@ -236,13 +236,13 @@ var autoMove = false
     function handleKeyDown(event) {
         var key = String.fromCharCode(event.keyCode)
         if (key === lastKey) return
-        inputTimes.push({time: Date.now() - initTime, key: key})
+        inputTimes.push({time: totalTime, key: key})
         keyDownSwitch(key)
         lastKey = key
     }
 
     function keyUpSwitch(key) {
-        inputUpTimes.push({time: Date.now() - initTime, key: key})
+        inputUpTimes.push({time: totalTime, key: key})
         switch(key) {
             case 'Q': //UP
                 car.stopForward()
@@ -339,13 +339,14 @@ var autoMove = false
 
         particles.update()
 
+        totalTime++
         if (autoMove) {
-            if (inputTimes.length > 0 && inputTimes[0].time <= Date.now() - initTime) {
+            if (inputTimes.length > 0 && inputTimes[0].time <= totalTime) {
                 keyDownSwitch(inputTimes[0].key)
                 inputTimes.splice(0, 1)
 
             }
-            if (inputUpTimes.length > 0 && inputUpTimes[0].time <= Date.now() - initTime) {
+            if (inputUpTimes.length > 0 && inputUpTimes[0].time <= totalTime) {
                 keyUpSwitch(inputUpTimes[0].key)
                 inputUpTimes.splice(0, 1)
             }  
@@ -690,7 +691,6 @@ var autoMove = false
         document.onkeydown = handleKeyDown;
         document.onkeyup = handleKeyUp;
 
-        initTime = Date.now()
         tick();
     }
 
