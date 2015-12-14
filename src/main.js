@@ -53,10 +53,12 @@ var totalTime = 0
     function resize() {
         try {
            gl = canvas.getContext("experimental-webgl", {stencil:true});
-           gl.viewportWidth = window.innerWidth
-           gl.viewportHeight = window.innerHeight
-           canvas.width = window.innerWidth
-           canvas.height = window.innerHeight
+           if (!autoMove) {
+               gl.viewportWidth = window.innerWidth
+               gl.viewportHeight = window.innerHeight
+               canvas.width = window.innerWidth
+               canvas.height = window.innerHeight
+           }
         } catch (e) {}
         if (!gl) {
            alert("Could not initialise WebGL, sorry :-(");
