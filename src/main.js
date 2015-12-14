@@ -25,10 +25,14 @@ var lastTime = 0
 var tableSize = 9
 var auxtimer = 0
 var lastKey = null
-var activeCamera = 0
+var activeCamera = 2
 
 var lamps = []
 var directional = null, spot1 = null, spot2 = null
+
+var stereoEye = 0
+var stereoAngle = 0
+var stereoActive = false
 
 
     function initGL(canvas) {
@@ -176,13 +180,16 @@ var directional = null, spot1 = null, spot2 = null
         switch(key) {
             case '1':
                 activeCamera = 0;
+                stereoActive = false;
                 break;
             case '2':
                 activeCamera = 1;
+                stereoActive = false;
                 break;
 
             case '3': 
                 activeCamera = 2;
+                stereoActive = false;
                 break;
 
             case 'Q': //UP
@@ -217,6 +224,11 @@ var directional = null, spot1 = null, spot2 = null
                 spot1.enabled = !spot1.enabled
                 spot2.enabled = !spot2.enabled
                 break
+
+            case '4':
+                activeCamera = 2;
+                stereoActive = true;
+                break;
         }
         lastKey = key
 
@@ -344,9 +356,15 @@ var directional = null, spot1 = null, spot2 = null
             var pos = [car.position.x - car.direction[0]/2, 1.5, car.position.z - car.direction[2]/2]
             var dir = [car.position.x + car.direction[0], 1, car.position.z + car.direction[2]]
 
+            var vw = gl.viewportWidth
+            if (stereoActive) vw = gl.viewportWidth/2
+
             mat4.lookAt(view, pos, dir, [0, 1, 0])
-            mat4.perspective(projection, 45, gl.viewportWidth / gl.viewportHeight, 1, 100.0)
+            mat4.perspective(projection, 45, vw / gl.viewportHeight, 1, 100.0)
             mat4.scale(projection, projection, [3, 3, 3])
+            mat4.rotateY(projection, projection, degToRad(stereoAngle))
+            mat4.translate(projection, projection, [stereoEye, 0, 0])
+
         }
     }
 
@@ -360,11 +378,26 @@ var directional = null, spot1 = null, spot2 = null
         }
     }
 
+    function drawViewports () {
+        gl.clear(gl.COLOR_BUFFER_BIT | gl.DEPTH_BUFFER_BIT)
+        if (stereoActive) {
+            stereoEye = 0.05
+            stereoAngle = 1
+            gl.viewport(0, 0, gl.viewportWidth/2, gl.viewportHeight)
+            drawScene()
+            stereoEye = -0.05
+            stereoAngle = -1
+            gl.viewport(gl.viewportWidth/2, 0, gl.viewportWidth/2, gl.viewportHeight)
+            drawScene()
+        } else {
+            gl.viewport(0, 0, gl.viewportWidth, gl.viewportHeight)
+            drawScene()
+        }
+
+    }
+
     function drawScene() {
         drawLights()
-
-        gl.viewport(0, 0, gl.viewportWidth, gl.viewportHeight)
-        gl.clear(gl.COLOR_BUFFER_BIT | gl.DEPTH_BUFFER_BIT)
 
         updateCamera()
 
@@ -615,7 +648,7 @@ var directional = null, spot1 = null, spot2 = null
         resize()
         requestAnimFrame(tick)
         setTimes()
-        drawScene()
+        drawViewports()
     }
 
     function webGLStart() {
