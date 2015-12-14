@@ -5,6 +5,8 @@ var Broccoli = function () {
 Broccoli.prototype = {
   create: function () {
     this.gameObject = new GameObject(QUAD_OBJ, "Assets/Textures/broccoli.png")
+    this.gameObject.scale.x = -1
+    this.gameObject.scale.z = -1
     this.initBuffers()
   },
 

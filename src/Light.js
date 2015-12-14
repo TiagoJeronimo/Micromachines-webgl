@@ -13,7 +13,7 @@ var Light = function (index) {
 
 Light.prototype = {
   update: function () {
-    this.direction = car.position
+    this.direction = [car.direction[0], -1, car.direction[2], 0]
     this.position = [car.position.x, 1, car.position.z, 1]
   },
 
@@ -38,7 +38,6 @@ Light.prototype = {
 
       var auxDir = []
       multMatrixPoint(view, this.direction, auxDir);
-
       gl.uniform1f(cutoff, this.cutoff);
       gl.uniform1f(exp, this.exponent);
       gl.uniform3fv(dir, [auxDir[0], auxDir[1], auxDir[2]]);

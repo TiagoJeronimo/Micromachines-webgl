@@ -20,7 +20,7 @@ Particles.prototype = {
 
       this.particula[i].gameObject = new GameObject(QUAD_OBJ, "Assets/Textures/particle.png")
       this.particula[i].gameObject.initBuffers()
-      this.particula[i].gameObject.setScale(0.2, 0.2, 0.2)
+      this.particula[i].gameObject.setScale(-0.2, 0.2, -0.2)
 
       this.particula[i].x = this.position.x
       this.particula[i].y = this.position.y

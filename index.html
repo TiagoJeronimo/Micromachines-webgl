@@ -86,7 +86,7 @@
                 attenuation = attenuation * 5.0;  //multiply by 5 to increase the light effect
                 
                 if (Lights[light].isSpot) {
-                    float spotCos = dot(light_Dir, -Lights[light].coneDirection);
+                    float spotCos = dot(light_Dir, vec3(-Lights[light].coneDirection));
                     if (spotCos < Lights[light].spotCutOff)
                         attenuation = 0.0;
                     else

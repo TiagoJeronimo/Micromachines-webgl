@@ -300,7 +300,7 @@ var totalTime = 0
             }
         }
         if (checkCollisions(car, butter1) || checkCollisions(car, butter2)) {
-            particles.setPosition(car.position.x, 1, car.position.z)
+            particles.setPosition(car.position.x + car.direction[0]/4, 1, car.position.z + car.direction[2]/4)
             particles.create()
             car.acceleration = 0
             car.speed = 0
