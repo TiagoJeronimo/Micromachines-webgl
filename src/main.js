@@ -44,6 +44,7 @@ var totalTime = 0
 
 var gyroAlpha = 0
 
+var gamePaused = false
 
     function initGL(canvas) {
         try {
@@ -223,6 +224,17 @@ var gyroAlpha = 0
                 gl.uniform1i(shaderProgram.useLightingUniform, lighting)
                 break
 
+            case 'S':
+                if(document.getElementById("pause").style.display == 'none') {
+                    document.getElementById("pause").style.display = 'block'
+                    gamePaused = true
+                }
+                else {
+                    document.getElementById("pause").style.display = 'none'
+                    gamePaused = false
+                }
+                break
+
             case 'F':
                 fog = !fog
                 gl.uniform1i(shaderProgram.fogUniform, fog)
@@ -286,7 +298,7 @@ var gyroAlpha = 0
         var currentTime = Date.now()
         if (lastTime != 0) {
             var dt = currentTime - lastTime
-            update(dt)
+            if (!gamePaused) update(dt)
         }
 
         lastTime = currentTime;
