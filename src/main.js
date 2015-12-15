@@ -1,7 +1,7 @@
 var gl
 var canvas
 var lighting = false
-var fog = true
+var fog = false
 
 // objects
 var car = null
@@ -39,7 +39,7 @@ var stereoEye = 0
 var stereoAngle = 0
 var stereoActive = false
 
-var autoMove = true
+var autoMove = false
 var totalTime = 0
 
 var gyroAlpha = 0
