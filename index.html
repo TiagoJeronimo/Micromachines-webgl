@@ -37,6 +37,7 @@
     uniform sampler2D texmap1;
     uniform sampler2D texmap2;
     uniform bool uUseLighting;
+    uniform bool uFog;
     uniform int depthFog;
 
     //esta info vem das normais interpoladas
@@ -45,8 +46,8 @@
     varying vec4 pos;
     varying vec2 vTextureCoord;
 
-    const vec3 fogColor = vec3(0.5, 0.5,0.5);
-    const float FogDensity = 0.025;
+    const vec3 fogColor = vec3(0.7, 0.9, 0.9);
+    const float FogDensity = 0.010;
 
     void main() {
         int disabled = 0;
@@ -124,12 +125,12 @@
         else if (!uUseLighting)
             gl_FragColor = texel;
 
-        /*if (uUseLighting) {
+        if (uFog) {
             fogFactor = 1.0 /exp(dist * (dist/2.0) * FogDensity);
             fogFactor = clamp( fogFactor, 0.0, 1.0 );
      
             gl_FragColor = vec4(mix(fogColor, vec3(gl_FragColor), fogFactor), gl_FragColor.w);
-        }*/
+        }
 
         if (darken) gl_FragColor *= vec4(0.6, 0.55, 0.5, 1);
     }

@@ -1,6 +1,7 @@
 var gl
 var canvas
 var lighting = false
+var fog = true
 
 // objects
 var car = null
@@ -38,7 +39,7 @@ var stereoEye = 0
 var stereoAngle = 0
 var stereoActive = true
 
-var autoMove = true
+var autoMove = false
 var totalTime = 0
 
 var gyroAlpha = 0
@@ -137,6 +138,8 @@ var gyroAlpha = 0
         shaderProgram.projectionMatrixUniform = gl.getUniformLocation(shaderProgram, "projectionMatrix");
         shaderProgram.nMatrixUniform = gl.getUniformLocation(shaderProgram, "uNMatrix");
         shaderProgram.useLightingUniform = gl.getUniformLocation(shaderProgram, "uUseLighting");
+        shaderProgram.fogUniform = gl.getUniformLocation(shaderProgram, "uFog");
+
 
         shaderProgram.darken_uniformId = gl.getUniformLocation(shaderProgram, "darken");
     }
@@ -217,6 +220,11 @@ var gyroAlpha = 0
             case 'L':
                 lighting = !lighting
                 gl.uniform1i(shaderProgram.useLightingUniform, lighting)
+                break
+
+            case 'F':
+                fog = !fog
+                gl.uniform1i(shaderProgram.fogUniform, fog)
                 break
 
             case 'N':
@@ -538,8 +546,10 @@ var gyroAlpha = 0
         drawBroccoli()
 
         gl.depthMask(false)
+        gl.uniform1i(shaderProgram.useLightingUniform, false)
         cup1.draw()
         cup2.draw()
+        gl.uniform1i(shaderProgram.useLightingUniform, lighting)
         gl.depthMask(true)
 
         drawLensFlares()
@@ -737,11 +747,10 @@ var gyroAlpha = 0
         create()
         initShaders()
 
-        gl.clearColor(0.5, 0.5, 0.5 , 1.0)
+        gl.clearColor(0.7, 0.9, 0.9 , 1.0)
         gl.enable(gl.DEPTH_TEST)
         gl.blendFunc(gl.SRC_ALPHA, gl.ONE_MINUS_SRC_ALPHA)
         gl.pixelStorei(gl.UNPACK_PREMULTIPLY_ALPHA_WEBGL, true)
-
 
         document.onkeydown = handleKeyDown;
         document.onkeyup = handleKeyUp;
