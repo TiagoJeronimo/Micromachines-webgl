@@ -315,6 +315,7 @@ var gyroAlpha = 0
             }
         }
         if (checkCollisions(car, butter1) || checkCollisions(car, butter2)) {
+            document.getElementById("score").textContent++
             particles.setPosition(car.position.x + car.direction[0]/4, 1, car.position.z + car.direction[2]/4)
             particles.create()
             car.acceleration = 0
@@ -325,12 +326,14 @@ var gyroAlpha = 0
         }
         for (var i = 0; i < donuts.length; i++) {
             if (checkCollisions(car, donuts[i])) {
+                document.getElementById("score").textContent++
                 car.acceleration = 0
                 car.speed = 0
                 car.targetSpeed = 0
             }
         }
         if (checkCollisions(car, cake) || checkCollisions(car, burguer) || checkCollisions(car, iceCream1) || checkCollisions(car, iceCream2)) {
+            document.getElementById("score").textContent++
             car.acceleration = 0
             car.speed = 0
             car.targetSpeed = 0
@@ -789,7 +792,6 @@ function updateSensors () {
         gyroAlpha = o.alpha
         gyroBeta = o.beta
         gyroGamma = o.gamma
-        document.getElementById("score").textContent = 'alpha: ' + Math.round(o.alpha) + ', beta: ' + Math.round(o.beta) + ', gamma: ' + Math.round(o.gamma)
         // o.x, o.y, o.z for accelerometer
         // o.alpha, o.beta, o.gamma for gyro
     });

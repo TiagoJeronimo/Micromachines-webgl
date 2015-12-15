@@ -114,7 +114,6 @@ Car.prototype = {
   },
 
   kill: function () {
-    //document.getElementById("score").textContent++
     this.gameObject.setPosition(0.0, 0.05, 7)
     this.acceleration = 0
     this.speed = 0
