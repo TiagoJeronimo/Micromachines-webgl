@@ -51,7 +51,13 @@ Particles.prototype = {
     if (this.particula[0]) {
       for (i = 0; i < this.maxN; i++) {
         this.particula[i].gameObject.draw()
-        this.particula[i].gameObject.rotation.y = car.angle
+
+        if (activeCamera == 2) {
+            this.particula[i].gameObject.rotation.y = car.angle
+        } else {
+            this.particula[i].gameObject.rotation.y = 0
+        }
+        
       }
     }
 

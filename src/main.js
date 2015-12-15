@@ -408,6 +408,8 @@ var gyroAlpha = 0
         for (var i = 0; i < broccoli.length; i++) {
             if (activeCamera == 2) {
                 broccoli[i].gameObject.rotation.y = car.angle + gyroAlpha
+            } else {
+                broccoli[i].gameObject.rotation.y = 45 + 90*i
             }
 
             broccoli[i].draw()
