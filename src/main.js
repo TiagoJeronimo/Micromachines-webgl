@@ -404,7 +404,7 @@ var gyroAlpha = 0
             var ratio = vw / gl.viewportHeight
             var aperture = 45
             var neardist = 0.01
-            var eyesep = 10
+            var eyesep = 5
             var focus = 100
             var fardist = 100
             var hdiv2 = neardist * Math.tan(aperture/2)
@@ -435,7 +435,7 @@ var gyroAlpha = 0
             //mat4.scale(projection, projection, [3, 3, 3])
             //mat4.rotateY(projection, projection, degToRad(stereoAngle))
             //mat4.rotateY(projection, projection, degToRad(-gyroAlpha))
-            mat4.translate(projection, projection, [stereoEye * 0.2, 0, 0])
+            mat4.translate(projection, projection, [stereoEye * 0.1, 0, 0])
         }
     }
 
