@@ -758,9 +758,9 @@ function drawLensFlares () {
 
 
     // draw on orthogonal camera
-    var lastCam = activeCamera
+    /*var lastCam = activeCamera
     activeCamera = 0
     updateCamera()
-    activeCamera = lastCam
+    activeCamera = lastCam*/
     flare.draw()
 }
