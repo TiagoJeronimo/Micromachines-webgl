@@ -27,7 +27,7 @@ Car.prototype = {
 
   update: function (dt) {
     var oldSpeed = this.speed
-    if (autoMove) var dt = 16
+    var dt = 16
 
     if (this.speed > this.targetSpeed) this.acceleration = -0.00005
     else if (this.speed < this.targetSpeed) this.acceleration = 0.00005

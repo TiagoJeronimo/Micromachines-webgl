@@ -39,7 +39,7 @@ var stereoEye = 0
 var stereoAngle = 0
 var stereoActive = false
 
-var autoMove = false
+var autoMove = true
 var totalTime = 0
 
 var gyroAlpha = 0
@@ -285,7 +285,7 @@ var gyroAlpha = 0
     function setTimes () {
         var currentTime = Date.now()
         if (lastTime != 0) {
-        var dt = currentTime - lastTime
+            var dt = currentTime - lastTime
             update(dt)
         }
 
@@ -358,7 +358,6 @@ var gyroAlpha = 0
         }
 
         particles.update()
-
         totalTime++
         if (autoMove) {
             if (inputTimes.length > 0 && inputTimes[0].time <= totalTime) {
