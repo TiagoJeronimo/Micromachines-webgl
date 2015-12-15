@@ -81,17 +81,21 @@ Flare.prototype = {
       var py = (1 - element.distance)*ly + element.distance*dy
       var width = element.size * distancescale * this.scale
       if (width > this.maxsize) width = this.maxsize
-      if (element.distance === 0) width = 10
       var alpha = element.alpha * distancescale
+      if (element.distance === 0) {
+        gl.blendFunc(gl.ONE, gl.ONE_MINUS_SRC_ALPHA)
+        width = 10
+        alpha = 1.0
+      }
       gl.uniform1f(shaderProgram.alphaUniform, alpha)
 
       element.obj.setScale(width, 1, width)
       element.obj.setPosition(px, 10, py)
       element.obj.draw()
+      gl.blendFunc(gl.SRC_ALPHA, gl.ONE_MINUS_SRC_ALPHA)
     }
     gl.uniform1f(shaderProgram.alphaUniform, 1.0)
     gl.enable(gl.DEPTH_TEST)
-    //gl.blendFunc(gl.SRC_ALPHA, gl.ONE_MINUS_SRC_ALPHA)
     gl.uniform1i(shaderProgram.useLightingUniform, lighting)
 
 
