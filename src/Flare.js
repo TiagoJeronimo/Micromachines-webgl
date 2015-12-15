@@ -83,7 +83,7 @@ Flare.prototype = {
       if (width > this.maxsize) width = this.maxsize
       var alpha = element.alpha * distancescale
       if (element.distance === 0) {
-        gl.blendFunc(gl.ONE, gl.ONE_MINUS_SRC_ALPHA)
+        if (!fog) gl.blendFunc(gl.ONE, gl.ONE_MINUS_SRC_ALPHA)
         width = 10
         alpha = 1.0
       }
