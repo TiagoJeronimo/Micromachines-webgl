@@ -387,23 +387,24 @@ var gyroAlpha = 0
             mat4.perspective(projection, 45, gl.viewportWidth / gl.viewportHeight, 1, 100.0)
         }
         else if (activeCamera == 2) {
-            //Dynamic Perspective
+             //Dynamic Perspective
             var pos = [car.position.x - car.direction[0]/1.5, 1, car.position.z - car.direction[2]/1.5]
-            var dir = [car.position.x + car.direction[0], 1, car.position.z + car.direction[2]]
+            var dir = []
+            vec3.scale(dir, car.direction, 5/3)
             var up = [0, 1, 0]
-            var right = []
-            vec3.cross(right, dir, up)
+            var vRight = []
+            vec3.cross(vRight, dir, up)
+            vec3.normalize(vRight, vRight)
 
             var vw = gl.viewportWidth
             if (stereoActive) vw = gl.viewportWidth/2
 
-            mat4.lookAt(view, pos, dir, up)
             //mat4.perspective(projection, 45, vw / gl.viewportHeight, 1, 100.0)
 
             var ratio = vw / gl.viewportHeight
             var aperture = 45
-            var neardist = 1
-            var eyesep = 40
+            var neardist = 0.01
+            var eyesep = 10
             var focus = 100
             var fardist = 100
             var hdiv2 = neardist * Math.tan(aperture/2)
@@ -414,11 +415,27 @@ var gyroAlpha = 0
 
             mat4.frustum(projection, left, right, bottom, top, neardist, fardist)
 
-            /*mat4.scale(projection, projection, [3, 3, 3])
-            mat4.rotateY(projection, projection, degToRad(stereoAngle))
-            mat4.rotateY(projection, projection, degToRad(-gyroAlpha))
-            mat4.translate(projection, projection, [stereoEye, 0, 0])*/
 
+
+            vec3.scale(vRight, vRight, stereoEye)
+            var vEye = []
+            vec3.scale(vEye, vRight, eyesep/100)
+            console.log(vEye)
+
+            var lookPos = [car.position.x - car.direction[0]/1.5, 1, car.position.z - car.direction[2]/1.5]
+            //var lookDir = [car.position.x + car.direction[0], 1, car.position.z + car.direction[2]]
+            //var lookPos = []
+            //vec3.add(lookPos, pos, vEye)
+
+            console.log(lookPos)
+            var lookDir = []
+            vec3.add(lookDir, lookPos, dir)
+            mat4.lookAt(view, lookPos, lookDir, up)
+
+            //mat4.scale(projection, projection, [3, 3, 3])
+            //mat4.rotateY(projection, projection, degToRad(stereoAngle))
+            //mat4.rotateY(projection, projection, degToRad(-gyroAlpha))
+            mat4.translate(projection, projection, [stereoEye * 0.2, 0, 0])
         }
     }
 
