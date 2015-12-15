@@ -797,13 +797,31 @@ function drawLensFlares () {
     multMatrixPoint(model, vBec, aux);
     multMatrixPoint(view, aux, aux1);
     multMatrixPoint(projection, aux1, aux2);
-    flare.setPosition(aux2[0], aux2[1], aux2[2])
+
+    aux2 = [aux2[0] / aux2[3], aux2[1] / aux2[3], aux2[2] / aux2[3]]
+
+
+    var w = gl.viewportWidth
+    var h = gl.viewportHeight
+    var ratioX = 1
+    var ratioY = 1
+    if (w > h) ratioX = w / h
+    else ratioY = h / w
+
+    var winX = (((aux2[0] + 1 ) / 2.0) * 20 -10) * ratioX
+    var winY = (((1 - aux2[1]) / 2.0) * 20 -10) * ratioY
+
+    flare.setPosition(winX, winY, winY)
+    console.log(winX, winY)
+
+    //flare.setPosition(aux2[0], aux2[1], aux2[2])
 
 
     // draw on orthogonal camera
-    /*var lastCam = activeCamera
+    var lastCam = activeCamera
     activeCamera = 0
     updateCamera()
-    activeCamera = lastCam*/
+    activeCamera = lastCam
     flare.draw()
+    updateCamera()
 }
