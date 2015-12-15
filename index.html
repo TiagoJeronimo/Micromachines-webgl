@@ -125,6 +125,8 @@
         else if (!uUseLighting)
             gl_FragColor = texel;
 
+        if (darken) gl_FragColor = vec4(mix(vec3(0.7, 0.7, 0.7), vec3(gl_FragColor), 0.4), gl_FragColor.w);
+
         if (uFog) {
             fogFactor = 1.0 /exp(dist * (dist/2.0) * FogDensity);
             fogFactor = clamp( fogFactor, 0.0, 1.0 );
@@ -132,7 +134,6 @@
             gl_FragColor = vec4(mix(fogColor, vec3(gl_FragColor), fogFactor), gl_FragColor.w);
         }
 
-        if (darken) gl_FragColor *= vec4(0.6, 0.55, 0.5, 1);
     }
 </script>
 
