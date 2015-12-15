@@ -225,15 +225,17 @@ var gamePaused = false
                 break
 
             case 'S':
-                if(document.getElementById("pause").style.display == 'none') {
+                if(document.getElementById("pause").style.display == 'none' && document.getElementById("death").style.display == 'none') {
                     document.getElementById("pause").style.display = 'block'
                     gamePaused = true
                 }
-                else {
+                else if(document.getElementById("death").style.display == 'none'){
                     document.getElementById("pause").style.display = 'none'
                     gamePaused = false
                 }
                 break
+            case 'R':
+                if(document.getElementById("death").style.display == 'block') location.reload()
 
             case 'F':
                 fog = !fog
@@ -320,10 +322,11 @@ var gamePaused = false
             }
             if (checkCollisions(car, orange[i]) && !autoMove) {
                 car.kill()
-                /* remainingLives--;
-                if (remainingLives <= 0) {
-                    pause()
-                } */
+                document.getElementById("lifes").textContent--
+                if (document.getElementById("lifes").textContent <= 0) {
+                    gamePaused = true
+                    document.getElementById("death").style.display = 'block'
+                }
             }
         }
         if (checkCollisions(car, butter1) || checkCollisions(car, butter2)) {
@@ -365,7 +368,8 @@ var gamePaused = false
             car.kill()
             document.getElementById("lifes").textContent--
             if (document.getElementById("lifes").textContent <= 0) {
-                document.getElementById("lifes").textContent = 'you DIEEEEEEEEEEEEEEEEE!!!'
+                gamePaused = true
+                document.getElementById("death").style.display = 'block'
             }
         }
 
