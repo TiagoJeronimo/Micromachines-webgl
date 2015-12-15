@@ -139,6 +139,7 @@ var gyroAlpha = 0
         shaderProgram.nMatrixUniform = gl.getUniformLocation(shaderProgram, "uNMatrix");
         shaderProgram.useLightingUniform = gl.getUniformLocation(shaderProgram, "uUseLighting");
         shaderProgram.fogUniform = gl.getUniformLocation(shaderProgram, "uFog");
+        shaderProgram.alphaUniform = gl.getUniformLocation(shaderProgram, "uAlpha");
 
 
         shaderProgram.darken_uniformId = gl.getUniformLocation(shaderProgram, "darken");
