@@ -37,7 +37,7 @@ var directional = null, spot1 = null, spot2 = null
 
 var stereoEye = 0
 var stereoAngle = 0
-var stereoActive = true
+var stereoActive = false
 
 var autoMove = false
 var totalTime = 0
@@ -702,10 +702,8 @@ var gyroAlpha = 0
         puddle2.setPosition(-7, 0.0, -7)
 
 
-        flare = new Broccoli()
+        flare = new Flare()
         flare.create()
-        flare.gameObject.rotation.x = 90
-        flare.setPosition(5, 5, 5)
 
         //Create lights
         directional = new Light(0)
@@ -798,7 +796,7 @@ function updateSensors () {
 
 function drawLensFlares () {
     var bPos = burguer.gameObject.position
-    var vBec = [bPos.x, bPos.y, bPos.z, 1]
+    var vBec = [bPos.x, 3, bPos.z, 1]
     var aux = [], aux1 = [], aux2 = []
 
     multMatrixPoint(model, vBec, aux);
@@ -818,8 +816,8 @@ function drawLensFlares () {
     var winX = (((aux2[0] + 1 ) / 2.0) * 20 -10) * ratioX
     var winY = (((1 - aux2[1]) / 2.0) * 20 -10) * ratioY
 
-    flare.setPosition(winX, winY, winY)
-    console.log(winX, winY)
+    flare.sunPos.x = winX
+    flare.sunPos.y = winY
 
     //flare.setPosition(aux2[0], aux2[1], aux2[2])
 
