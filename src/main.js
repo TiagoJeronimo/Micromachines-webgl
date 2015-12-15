@@ -796,7 +796,7 @@ function updateSensors () {
 
 function drawLensFlares () {
     var bPos = burguer.gameObject.position
-    var vBec = [bPos.x, 3, bPos.z, 1]
+    var vBec = [-15, 8, -15, 1]
     var aux = [], aux1 = [], aux2 = []
 
     multMatrixPoint(model, vBec, aux);
@@ -827,6 +827,7 @@ function drawLensFlares () {
     activeCamera = 0
     updateCamera()
     activeCamera = lastCam
+    if (winY < 0)
     flare.draw()
     updateCamera()
 }
