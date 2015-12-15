@@ -87,9 +87,11 @@ Flare.prototype = {
         width = 10
         alpha = 1.0
       }
+      var height = width
+      if (stereoActive) height = width/2
       gl.uniform1f(shaderProgram.alphaUniform, alpha)
 
-      element.obj.setScale(width, 1, width)
+      element.obj.setScale(width, 1, height)
       element.obj.setPosition(px, 10, py)
       element.obj.draw()
       gl.blendFunc(gl.SRC_ALPHA, gl.ONE_MINUS_SRC_ALPHA)
