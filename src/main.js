@@ -440,8 +440,8 @@ var gyroAlpha = 0
 
             //mat4.scale(projection, projection, [3, 3, 3])
             //mat4.rotateY(projection, projection, degToRad(stereoAngle))
-            if (autoMove) {
-                mat4.rotateX(projection, projection, degToRad(gyroGamma*2+180))
+            if (true) {
+                mat4.rotateX(projection, projection, degToRad(gyroGamma*2+90))
                 mat4.rotateY(projection, projection, degToRad(-gyroAlpha))
                 //mat4.rotateZ(projection, projection, degToRad(gyroGamma))
             }
