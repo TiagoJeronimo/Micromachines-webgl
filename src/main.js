@@ -36,9 +36,9 @@ var directional = null, spot1 = null, spot2 = null
 
 var stereoEye = 0
 var stereoAngle = 0
-var stereoActive = false
+var stereoActive = true
 
-var autoMove = false
+var autoMove = true
 var totalTime = 0
 
 var gyroAlpha = 0
@@ -420,21 +420,19 @@ var gyroAlpha = 0
             vec3.scale(vRight, vRight, stereoEye)
             var vEye = []
             vec3.scale(vEye, vRight, eyesep/100)
-            console.log(vEye)
 
             var lookPos = [car.position.x - car.direction[0]/1.5, 1, car.position.z - car.direction[2]/1.5]
             //var lookDir = [car.position.x + car.direction[0], 1, car.position.z + car.direction[2]]
             //var lookPos = []
             //vec3.add(lookPos, pos, vEye)
 
-            console.log(lookPos)
             var lookDir = []
             vec3.add(lookDir, lookPos, dir)
             mat4.lookAt(view, lookPos, lookDir, up)
 
             //mat4.scale(projection, projection, [3, 3, 3])
             //mat4.rotateY(projection, projection, degToRad(stereoAngle))
-            //mat4.rotateY(projection, projection, degToRad(-gyroAlpha))
+            mat4.rotateY(projection, projection, degToRad(-gyroAlpha))
             mat4.translate(projection, projection, [stereoEye * 0.1, 0, 0])
         }
     }
