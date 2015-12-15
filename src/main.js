@@ -390,16 +390,34 @@ var gyroAlpha = 0
             //Dynamic Perspective
             var pos = [car.position.x - car.direction[0]/1.5, 1, car.position.z - car.direction[2]/1.5]
             var dir = [car.position.x + car.direction[0], 1, car.position.z + car.direction[2]]
+            var up = [0, 1, 0]
+            var right = []
+            vec3.cross(right, dir, up)
 
             var vw = gl.viewportWidth
             if (stereoActive) vw = gl.viewportWidth/2
 
-            mat4.lookAt(view, pos, dir, [0, 1, 0])
-            mat4.perspective(projection, 45, vw / gl.viewportHeight, 1, 100.0)
-            mat4.scale(projection, projection, [3, 3, 3])
+            mat4.lookAt(view, pos, dir, up)
+            //mat4.perspective(projection, 45, vw / gl.viewportHeight, 1, 100.0)
+
+            var ratio = vw / gl.viewportHeight
+            var aperture = 45
+            var neardist = 1
+            var eyesep = 40
+            var focus = 100
+            var fardist = 100
+            var hdiv2 = neardist * Math.tan(aperture/2)
+            var top = hdiv2
+            var bottom = -hdiv2
+            var left = -ratio * hdiv2 + stereoEye * (0.5 * eyesep * neardist / focus)
+            var right = ratio * hdiv2 + stereoEye * (0.5 * eyesep * neardist / focus)
+
+            mat4.frustum(projection, left, right, bottom, top, neardist, fardist)
+
+            /*mat4.scale(projection, projection, [3, 3, 3])
             mat4.rotateY(projection, projection, degToRad(stereoAngle))
             mat4.rotateY(projection, projection, degToRad(-gyroAlpha))
-            mat4.translate(projection, projection, [stereoEye, 0, 0])
+            mat4.translate(projection, projection, [stereoEye, 0, 0])*/
 
         }
     }
@@ -419,16 +437,17 @@ var gyroAlpha = 0
     function drawViewports () {
         gl.clear(gl.COLOR_BUFFER_BIT | gl.DEPTH_BUFFER_BIT)
         if (stereoActive) {
-            stereoEye = 0.05
+            stereoEye = -1
             stereoAngle = 1
             gl.viewport(0, 0, gl.viewportWidth/2, gl.viewportHeight)
             drawScene()
-            stereoEye = -0.05
+            stereoEye = 1
             stereoAngle = -1
             gl.viewport(gl.viewportWidth/2, 0, gl.viewportWidth/2, gl.viewportHeight)
             drawScene()
         } else {
             gl.viewport(0, 0, gl.viewportWidth, gl.viewportHeight)
+            stereoEye = 0
             drawScene()
         }
 
