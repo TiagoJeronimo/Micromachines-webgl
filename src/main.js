@@ -1,6 +1,6 @@
 var gl
 var canvas
-var lighting = false
+var lighting = true
 var fog = false
 
 // objects
@@ -37,9 +37,9 @@ var directional = null, spot1 = null, spot2 = null
 
 var stereoEye = 0
 var stereoAngle = 0
-var stereoActive = false
+var stereoActive = true
 
-var autoMove = false
+var autoMove = true
 var totalTime = 0
 
 var gyroAlpha = 0
