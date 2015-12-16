@@ -570,10 +570,12 @@ var gamePaused = false
         drawBroccoli()
 
         gl.depthMask(false)
-        gl.uniform1i(shaderProgram.useLightingUniform, false)
+        gl.enable(gl.CULL_FACE)
+        //gl.uniform1i(shaderProgram.useLightingUniform, false)
         cup1.draw()
         cup2.draw()
-        gl.uniform1i(shaderProgram.useLightingUniform, lighting)
+        //gl.uniform1i(shaderProgram.useLightingUniform, lighting)
+        gl.disable(gl.CULL_FACE)
         gl.depthMask(true)
 
         drawLensFlares()
