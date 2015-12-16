@@ -37,9 +37,9 @@ var directional = null, spot1 = null, spot2 = null
 
 var stereoEye = 0
 var stereoAngle = 0
-var stereoActive = true
+var stereoActive = false
 
-var autoMove = true
+var autoMove = false
 var totalTime = 0
 
 var gyroAlpha = 0
@@ -653,10 +653,10 @@ var gamePaused = false
 
         iceCream1 = new IceCream()
         iceCream1.create()
-        iceCream1.setPosition(-3, 0.1, 3)
+        iceCream1.setPosition(-3, 0.0, 3)
         iceCream2 = new IceCream()
         iceCream2.create()
-        iceCream2.setPosition(3, 0.1, -3)
+        iceCream2.setPosition(3, 0.0, -3)
 
         cake = new Cake()
         cake.create()
@@ -665,37 +665,37 @@ var gamePaused = false
         for(var i = 0, e = 0; i < 28; e++, i += 4) {
             donuts[i] = new Donut()
             donuts[i].create()
-            donuts[i].setPosition(-3 + e, 0.1, -8.5)
+            donuts[i].setPosition(-3 + e, 0.0, -8.5)
 
             donuts[i+1] = new Donut()
             donuts[i+1].create()
-            donuts[i+1].setPosition(-3 + e, 0.1, -5)
+            donuts[i+1].setPosition(-3 + e, 0, -5)
 
             donuts[i+2] = new Donut()
             donuts[i+2].create()
-            donuts[i+2].setPosition(-3 + e, 0.1, 8.5)
+            donuts[i+2].setPosition(-3 + e, 0, 8.5)
 
             donuts[i+3] = new Donut()
             donuts[i+3].create()
-            donuts[i+3].setPosition(-3 + e, 0.1, 5)
+            donuts[i+3].setPosition(-3 + e, 0, 5)
         }
 
         for(var i = 28, e = 0; i < 56; e++, i += 4) {
             donuts[i] = new Donut()
             donuts[i].create()
-            donuts[i].setPosition(-8.5, 0.1, -3 + e)
+            donuts[i].setPosition(-8.5, 0, -3 + e)
 
             donuts[i+1] = new Donut()
             donuts[i+1].create()
-            donuts[i+1].setPosition(-5, 0.1, -3 + e)
+            donuts[i+1].setPosition(-5, 0, -3 + e)
 
             donuts[i+2] = new Donut()
             donuts[i+2].create()
-            donuts[i+2].setPosition(8.5, 0.1, -3 + e)
+            donuts[i+2].setPosition(8.5, 0, -3 + e)
 
             donuts[i+3] = new Donut()
             donuts[i+3].create()
-            donuts[i+3].setPosition(5, 0.1, -3 + e)
+            donuts[i+3].setPosition(5, 0, -3 + e)
         }
 
         for(var i = 0; i < 3; i++) {

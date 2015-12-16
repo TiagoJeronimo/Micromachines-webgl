@@ -7,7 +7,7 @@ Cake.prototype = {
   create: function () {
     this.gameObject = new GameObject(CAKE_OBJ, "Assets/Textures/Cake.png")
     this.initBuffers()
-    this.setPosition(7, 0.1, -7)
+    this.setPosition(7, 0, -7)
     this.gameObject.rotation = {x: 0, y:30, z:0}
   },
 

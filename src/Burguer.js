@@ -7,7 +7,7 @@ Burguer.prototype = {
   create: function () {
     this.gameObject = new GameObject(BURGUER_OBJ, "Assets/Textures/Hambuger.png")
     this.initBuffers()
-    this.setPosition(-7, 0.1, 7)
+    this.setPosition(-7, 0, 7)
     this.gameObject.scale = {x: 5, y:5, z:5}
   },
 
