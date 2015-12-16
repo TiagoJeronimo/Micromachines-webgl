@@ -5,6 +5,8 @@ var fog = false
 
 // objects
 var car = null
+var carInv = null
+
 var table = null
 var butter1 = null
 var butter2 = null
@@ -310,6 +312,10 @@ var gamePaused = false
         spot1.update()
         spot2.update()
         car.update(dt)
+
+        carInv.setPosition(car.gameObject.position.x, car.gameObject.position.y, car.gameObject.position.z)
+        carInv.gameObject.rotation.y = car.angle
+
         for(var i = 0; i < 3; i++) {
             orange[i].update(dt)
 
@@ -562,6 +568,7 @@ var gamePaused = false
         gl.uniform1i(shaderProgram.darken_uniformId, true)
         butterInv1.draw()
         butterInv2.draw()
+        carInv.draw()
         gl.uniform1i(shaderProgram.darken_uniformId, false)
 
         gl.disable(gl.STENCIL_TEST);
@@ -591,6 +598,11 @@ var gamePaused = false
         car = new Car()
         car.create()
         car.setPosition(0, 0.05, 7)
+
+        carInv = new Car()
+        carInv.create()
+        carInv.setPosition(0, 0.05, 7)
+        carInv.gameObject.scale.y = -1
 
         butter1 = new Butter()
         butter1.create()
